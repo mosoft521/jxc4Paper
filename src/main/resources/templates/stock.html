@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Basic DataGrid - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/themes/default/easyui.css" th:href="@{../../../static/themes/default/easyui.css}">
+    <link rel="stylesheet" type="text/css" href="../../../static/themes/icon.css" th:href="@{../../../static/themes/icon.css}">
+    <link rel="stylesheet" type="text/css" href="../demo.css" th:href="@{../demo.css}">
+    <script type="text/javascript" src="../../../static/jquery.min.js" th:href="@{../../../static/jquery.min.js}"></script>
+    <script type="text/javascript" src="../../../static/jquery.easyui.min.js" th:href="@{../../../static/jquery.easyui.min.js}"></script>
+</head>
+<body>
+<!-- 数据列表 start -->
+<table id="dg" title="库存列表" class="easyui-datagrid" style="width:750px;height:400px"
+       url="/stock/list" toolbar="#toolbar" singleSelect="true" method="get">
+    <thead>
+    <tr>
+        <th field="productId" width="60" align="center">商品ID</th>
+        <th field="productName" width="100" align="center">商品名称</th>
+        <th field="quantityCurrent" width="100" align="center">当前库存量</th>
+        <th field="quantityMin" width="100" align="center">最小库存量</th>
+        <th field="quantityMax" width="200" align="center">最大库存量</th>
+    </tr>
+    </thead>
+</table>
+<!-- 数据列表 end -->
+
+<!-- 工具按钮 start -->
+<div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newStock()">新建库存</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editStock()">编辑库存</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyStock()">移除库存</a>
+</div>
+<!-- 工具按钮 end -->
+
+<!--  新增(form表单) start  -->
+<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+     closed="true" buttons="#dlg-buttons">
+    <div class="ftitle">库存信息</div>
+    <form id="fm" method="post">
+        <div class="fitem">
+            <label>商品:</label>
+            <select id="productId" name="productId" required="true">
+            </select>
+        </div>
+
+        <div class="fitem">
+            <label>当前库存量:</label>
+            <input name="quantityCurrent" class="easyui-numberbox" required="true">
+        </div>
+        <div class="fitem">
+            <label>最小库存量:</label>
+            <input name="quantityMin" class="easyui-numberbox" required="true">
+        </div>
+        <div class="fitem">
+            <label>最大库存量:</label>
+            <input name="quantityMax" class="easyui-numberbox" required="true">
+        </div>
+    </form>
+</div>
+<!--  新增(form表单) end  -->
+
+<!--  新增中保存和取消按钮 start  -->
+<div id="dlg-buttons">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveStock()">Save</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
+</div>
+<!--  新增中保存和取消按钮 end  -->
+</body>
+
+
+<script type="text/javascript">
+    <!-- 新增库存窗口 -->
+    function newStock() {
+        $("#dlg").dialog("open").dialog('setTitle', '添加库存');
+        $("#fm").form("clear");
+        url = "/stock/saveOrUpdate";
+    }
+
+    <!-- 编辑库存窗口  -->
+    function editStock() {
+        var row = $("#dg").datagrid("getSelected");
+        if (row) {
+            $("#dlg").dialog("open").dialog("setTitle", "修改库存");
+            $("#dlg").form("load", row);
+            url = "/stock/saveOrUpdate?productId=" + row.productId;
+        }
+    }
+
+    <!-- 保存库存 -->
+    function saveStock() {
+        $("#fm").form('submit', {
+            url: url,
+            method: "post",
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                if (result.errorMsg) {
+                    $.messager.show({
+                        title: 'Error',
+                        msg: result.errorMsg
+                    });
+                } else {
+                    $('#dlg').dialog('close');        // close the dialog
+                    $('#dg').datagrid('reload');    // reload the stock data
+                }
+            },
+        });
+    }
+
+    <!-- 删除库存  -->
+    function destroyStock() {
+        var row = $("#dg").datagrid("getSelected");
+        if (row) {
+            $.messager.confirm("确认", "确定删除该库存吗?", function (r) {
+                if (r) {
+                    var url = "/stock/delete?productId=" + row.productId;
+                    $.post(url, {id: row.id}, function (result) {
+                        if (result) {
+                            $('#dg').datagrid('reload');     //reload the stock data
+                        } else {
+                            $.messager.show({                //show error msg
+                                title: "Error",
+                                msg: result.errorMsg
+                            });
+                        }
+                    }, 'json');
+                }
+            });
+        }
+    }
+
+    $(function () {
+
+        //Ajax初始化商品select
+        $.get("/product/list", function (data, status) {
+            if (status) {
+                $.each(data, function (i, v) {
+                    $("#productId").append('<option value ="' + v.productId + '">' + v.productName + '</option>');
+                })
+
+            }
+        });
+    })
+</script>
+</html>

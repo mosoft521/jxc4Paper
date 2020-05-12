@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Basic DataGrid - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/themes/default/easyui.css" th:href="@{../../../static/themes/default/easyui.css}">
+    <link rel="stylesheet" type="text/css" href="../../../static/themes/icon.css" th:href="@{../../../static/themes/icon.css}">
+    <link rel="stylesheet" type="text/css" href="../demo.css" th:href="@{../demo.css}">
+    <script type="text/javascript" src="../../../static/jquery.min.js" th:href="@{../../../static/jquery.min.js}"></script>
+    <script type="text/javascript" src="../../../static/jquery.easyui.min.js" th:href="@{../../../static/jquery.easyui.min.js}"></script>
+</head>
+<body>
+<!-- 数据列表 start -->
+<table id="dg" title="员工类别列表" class="easyui-datagrid" style="width:750px;height:400px"
+       url="/empType/list" toolbar="#toolbar" singleSelect="true"  method="get">
+    <thead>
+    <tr>
+        <th field="empTypeId" width="60" align="center">员工类别ID</th>
+        <th field="name" width="100" align="center">员工类别名</th>
+        <th field="remark" width="160" align="center">备注</th>
+    </tr>
+    </thead>
+</table>
+<!-- 数据列表 end -->
+
+<!-- 工具按钮 start -->
+<div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newEmpType()">新建员工类别</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editEmpType()">编辑员工类别</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyEmpType()">移除员工类别</a>
+</div>
+<!-- 工具按钮 end -->
+
+<!--  新增(form表单) start  -->
+<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+     closed="true" buttons="#dlg-buttons">
+    <div class="ftitle">员工类别信息</div>
+    <form id="fm" method="post">
+        <div class="fitem">
+            <label>empTypeId:</label>
+            <input type="hidden" name="empTypeId">
+        </div>
+
+        <div class="fitem">
+            <label>员工类别名:</label>
+            <input name="name" class="easyui-validatebox" required="true">
+        </div>
+        <div class="fitem">
+            <label>备注:</label>
+            <input name="remark" class="easyui-validatebox">
+        </div>
+    </form>
+</div>
+<!--  新增(form表单) end  -->
+
+<!--  新增中保存和取消按钮 start  -->
+<div id="dlg-buttons">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveEmpType()">Save</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
+</div>
+<!--  新增中保存和取消按钮 end  -->
+</body>
+
+
+<script type="text/javascript">
+    <!-- 新增员工类别窗口 -->
+    function newEmpType() {
+        $("#dlg").dialog("open").dialog('setTitle','添加员工类别');
+        $("#fm").form("clear");
+        url = "/empType/saveOrUpdate";
+    }
+
+    <!-- 编辑员工类别窗口  -->
+    function editEmpType(){
+        var row = $("#dg").datagrid("getSelected");
+        if(row) {
+            $("#dlg").dialog("open").dialog("setTitle","修改员工类别");
+            $("#dlg").form("load",row);
+            url = "/empType/saveOrUpdate?empTypeId="+row.empTypeId;
+        }
+    }
+
+    <!-- 保存员工类别 -->
+    function saveEmpType() {
+        $("#fm").form('submit',{
+            url: url,
+            method:"post",
+            onSubmit: function() {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('('+ result +')');
+                if (result.errorMsg){
+                    $.messager.show({
+                        title: 'Error',
+                        msg: result.errorMsg
+                    });
+                } else {
+                    $('#dlg').dialog('close');        // close the dialog
+                    $('#dg').datagrid('reload');    // reload the empType data
+                }
+            },
+        });
+    }
+
+    <!-- 删除员工类别  -->
+    function destroyEmpType() {
+        var row = $("#dg").datagrid("getSelected");
+        if(row) {
+            $.messager.confirm("确认","确定删除该员工类别吗?",function(r) {
+                if(r) {
+                    var url = "/empType/delete?empTypeId="+row.empTypeId;
+                    $.post(url,{id:row.id},function(result) {
+                        if(result) {
+                            $('#dg').datagrid('reload');     //reload the empType data
+                        }else {
+                            $.messager.show({                //show error msg
+                                title: "Error",
+                                msg: result.errorMsg
+                            });
+                        }
+                    },'json');
+                }
+            });
+        }
+    }
+
+</script>
+</html>

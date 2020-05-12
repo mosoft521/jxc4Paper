@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Basic DataGrid - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/themes/default/easyui.css" th:href="@{../../../static/themes/default/easyui.css}">
+    <link rel="stylesheet" type="text/css" href="../../../static/themes/icon.css" th:href="@{../../../static/themes/icon.css}">
+    <link rel="stylesheet" type="text/css" href="../demo.css" th:href="@{../demo.css}">
+    <script type="text/javascript" src="../../../static/jquery.min.js" th:href="@{../../../static/jquery.min.js}"></script>
+    <script type="text/javascript" src="../../../static/jquery.easyui.min.js" th:href="@{../../../static/jquery.easyui.min.js}"></script>
+</head>
+<body>
+<!-- 数据列表 start -->
+<table id="dg" title="顾客类别列表" class="easyui-datagrid" style="width:750px;height:400px"
+       url="/customerType/list" toolbar="#toolbar" singleSelect="true"  method="get">
+    <thead>
+    <tr>
+        <th field="customerTypeId" width="60" align="center">顾客类别ID</th>
+        <th field="name" width="100" align="center">顾客类别名</th>
+        <th field="discountRate" width="100" align="center">折扣率</th>
+        <th field="remark" width="160" align="center">备注</th>
+    </tr>
+    </thead>
+</table>
+<!-- 数据列表 end -->
+
+<!-- 工具按钮 start -->
+<div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newCustomerType()">新建顾客类别</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editCustomerType()">编辑顾客类别</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyCustomerType()">移除顾客类别</a>
+</div>
+<!-- 工具按钮 end -->
+
+<!--  新增(form表单) start  -->
+<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+     closed="true" buttons="#dlg-buttons">
+    <div class="ftitle">顾客类别信息</div>
+    <form id="fm" method="post">
+        <div class="fitem">
+            <label>customerTypeId:</label>
+            <input type="hidden" name="customerTypeId">
+        </div>
+        <div class="fitem">
+            <label>顾客类别名:</label>
+            <input name="name" class="easyui-validatebox" required="true">
+        </div>
+        <div class="fitem">
+            <label>折扣率:</label>
+            <input name="discountRate" class="easyui-validatebox" required="true">
+        </div>
+        <div class="fitem">
+            <label>备注:</label>
+            <input name="remark" class="easyui-validatebox">
+        </div>
+    </form>
+</div>
+<!--  新增(form表单) end  -->
+
+<!--  新增中保存和取消按钮 start  -->
+<div id="dlg-buttons">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveCustomerType()">Save</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
+</div>
+<!--  新增中保存和取消按钮 end  -->
+</body>
+
+
+<script type="text/javascript">
+    <!-- 新增顾客类别窗口 -->
+    function newCustomerType() {
+        $("#dlg").dialog("open").dialog('setTitle','添加顾客类别');
+        $("#fm").form("clear");
+        url = "/customerType/saveOrUpdate";
+    }
+
+    <!-- 编辑顾客类别窗口  -->
+    function editCustomerType(){
+        var row = $("#dg").datagrid("getSelected");
+        if(row) {
+            $("#dlg").dialog("open").dialog("setTitle","修改顾客类别");
+            $("#dlg").form("load",row);
+            url = "/customerType/saveOrUpdate?customerTypeId="+row.customerTypeId;
+        }
+    }
+
+    <!-- 保存顾客类别 -->
+    function saveCustomerType() {
+        $("#fm").form('submit',{
+            url: url,
+            method:"post",
+            onSubmit: function() {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('('+ result +')');
+                if (result.errorMsg){
+                    $.messager.show({
+                        title: 'Error',
+                        msg: result.errorMsg
+                    });
+                } else {
+                    $('#dlg').dialog('close');        // close the dialog
+                    $('#dg').datagrid('reload');    // reload the customerType data
+                }
+            },
+        });
+    }
+
+    <!-- 删除顾客类别  -->
+    function destroyCustomerType() {
+        var row = $("#dg").datagrid("getSelected");
+        if(row) {
+            $.messager.confirm("确认","确定删除该顾客类别吗?",function(r) {
+                if(r) {
+                    var url = "/customerType/delete?customerTypeId="+row.customerTypeId;
+                    $.post(url,{id:row.id},function(result) {
+                        if(result) {
+                            $('#dg').datagrid('reload');     //reload the customerType data
+                        }else {
+                            $.messager.show({                //show error msg
+                                title: "Error",
+                                msg: result.errorMsg
+                            });
+                        }
+                    },'json');
+                }
+            });
+        }
+    }
+
+</script>
+</html>

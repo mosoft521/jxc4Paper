@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Basic DataGrid - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/themes/default/easyui.css" th:href="@{../../../static/themes/default/easyui.css}">
+    <link rel="stylesheet" type="text/css" href="../../../static/themes/icon.css" th:href="@{../../../static/themes/icon.css}">
+    <link rel="stylesheet" type="text/css" href="../demo.css" th:href="@{../demo.css}">
+    <script type="text/javascript" src="../../../static/jquery.min.js" th:href="@{../../../static/jquery.min.js}"></script>
+    <script type="text/javascript" src="../../../static/jquery.easyui.min.js" th:href="@{../../../static/jquery.easyui.min.js}"></script>
+</head>
+<body>
+<!-- 数据列表 start -->
+<table id="dg" title="客户列表" class="easyui-datagrid" style="width:750px;height:400px"
+       url="/customer/list" toolbar="#toolbar" singleSelect="true" method="get">
+    <thead>
+    <tr>
+        <th field="customerId" width="60" align="center">客户ID</th>
+        <th field="name" width="100" align="center">名称</th>
+        <th field="customerTypeName" width="100" align="center">客户类别</th>
+        <th field="tel" width="100" align="center">电话</th>
+        <th field="sexName" width="100" align="center">性别</th>
+        <th field="address" width="100" align="center">地址</th>
+        <th field="remark" width="160" align="center">备注</th>
+    </tr>
+    </thead>
+</table>
+<!-- 数据列表 end -->
+
+<!-- 工具按钮 start -->
+<div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newCustomer()">新建客户</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editCustomer()">编辑客户</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyCustomer()">移除客户</a>
+</div>
+<!-- 工具按钮 end -->
+
+<!--  新增(form表单) start  -->
+<div id="dlg" class="easyui-dialog" style="width:400px;height:320px;padding:10px 20px"
+     closed="true" buttons="#dlg-buttons">
+    <div class="ftitle">客户信息</div>
+    <form id="fm" method="post">
+        <div class="fitem">
+            <label>客户ID:</label>
+            <input type="hidden" name="customerId">
+        </div>
+
+        <div class="fitem">
+            <label>名称:</label>
+            <input name="name" class="easyui-validatebox" required="true">
+        </div>
+        <div class="fitem">
+            <label>客户类别:</label>
+            <select id="customerTypeId" name="customerTypeId"  required="true">
+            </select>
+        </div>
+        <div class="fitem">
+            <label>电话:</label>
+            <input name="tel" class="easyui-validatebox" required="true">
+        </div>
+        <div class="fitem">
+            <label>性别:</label>
+            <select id="sex" name="sex" required="true">
+                <option value="M" selected="selected">男</option>
+                <option value="F" >女</option>
+            </select>
+        </div>
+        <div class="fitem">
+            <label>地址:</label>
+            <input name="address" class="easyui-validatebox" required="true">
+        </div>
+        <div class="fitem">
+            <label>备注:</label>
+            <input name="remark" class="easyui-validatebox">
+        </div>
+    </form>
+</div>
+<!--  新增(form表单) end  -->
+
+<!--  新增中保存和取消按钮 start  -->
+<div id="dlg-buttons">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveCustomer()">Save</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
+</div>
+<!--  新增中保存和取消按钮 end  -->
+</body>
+
+
+<script type="text/javascript">
+    <!-- 新增客户窗口 -->
+    function newCustomer() {
+        $("#dlg").dialog("open").dialog('setTitle', '添加客户');
+        $("#fm").form("clear");
+        url = "/customer/saveOrUpdate";
+    }
+
+    <!-- 编辑客户窗口  -->
+    function editCustomer() {
+        var row = $("#dg").datagrid("getSelected");
+        if (row) {
+            $("#dlg").dialog("open").dialog("setTitle", "修改客户");
+            $("#dlg").form("load", row);
+            url = "/customer/saveOrUpdate?customerId=" + row.customerId;
+        }
+    }
+
+    <!-- 保存客户 -->
+    function saveCustomer() {
+        $("#fm").form('submit', {
+            url: url,
+            method: "post",
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                if (result.errorMsg) {
+                    $.messager.show({
+                        title: 'Error',
+                        msg: result.errorMsg
+                    });
+                } else {
+                    $('#dlg').dialog('close');        // close the dialog
+                    $('#dg').datagrid('reload');    // reload the customer data
+                }
+            },
+        });
+    }
+
+    <!-- 删除客户  -->
+    function destroyCustomer() {
+        var row = $("#dg").datagrid("getSelected");
+        if (row) {
+            $.messager.confirm("确认", "确定删除该客户吗?", function (r) {
+                if (r) {
+                    var url = "/customer/delete?customerId=" + row.customerId;
+                    $.post(url, {id: row.id}, function (result) {
+                        if (result) {
+                            $('#dg').datagrid('reload');     //reload the customer data
+                        } else {
+                            $.messager.show({                //show error msg
+                                title: "Error",
+                                msg: result.errorMsg
+                            });
+                        }
+                    }, 'json');
+                }
+            });
+        }
+    }
+
+    $(function () {
+
+        //Ajax初始化客户类别select
+        $.get("/customerType/list", function (data, status) {
+            if (status) {
+                $.each(data, function (i, v) {
+                    $("#customerTypeId").append('<option value ="' + v.customerTypeId + '">' + v.name + '</option>');
+                })
+
+            }
+        });
+    })
+</script>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Basic DataGrid - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/themes/default/easyui.css" th:href="@{../../../static/themes/default/easyui.css}">
+    <link rel="stylesheet" type="text/css" href="../../../static/themes/icon.css" th:href="@{../../../static/themes/icon.css}">
+    <link rel="stylesheet" type="text/css" href="../demo.css" th:href="@{../demo.css}">
+    <script type="text/javascript" src="../../../static/jquery.min.js" th:href="@{../../../static/jquery.min.js}"></script>
+    <script type="text/javascript" src="../../../static/jquery.easyui.min.js" th:href="@{../../../static/jquery.easyui.min.js}"></script>
+</head>
+<body>
+<h2>Basic DataGrid</h2>
+<p>The DataGrid is created from markup, no JavaScript code needed.</p>
+<div style="margin:20px 0;"></div>
+
+<!--<table class="easyui-datagrid" title="Basic DataGrid" style="width:580px;height:250px"
+       data-options="singleSelect:true,collapsible:true,url:'/datagrid/list',method:'get'">-->
+<!-- 数据列表 start -->
+<table id="dg" title="My Users" class="easyui-datagrid" style="width:580px;height:250px"
+       url="/datagrid/list" toolbar="#toolbar" singleSelect="true"  method="get">
+    <thead>
+    <tr>
+        <th field="id" width="60" align="center">ID</th>
+        <th field="firstname" width="100" align="center">First Name</th>
+        <th field="lastname" width="100" align="center">Last Name</th>
+        <th field="phone" width="160" align="center">Phone</th>
+        <th field="email" width="160" align="center">Email</th>
+    </tr>
+    </thead>
+</table>
+<!-- 数据列表 end -->
+
+<!-- 工具按钮 start -->
+<div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">Edit User</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">Remove User</a>
+</div>
+<!-- 工具按钮 end -->
+
+<!--  新增(form表单) start  -->
+<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+     closed="true" buttons="#dlg-buttons">
+    <div class="ftitle">User Information</div>
+    <form id="fm" method="post">
+        <div class="fitem">
+            <label>First Name:</label>
+            <input type="hidden" name="id">
+        </div>
+
+        <div class="fitem">
+            <label>First Name:</label>
+            <input name="firstname" class="easyui-validatebox" required="true">
+        </div>
+        <div class="fitem">
+            <label>Last Name:</label>
+            <input name="lastname" class="easyui-validatebox" required="true">
+        </div>
+        <div class="fitem">
+            <label>Phone:</label>
+            <input name="phone">
+        </div>
+        <div class="fitem">
+            <label>Email:</label>
+            <input name="email" class="easyui-validatebox" validType="email">
+        </div>
+    </form>
+</div>
+<!--  新增(form表单) end  -->
+
+<!--  新增中保存和取消按钮 start  -->
+<div id="dlg-buttons">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUser()">Save</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
+</div>
+<!--  新增中保存和取消按钮 end  -->
+</body>
+
+
+<script type="text/javascript">
+    <!-- 新增用户窗口 -->
+    function newUser() {
+        $("#dlg").dialog("open").dialog('setTitle','New User');
+        $("#fm").form("clear");
+        url = "/datagrid/saveOrUpdate";
+    }
+
+    <!-- 编辑用户窗口  -->
+    function editUser(){
+        var row = $("#dg").datagrid("getSelected");
+        if(row) {
+            $("#dlg").dialog("open").dialog("setTitle","Edit User");
+            $("#dlg").form("load",row);
+            url = "/datagrid/saveOrUpdate?id="+row.id;
+        }
+    }
+
+    <!-- 保存用户 -->
+    function saveUser() {
+        $("#fm").form('submit',{
+            url: url,
+            method:"post",
+            onSubmit: function() {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('('+ result +')');
+                if (result.errorMsg){
+                    $.messager.show({
+                        title: 'Error',
+                        msg: result.errorMsg
+                    });
+                } else {
+                    $('#dlg').dialog('close');        // close the dialog
+                    $('#dg').datagrid('reload');    // reload the user data
+                }
+            },
+        });
+    }
+
+    <!-- 删除用户  -->
+    function destroyUser() {
+        var row = $("#dg").datagrid("getSelected");
+        if(row) {
+            $.messager.confirm("Confirm","Are you sure you want to destroy this user?",function(r) {
+                if(r) {
+                    var url = "/datagrid/delete?id="+row.id;
+                    $.post(url,{id:row.id},function(result) {
+                        if(result) {
+                            $('#dg').datagrid('reload');     //reload the user data
+                        }else {
+                            $.messager.show({                //show error msg
+                                title: "Error",
+                                msg: result.errorMsg
+                            });
+                        }
+                    },'json');
+                }
+            });
+        }
+    }
+
+</script>
+</html>

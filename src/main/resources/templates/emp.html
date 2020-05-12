@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Basic DataGrid - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/themes/default/easyui.css" th:href="@{../../../static/themes/default/easyui.css}">
+    <link rel="stylesheet" type="text/css" href="../../../static/themes/icon.css" th:href="@{../../../static/themes/icon.css}">
+    <link rel="stylesheet" type="text/css" href="demo.css" th:href="@{demo.css}">
+    <script type="text/javascript" src="../../../static/jquery.min.js" th:href="@{../../../static/jquery.min.js}"></script>
+    <script type="text/javascript" src="../../../static/jquery.easyui.min.js" th:href="@{../../../static/jquery.easyui.min.js}"></script>
+</head>
+<body>
+<!-- 数据列表 start -->
+<table id="dg" title="员工列表" class="easyui-datagrid" style="width:900px;height:400px"
+       url="/emp/list" toolbar="#toolbar" singleSelect="true" method="get">
+    <thead>
+    <tr>
+        <th field="empId" width="60" align="center">员工ID</th>
+        <th field="deptName" width="60" align="center">所属部门</th>
+        <th field="manageTypeName" width="60" align="center">管理类别</th>
+        <th field="name" width="100" align="center">姓名</th>
+        <th field="tel" width="100" align="center">电话</th>
+        <th field="userName" width="100" align="center">用户名</th>
+        <th field="password" width="100" align="center">密码</th>
+        <th field="sexName" width="100" align="center">性别</th>
+        <th field="strBirthday" width="150" align="center">出生年月</th>
+        <th field="degree" width="100" align="center">最高学历</th>
+    </tr>
+    </thead>
+</table>
+<!-- 数据列表 end -->
+
+<!-- 工具按钮 start -->
+<div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newEmp()">新建员工</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editEmp()">编辑员工</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyEmp()">移除员工</a>
+</div>
+<!-- 工具按钮 end -->
+
+<!--  新增(form表单) start  -->
+<div id="dlg" class="easyui-dialog" style="width:400px;height:480px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
+    <div class="ftitle">员工信息</div>
+    <form id="fm" method="post">
+        <div class="fitem">
+            <label>员工ID:</label>
+            <input type="hidden" name="empId">
+        </div>
+
+        <div class="fitem">
+            <label>所属部门:</label>
+            <select id="deptId" name="deptId"  required="true">
+            </select>
+        </div>
+        <div class="fitem">
+            <label>管理类别:</label>
+            <select id="manageTypeId" name="manageTypeId"  required="true">
+            </select>
+        </div>
+        <div class="fitem">
+            <label>姓名:</label>
+            <input name="name" class="easyui-validatebox"  required="true">
+        </div>
+        <div class="fitem">
+            <label>电话:</label>
+            <input name="tel" class="easyui-validatebox">
+        </div>
+        <div class="fitem">
+            <label>用户名:</label>
+            <input name="userName" class="easyui-validatebox" required="true">
+        </div>
+        <div class="fitem">
+            <label>密码:</label>
+            <input name="password" class="easyui-validatebox" required="true">
+        </div>
+        <div class="fitem">
+            <label>性别:</label>
+            <select id="sex" name="sex">
+                <option value="M" selected="selected">男</option>
+                <option value="F" >女</option>
+            </select>
+        </div>
+        <div class="fitem">
+            <input name="birthday" class="easyui-datebox" label="出生年月:" labelPosition="top" data-options="formatter:myformatter,parser:myparser" style="width:100%;">
+        </div>
+        <div class="fitem">
+            <label>最高学历:</label>
+            <input name="degree" class="easyui-validatebox">
+        </div>
+    </form>
+</div>
+<!--  新增(form表单) end  -->
+
+<!--  新增中保存和取消按钮 start  -->
+<div id="dlg-buttons">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveEmp()">Save</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
+</div>
+<!--  新增中保存和取消按钮 end  -->
+</body>
+
+
+<script type="text/javascript">
+    <!--新增员工窗口-->
+    function newEmp() {
+        $("#dlg").dialog("open").dialog('setTitle', '添加员工');
+        $("#fm").form("clear");
+        url = "/emp/saveOrUpdate";
+    }
+
+    <!-- 编辑员工窗口  -->
+    function editEmp() {
+        var row = $("#dg").datagrid("getSelected");
+        if (row) {
+            $("#dlg").dialog("open").dialog("setTitle", "修改员工");
+            $("#dlg").form("load", row);
+            url = "/emp/saveOrUpdate?empId=" + row.empId;
+        }
+    }
+
+    <!-- 保存员工 -->
+    function saveEmp() {
+        $("#fm").form('submit', {
+            url: url,
+            method: "post",
+            onSubmit: function () {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('(' + result + ')');
+                if (result.errorMsg) {
+                    $.messager.show({
+                        title: 'Error',
+                        msg: result.errorMsg
+                    });
+                } else {
+                    $('#dlg').dialog('close');        // close the dialog
+                    $('#dg').datagrid('reload');    // reload the emp data
+                }
+            },
+        });
+    }
+
+    <!-- 删除员工  -->
+    function destroyEmp() {
+        var row = $("#dg").datagrid("getSelected");
+        if (row) {
+            $.messager.confirm("确认", "确定删除该员工吗?", function (r) {
+                if (r) {
+                    var url = "/emp/delete?empId=" + row.empId;
+                    $.post(url, {id: row.id}, function (result) {
+                        if (result) {
+                            $('#dg').datagrid('reload');     //reload the emp data
+                        } else {
+                            $.messager.show({                //show error msg
+                                title: "Error",
+                                msg: result.errorMsg
+                            });
+                        }
+                    }, 'json');
+                }
+            });
+        }
+    }
+
+    function myformatter(date){
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        var d = date.getDate();
+        return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
+    }
+
+    function myparser(s){
+        if (!s) return new Date();
+        var ss = (s.split('-'));
+        var y = parseInt(ss[0],10);
+        var m = parseInt(ss[1],10);
+        var d = parseInt(ss[2],10);
+        if (!isNaN(y) && !isNaN(m) && !isNaN(d)){
+            return new Date(y,m-1,d);
+        } else {
+            return new Date();
+        }
+    }
+
+    $(function () {
+
+        //Ajax初始化所属部门select
+        $.get("/dept/list", function (data, status) {
+            if (status) {
+                $.each(data, function (i, v) {
+                    $("#deptId").append('<option value ="' + v.deptId + '">' + v.name + '</option>');
+                })
+
+            }
+        });
+
+        //Ajax初始化管理类别select
+        $.get("/empType/list", function (data, status) {
+            if (status) {
+                $.each(data, function (i, v) {
+                    $("#manageTypeId").append('<option value ="' + v.empTypeId + '">' + v.name + '</option>');
+                })
+
+            }
+        });
+    })
+</script>
+</html>

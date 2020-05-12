@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Basic DataGrid - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/themes/default/easyui.css" th:href="@{../../../static/themes/default/easyui.css}">
+    <link rel="stylesheet" type="text/css" href="../../../static/themes/icon.css" th:href="@{../../../static/themes/icon.css}">
+    <link rel="stylesheet" type="text/css" href="../demo.css" th:href="@{../demo.css}">
+    <script type="text/javascript" src="../../../static/jquery.min.js" th:href="@{../../../static/jquery.min.js}"></script>
+    <script type="text/javascript" src="../../../static/jquery.easyui.min.js" th:href="@{../../../static/jquery.easyui.min.js}"></script>
+</head>
+<body>
+<!-- 数据列表 start -->
+<table id="dg" title="出库列表" class="easyui-datagrid" style="width:850px;height:400px"
+       url="/stockOut/list" toolbar="#toolbar" singleSelect="true"  method="get">
+    <thead>
+    <tr>
+        <th field="stockOutId" width="60" align="center">出库ID</th>
+        <th field="stockOutNo" width="150" align="center">出库单号</th>
+        <th field="saleNo" width="150" align="center">销售单号</th>
+        <th field="customerName" width="150" align="center">客户</th>
+        <th field="empName" width="150" align="center">销售员工</th>
+        <th field="productName" width="150" align="center">商品</th>
+        <th field="strDay" width="220" align="center">日期</th>
+        <th field="quantity" width="100" align="center">数量</th>
+        <th field="remark" width="160" align="center">备注</th>
+    </tr>
+    </thead>
+</table>
+<!-- 数据列表 end -->
+
+<!-- 工具按钮 start -->
+<div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newStockOut()">新建出库</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editStockOut()">编辑出库</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyStockOut()">移除出库</a>
+</div>
+<!-- 工具按钮 end -->
+
+<!--  新增(form表单) start  -->
+<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+     closed="true" buttons="#dlg-buttons">
+    <div class="ftitle">出库信息</div>
+    <form id="fm" method="post">
+        <div class="fitem">
+            <label>stockOutId:</label>
+            <input type="hidden" name="stockOutId">
+        </div>
+
+        <div class="fitem">
+            <label>出库单号:</label>
+            <input name="stockOutNo" class="easyui-validatebox" required="true">
+        </div>
+        <div class="fitem">
+            <label>销售单号:</label>
+            <select id="saleId" name="saleId" required="true">
+            </select>
+        </div>
+        <div class="fitem">
+            <input name="strDay" class="easyui-datetimebox" label="日期:" labelPosition="top" data-options="formatter:myformatter,parser:myparser" style="width:100%;">
+        </div>
+        <div class="fitem">
+            <label>数量:</label>
+            <input name="quantity" class="easyui-numberbox" required="true">
+        </div>
+        <div class="fitem">
+            <label>备注:</label>
+            <input name="remark" class="easyui-validatebox">
+        </div>
+    </form>
+</div>
+<!--  新增(form表单) end  -->
+
+<!--  新增中保存和取消按钮 start  -->
+<div id="dlg-buttons">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveStockOut()">Save</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
+</div>
+<!--  新增中保存和取消按钮 end  -->
+</body>
+
+
+<script type="text/javascript">
+    <!-- 新增出库窗口 -->
+    function newStockOut() {
+        $("#dlg").dialog("open").dialog('setTitle','添加出库');
+        $("#fm").form("clear");
+        url = "/stockOut/saveOrUpdate";
+    }
+
+    <!-- 编辑出库窗口  -->
+    function editStockOut(){
+        var row = $("#dg").datagrid("getSelected");
+        if(row) {
+            $("#dlg").dialog("open").dialog("setTitle","修改出库");
+            $("#dlg").form("load",row);
+            url = "/stockOut/saveOrUpdate?stockOutId="+row.stockOutId;
+        }
+    }
+
+    <!-- 保存出库 -->
+    function saveStockOut() {
+        $("#fm").form('submit',{
+            url: url,
+            method:"post",
+            onSubmit: function() {
+                return $(this).form('validate');
+            },
+            success: function (result) {
+                var result = eval('('+ result +')');
+                if (result.errorMsg){
+                    $.messager.show({
+                        title: 'Error',
+                        msg: result.errorMsg
+                    });
+                } else {
+                    $('#dlg').dialog('close');        // close the dialog
+                    $('#dg').datagrid('reload');    // reload the stockOut data
+                }
+            },
+        });
+    }
+
+    <!-- 删除出库  -->
+    function destroyStockOut() {
+        var row = $("#dg").datagrid("getSelected");
+        if(row) {
+            $.messager.confirm("确认","确定删除该出库吗?",function(r) {
+                if(r) {
+                    var url = "/stockOut/delete?stockOutId="+row.stockOutId;
+                    $.post(url,{id:row.id},function(result) {
+                        if(result) {
+                            $('#dg').datagrid('reload');     //reload the stockOut data
+                        }else {
+                            $.messager.show({                //show error msg
+                                title: "Error",
+                                msg: result.errorMsg
+                            });
+                        }
+                    },'json');
+                }
+            });
+        }
+    }
+
+    function myformatter(date) {
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        var d = date.getDate();
+        var hour = date.getHours();
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d) + ' ' + (hour < 10 ? ('0' + hour) : hour) + ":" + (minute < 10 ? ('0' + minute) : minute) + ':' + (second < 10 ? ('0' + second) : second);
+    }
+
+    function myparser(s) {
+        if (!s) return new Date();
+        var ss = s.replace(" ",":").replace(/\:/g,"-").split("-");
+        var y = parseInt(ss[0], 10);
+        var m = parseInt(ss[1], 10);
+        var d = parseInt(ss[2], 10);
+        var hour = parseInt(ss[3], 10);
+        var minute = parseInt(ss[4], 10);
+        var second = parseInt(ss[5], 10);
+        if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+            return new Date(y, m - 1, d, hour, minute, second);
+        } else {
+            return new Date();
+        }
+    }
+
+    $(function () {
+
+        //Ajax初始化销售单select
+        $.get("/sale/list", function (data, status) {
+            if (status) {
+                $.each(data, function (i, v) {
+                    $("#saleId").append('<option value ="' + v.saleId + '">' + v.saleNo + '</option>');
+                })
+
+            }
+        });
+    })
+</script>
+</html>
