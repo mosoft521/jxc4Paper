@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmail.mosoft521.jxc4papaer.dao.StockMapper">
+  <resultMap id="BaseResultMap" type="com.gmail.mosoft521.jxc4papaer.entity.Stock">
+    <id column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="quantity_current" jdbcType="INTEGER" property="quantityCurrent" />
+    <result column="quantity_min" jdbcType="INTEGER" property="quantityMin" />
+    <result column="quantity_max" jdbcType="INTEGER" property="quantityMax" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    product_id, quantity_current, quantity_min, quantity_max
+  </sql>
+  <select id="selectByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.StockExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from stock
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stock
+    where product_id = #{productId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from stock
+    where product_id = #{productId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.StockExample">
+    delete from stock
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Stock">
+    insert into stock (product_id, quantity_current, quantity_min, 
+      quantity_max)
+    values (#{productId,jdbcType=INTEGER}, #{quantityCurrent,jdbcType=INTEGER}, #{quantityMin,jdbcType=INTEGER}, 
+      #{quantityMax,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Stock">
+    insert into stock
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="quantityCurrent != null">
+        quantity_current,
+      </if>
+      <if test="quantityMin != null">
+        quantity_min,
+      </if>
+      <if test="quantityMax != null">
+        quantity_max,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="quantityCurrent != null">
+        #{quantityCurrent,jdbcType=INTEGER},
+      </if>
+      <if test="quantityMin != null">
+        #{quantityMin,jdbcType=INTEGER},
+      </if>
+      <if test="quantityMax != null">
+        #{quantityMax,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.StockExample" resultType="java.lang.Long">
+    select count(*) from stock
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update stock
+    <set>
+      <if test="record.productId != null">
+        product_id = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.quantityCurrent != null">
+        quantity_current = #{record.quantityCurrent,jdbcType=INTEGER},
+      </if>
+      <if test="record.quantityMin != null">
+        quantity_min = #{record.quantityMin,jdbcType=INTEGER},
+      </if>
+      <if test="record.quantityMax != null">
+        quantity_max = #{record.quantityMax,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update stock
+    set product_id = #{record.productId,jdbcType=INTEGER},
+      quantity_current = #{record.quantityCurrent,jdbcType=INTEGER},
+      quantity_min = #{record.quantityMin,jdbcType=INTEGER},
+      quantity_max = #{record.quantityMax,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Stock">
+    update stock
+    <set>
+      <if test="quantityCurrent != null">
+        quantity_current = #{quantityCurrent,jdbcType=INTEGER},
+      </if>
+      <if test="quantityMin != null">
+        quantity_min = #{quantityMin,jdbcType=INTEGER},
+      </if>
+      <if test="quantityMax != null">
+        quantity_max = #{quantityMax,jdbcType=INTEGER},
+      </if>
+    </set>
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Stock">
+    update stock
+    set quantity_current = #{quantityCurrent,jdbcType=INTEGER},
+      quantity_min = #{quantityMin,jdbcType=INTEGER},
+      quantity_max = #{quantityMax,jdbcType=INTEGER}
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+</mapper>

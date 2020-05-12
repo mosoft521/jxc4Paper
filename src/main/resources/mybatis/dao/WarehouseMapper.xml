@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gmail.mosoft521.jxc4papaer.dao.WarehouseMapper">
+  <resultMap id="BaseResultMap" type="com.gmail.mosoft521.jxc4papaer.entity.Warehouse">
+    <id column="warehouse_id" jdbcType="INTEGER" property="warehouseId" />
+    <result column="warehouse_name" jdbcType="VARCHAR" property="warehouseName" />
+    <result column="warehouse_address" jdbcType="VARCHAR" property="warehouseAddress" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="warehouse_size" jdbcType="INTEGER" property="warehouseSize" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    warehouse_id, warehouse_name, warehouse_address, tel, warehouse_size
+  </sql>
+  <select id="selectByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.WarehouseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from warehouse
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from warehouse
+    where warehouse_id = #{warehouseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from warehouse
+    where warehouse_id = #{warehouseId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.WarehouseExample">
+    delete from warehouse
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Warehouse">
+    <selectKey keyProperty="warehouseId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into warehouse (warehouse_name, warehouse_address, 
+      tel, warehouse_size)
+    values (#{warehouseName,jdbcType=VARCHAR}, #{warehouseAddress,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{warehouseSize,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Warehouse">
+    <selectKey keyProperty="warehouseId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into warehouse
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="warehouseName != null">
+        warehouse_name,
+      </if>
+      <if test="warehouseAddress != null">
+        warehouse_address,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="warehouseSize != null">
+        warehouse_size,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="warehouseName != null">
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseAddress != null">
+        #{warehouseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseSize != null">
+        #{warehouseSize,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.WarehouseExample" resultType="java.lang.Long">
+    select count(*) from warehouse
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update warehouse
+    <set>
+      <if test="record.warehouseId != null">
+        warehouse_id = #{record.warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.warehouseName != null">
+        warehouse_name = #{record.warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.warehouseAddress != null">
+        warehouse_address = #{record.warehouseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null">
+        tel = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.warehouseSize != null">
+        warehouse_size = #{record.warehouseSize,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update warehouse
+    set warehouse_id = #{record.warehouseId,jdbcType=INTEGER},
+      warehouse_name = #{record.warehouseName,jdbcType=VARCHAR},
+      warehouse_address = #{record.warehouseAddress,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      warehouse_size = #{record.warehouseSize,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Warehouse">
+    update warehouse
+    <set>
+      <if test="warehouseName != null">
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseAddress != null">
+        warehouse_address = #{warehouseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseSize != null">
+        warehouse_size = #{warehouseSize,jdbcType=INTEGER},
+      </if>
+    </set>
+    where warehouse_id = #{warehouseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Warehouse">
+    update warehouse
+    set warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      warehouse_address = #{warehouseAddress,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      warehouse_size = #{warehouseSize,jdbcType=INTEGER}
+    where warehouse_id = #{warehouseId,jdbcType=INTEGER}
+  </update>
+</mapper>
