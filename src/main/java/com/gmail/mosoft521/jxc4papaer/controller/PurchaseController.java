@@ -49,15 +49,7 @@ public class PurchaseController {
     @RequestMapping("/list")
     @ResponseBody
     public List<PurchaseVO> list() {
-        List<Purchase> purchaseList = purchaseService.list();
-        List<PurchaseVO> purchaseVOList = new ArrayList<>(purchaseList.size());
-        for (Purchase purchase : purchaseList) {
-            PurchaseVO purchaseVO = new PurchaseVO();
-            BeanUtils.copyProperties(purchase, purchaseVO);
-            purchaseVO.setProviderName(providerService.getNameById(purchaseVO.getProviderId()));
-            purchaseVO.setEmpName(empService.getNameById(purchaseVO.getEmpId()));
-            purchaseVOList.add(purchaseVO);
-        }
+        List<PurchaseVO> purchaseVOList = purchaseService.list();
         return purchaseVOList;
     }
 

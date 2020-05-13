@@ -5,6 +5,7 @@ import com.gmail.mosoft521.jxc4papaer.entity.Purchase;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class PurchaseVO extends Purchase {
 
@@ -15,9 +16,10 @@ public class PurchaseVO extends Purchase {
 
     private String empName;
 
-    private String productName;
-
     private String strDay;
+
+    private List<PurchaseItemVO> purchaseItemVOList;
+
 
     public PurchaseVO() {
     }
@@ -38,14 +40,6 @@ public class PurchaseVO extends Purchase {
         this.empName = empName;
     }
 
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
     public String getStrDay() {
         return dateFormat.format(super.getDay());
     }
@@ -58,5 +52,13 @@ public class PurchaseVO extends Purchase {
             super.setDay(new Date());
         }
         super.setDay(d);
+    }
+
+    public List<PurchaseItemVO> getPurchaseItemVOList() {
+        return purchaseItemVOList;
+    }
+
+    public void setPurchaseItemVOList(List<PurchaseItemVO> purchaseItemVOList) {
+        this.purchaseItemVOList = purchaseItemVOList;
     }
 }
