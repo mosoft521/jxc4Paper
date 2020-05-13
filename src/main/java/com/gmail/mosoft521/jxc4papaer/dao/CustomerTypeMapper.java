@@ -3,8 +3,11 @@ package com.gmail.mosoft521.jxc4papaer.dao;
 import com.gmail.mosoft521.jxc4papaer.entity.CustomerType;
 import com.gmail.mosoft521.jxc4papaer.entity.CustomerTypeExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface CustomerTypeMapper {
     long countByExample(CustomerTypeExample example);
 

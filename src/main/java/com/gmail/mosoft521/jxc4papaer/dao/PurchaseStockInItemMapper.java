@@ -3,8 +3,11 @@ package com.gmail.mosoft521.jxc4papaer.dao;
 import com.gmail.mosoft521.jxc4papaer.entity.PurchaseStockInItem;
 import com.gmail.mosoft521.jxc4papaer.entity.PurchaseStockInItemExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface PurchaseStockInItemMapper {
     long countByExample(PurchaseStockInItemExample example);
 

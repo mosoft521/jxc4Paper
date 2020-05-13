@@ -9,5 +9,4 @@ public class Jxc4PaperApplication {
     public static void main(String[] args) {
         SpringApplication.run(Jxc4PaperApplication.class, args);
     }
-
 }
