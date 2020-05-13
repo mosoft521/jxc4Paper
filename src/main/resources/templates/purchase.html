@@ -19,10 +19,7 @@
         <th field="purchaseNo" width="220" align="center">采购单号</th>
         <th field="providerName" width="100" align="center">供应商</th>
         <th field="empName" width="100" align="center">采购员工</th>
-        <th field="productName" width="100" align="center">商品</th>
         <th field="strDay" width="220" align="center">日期</th>
-        <th field="price" width="100" align="center">单价</th>
-        <th field="quantity" width="100" align="center">数量</th>
         <th field="remark" width="160" align="center">备注</th>
     </tr>
     </thead>
@@ -34,6 +31,7 @@
     <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newPurchase()">新建采购</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editPurchase()">编辑采购</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyPurchase()">移除采购</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="openPurchaseItem()">编辑采购明细</a>
 </div>
 <!-- 工具按钮 end -->
 
@@ -62,22 +60,6 @@
             </select>
         </div>
         <div class="fitem">
-            <label>商品:</label>
-            <select id="productId" name="productId"  required="true">
-            </select>
-        </div>
-        <div class="fitem">
-            <input name="strDay" class="easyui-datetimebox" label="日期:" labelPosition="top" data-options="formatter:myformatter,parser:myparser" style="width:100%;">
-        </div>
-        <div class="fitem">
-            <label>单价:</label>
-            <input name="price" class="easyui-numberbox" precision="2" required="true">
-        </div>
-        <div class="fitem">
-            <label>数量:</label>
-            <input name="quantity" class="easyui-numberbox" required="true">
-        </div>
-        <div class="fitem">
             <label>备注:</label>
             <input name="remark" class="easyui-validatebox">
         </div>
@@ -95,6 +77,24 @@
 
 
 <script type="text/javascript">
+    <!-- 编辑采购明细 -->
+    function openPurchaseItem() {
+        var row = $("#dg").datagrid("getSelected");
+        if(row) {
+            // var b = window.parent==window.self;
+            // alert( "当前窗口是否是顶层窗口："+b );//false
+
+            window.parent.$('#tabs').tabs('add', {
+                title: "采购明细",
+                iconCls: "",
+                content: '<iframe scrolling="auto" frameborder="0"  src="' + "purchaseItem.html?purchaseId=" + row.purchaseId + '" style="width:100%;height:100%;"></iframe>',
+                closable: true,
+            });
+        } else {
+            alert("请选择一条采购单");
+        }
+    }
+
     <!-- 新增采购窗口 -->
     function newPurchase() {
         $("#dlg").dialog("open").dialog('setTitle','添加采购');
