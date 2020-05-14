@@ -53,13 +53,24 @@ INSERT INTO purchase_stock_in_item (purchase_stock_in_item_id, purchase_stock_in
 INSERT INTO purchase_stock_in_item (purchase_stock_in_item_id, purchase_stock_in_id, product_id, quantity, remark) VALUES (2, 2, 4001, 8, '首单采购入库明细测试');
 INSERT INTO purchase_stock_in_item (purchase_stock_in_item_id, purchase_stock_in_id, product_id, quantity, remark) VALUES (3, 2, 4002, 10, '首单采购入库明细测试');
 
-INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4000, 10, 10, 10000);
-INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4001, 8, 5, 10000);
-INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4002, 10, 10, 10000);
+-- INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4000, 10, 10, 10000);
+-- INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4001, 8, 5, 10000);
+-- INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4002, 10, 10, 10000);
 
 INSERT INTO sale (sale_id, emp_id, customer_id, sale_no, day, remark) VALUES (1, 2002, 8000, 'XS202005130001', '2020-05-13 07:17:56', '首单测试');
-INSERT INTO sale (sale_id, emp_id, customer_id, sale_no, day, remark) VALUES (9001, 2002, 8001, 'XS202005080001', '2020-05-08 17:17:56', '首单测试');
+INSERT INTO sale (sale_id, emp_id, customer_id, sale_no, day, remark) VALUES (9001, 2002, 8001, 'XS202005080001', '2020-05-08 17:17:56', '首单测试Test');
 
 INSERT INTO sale_item (sale_item_id, sale_id, product_id, price, quantity, remark) VALUES (1, 1, 4000, 5000, 1, '10g项链测试单');
 INSERT INTO sale_item (sale_item_id, sale_id, product_id, price, quantity, remark) VALUES (10001, 9001, 4001, 8000, 5, 'Apple手机5台');
 INSERT INTO sale_item (sale_item_id, sale_id, product_id, price, quantity, remark) VALUES (10002, 9001, 4002, 4000, 10, 'Oppo手机10台');
+
+INSERT INTO sale_stock_out (sale_stock_out_id, sale_id, emp_id, sale_stock_out_no, day, remark) VALUES (1, 1, 2004, 'XSCK202005140000', '2020-05-14 08:25:31', '首单测试');
+INSERT INTO sale_stock_out (sale_stock_out_id, sale_id, emp_id, sale_stock_out_no, day, remark) VALUES (1001, 9001, 2004, 'XSCK202005140001', '2020-05-14 18:25:31', '首单测试Test');
+
+INSERT INTO sale_stock_out_item (sale_stock_out_item_id, sale_stock_out_id, product_id, quantity, remark) VALUES (1, 1, 4000, 2, '首单销售出库明细');
+INSERT INTO sale_stock_out_item (sale_stock_out_item_id, sale_stock_out_id, product_id, quantity, remark) VALUES (11001, 1001, 4001, 3, '首单销售出库明细init01');
+INSERT INTO sale_stock_out_item (sale_stock_out_item_id, sale_stock_out_id, product_id, quantity, remark) VALUES (11002, 1001, 4002, 5, '首单销售出库明细init02');
+
+INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4000, 8, 10, 10000);
+INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4001, 5, 5, 10000);
+INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4002, 5, 10, 10000);
