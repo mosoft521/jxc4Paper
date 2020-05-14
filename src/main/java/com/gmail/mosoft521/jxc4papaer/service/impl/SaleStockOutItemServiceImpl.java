@@ -4,8 +4,10 @@ import com.gmail.mosoft521.jxc4papaer.dao.ProductMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.SaleMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.SaleStockOutItemMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.StockMapper;
+import com.gmail.mosoft521.jxc4papaer.entity.PurchaseStockInItem;
 import com.gmail.mosoft521.jxc4papaer.entity.SaleStockOutItem;
 import com.gmail.mosoft521.jxc4papaer.entity.SaleStockOutItemExample;
+import com.gmail.mosoft521.jxc4papaer.entity.Stock;
 import com.gmail.mosoft521.jxc4papaer.service.SaleStockOutItemService;
 import com.gmail.mosoft521.jxc4papaer.vo.SaleStockOutItemVO;
 import org.springframework.beans.BeanUtils;
@@ -59,21 +61,30 @@ public class SaleStockOutItemServiceImpl implements SaleStockOutItemService {
     @Override
     public boolean saveOrUpdate(SaleStockOutItem saleStockOutItem) {
         int r = 0;
+        int delta = 0;
         if (null == saleStockOutItem.getSaleStockOutItemId()) {
+            delta = saleStockOutItem.getQuantity();
             r = saleStockOutItemMapper.insertSelective(saleStockOutItem);
-
         } else {
+            SaleStockOutItem saleStockOutItemOld = saleStockOutItemMapper.selectByPrimaryKey(saleStockOutItem.getSaleStockOutItemId());
+            delta = saleStockOutItem.getQuantity() - saleStockOutItemOld.getQuantity();
             r = saleStockOutItemMapper.updateByPrimaryKey(saleStockOutItem);
         }
-        //todo: 更新一下库存
+        //更新一下库存
+        Stock stock = stockMapper.selectByPrimaryKey(saleStockOutItem.getProductId());
+        stock.setQuantityCurrent(stock.getQuantityCurrent() - delta);
+        stockMapper.updateByPrimaryKey(stock);
+        //todo:最小库存判断
         return r > 0 ? true : false;
     }
 
     @Override
     public boolean delete(Integer saleStockOutItemId) {
-
         SaleStockOutItem saleStockOutItem = saleStockOutItemMapper.selectByPrimaryKey(saleStockOutItemId);
-        //todo:更新库存
+        //更新一下库存【删出库明细，就是加当前库存】
+        Stock stock = stockMapper.selectByPrimaryKey(saleStockOutItem.getProductId());
+        stock.setQuantityCurrent(stock.getQuantityCurrent() + saleStockOutItem.getQuantity());
+        stockMapper.updateByPrimaryKey(stock);
         return saleStockOutItemMapper.deleteByPrimaryKey(saleStockOutItemId) > 0 ? true : false;
     }
 }

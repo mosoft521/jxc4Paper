@@ -61,8 +61,8 @@ public class PurchaseStockInItemServiceImpl implements PurchaseStockInItemServic
         int r = 0;
         int delta = 0;
         if (null == purchaseStockInItem.getPurchaseStockInItemId()) {//插入
-            r = purchaseStockInItemMapper.insertSelective(purchaseStockInItem);
             delta = purchaseStockInItem.getQuantity();
+            r = purchaseStockInItemMapper.insertSelective(purchaseStockInItem);
         } else {//修改
             PurchaseStockInItem purchaseStockInItemOld = purchaseStockInItemMapper.selectByPrimaryKey(purchaseStockInItem.getPurchaseStockInId());
             delta = purchaseStockInItem.getQuantity() - purchaseStockInItemOld.getQuantity();
@@ -72,6 +72,7 @@ public class PurchaseStockInItemServiceImpl implements PurchaseStockInItemServic
         Stock stock = stockMapper.selectByPrimaryKey(purchaseStockInItem.getProductId());
         stock.setQuantityCurrent(stock.getQuantityCurrent() + delta);
         stockMapper.updateByPrimaryKey(stock);
+        //todo:最小库存判断
         return r > 0 ? true : false;
     }
 
