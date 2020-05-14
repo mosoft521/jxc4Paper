@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping("/stockIn")
+@RequestMapping("/purchaseStockIn")
 public class PurchaseStockInController {
 
     //日期格式
@@ -54,18 +54,18 @@ public class PurchaseStockInController {
     @RequestMapping("/list")
     @ResponseBody
     public List<PurchaseStockInVO> list() {
-        List<PurchaseStockIn> stockInList = purchaseStockInService.list();
-        List<PurchaseStockInVO> stockInVOList = new ArrayList<>(stockInList.size());
-        for (PurchaseStockIn stockIn : stockInList) {
-            PurchaseStockInVO stockInVO = new PurchaseStockInVO();
-            BeanUtils.copyProperties(stockIn, stockInVO);
-            stockInVO.setPurchaseNo(purchaseService.getNoById(stockIn.getPurchaseId()));
-            Purchase purchase = purchaseService.getById(stockIn.getPurchaseId());
-            stockInVO.setProviderName(providerService.getNameById(purchase.getProviderId()));
-            stockInVO.setEmpName(empService.getNameById(purchase.getEmpId()));
-            stockInVOList.add(stockInVO);
+        List<PurchaseStockIn> purchaseStockInList = purchaseStockInService.list();
+        List<PurchaseStockInVO> purchaseStockInVOList = new ArrayList<>(purchaseStockInList.size());
+        for (PurchaseStockIn purchaseStockIn : purchaseStockInList) {
+            PurchaseStockInVO purchaseStockInVO = new PurchaseStockInVO();
+            BeanUtils.copyProperties(purchaseStockIn, purchaseStockInVO);
+            purchaseStockInVO.setPurchaseNo(purchaseService.getNoById(purchaseStockIn.getPurchaseId()));
+            Purchase purchase = purchaseService.getById(purchaseStockIn.getPurchaseId());
+            purchaseStockInVO.setProviderName(providerService.getNameById(purchase.getProviderId()));
+            purchaseStockInVO.setEmpName(empService.getNameById(purchase.getEmpId()));
+            purchaseStockInVOList.add(purchaseStockInVO);
         }
-        return stockInVOList;
+        return purchaseStockInVOList;
     }
 
     /**
@@ -75,25 +75,25 @@ public class PurchaseStockInController {
      */
     @PostMapping("/saveOrUpdate")
     @ResponseBody
-    public boolean saveOrUpdate(@RequestParam Integer stockInId, @RequestParam String stockInNo, @RequestParam Integer purchaseId, @RequestParam String strDay, @RequestParam Integer quantity, @RequestParam String remark) {
-        PurchaseStockIn stockIn = new PurchaseStockIn();
-        stockIn.setPurchaseStockInId(stockInId);
-        stockIn.setPurchaseStockInNo(stockInNo);
-        stockIn.setPurchaseId(purchaseId);
+    public boolean saveOrUpdate(@RequestParam Integer purchaseStockInId, @RequestParam String purchaseStockInNo, @RequestParam Integer purchaseId, @RequestParam String strDay, @RequestParam Integer quantity, @RequestParam String remark) {
+        PurchaseStockIn purchaseStockIn = new PurchaseStockIn();
+        purchaseStockIn.setPurchaseStockInId(purchaseStockInId);
+        purchaseStockIn.setPurchaseStockInNo(purchaseStockInNo);
+        purchaseStockIn.setPurchaseId(purchaseId);
         Date d = null;
         try {
             d = timeFormat.parse(strDay);
         } catch (ParseException e) {
             return false;
         }
-        stockIn.setDay(d);
-        stockIn.setRemark(remark);
-        return purchaseStockInService.saveOrUpdate(stockIn);
+        purchaseStockIn.setDay(d);
+        purchaseStockIn.setRemark(remark);
+        return purchaseStockInService.saveOrUpdate(purchaseStockIn);
     }
 
     @PostMapping("/delete")
     @ResponseBody
-    public boolean delete(@RequestParam Integer stockInId) {
-        return purchaseStockInService.delete(stockInId);
+    public boolean delete(@RequestParam Integer purchaseStockInId) {
+        return purchaseStockInService.delete(purchaseStockInId);
     }
 }

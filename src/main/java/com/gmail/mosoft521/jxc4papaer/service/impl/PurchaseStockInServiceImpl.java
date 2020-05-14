@@ -45,15 +45,15 @@ public class PurchaseStockInServiceImpl implements PurchaseStockInService {
     }
 
     @Override
-    public boolean delete(Integer stockInId) {
+    public boolean delete(Integer purchaseStockInId) {
         //更新库存
-        PurchaseStockIn stockIn = purchaseStockInMapper.selectByPrimaryKey(stockInId);
+        PurchaseStockIn stockIn = purchaseStockInMapper.selectByPrimaryKey(purchaseStockInId);
         Purchase purchase = purchaseMapper.selectByPrimaryKey(stockIn.getPurchaseId());
-        return purchaseStockInMapper.deleteByPrimaryKey(stockInId) > 0 ? true : false;
+        return purchaseStockInMapper.deleteByPrimaryKey(purchaseStockInId) > 0 ? true : false;
     }
 
     @Override
-    public String getNameById(Integer stockInId) {
-        return purchaseStockInMapper.selectByPrimaryKey(stockInId).getPurchaseStockInNo();
+    public String getNameById(Integer purchaseStockInId) {
+        return purchaseStockInMapper.selectByPrimaryKey(purchaseStockInId).getPurchaseStockInNo();
     }
 }

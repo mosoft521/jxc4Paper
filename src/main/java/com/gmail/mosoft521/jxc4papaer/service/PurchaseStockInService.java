@@ -10,10 +10,10 @@ public interface PurchaseStockInService {
     List<PurchaseStockIn> list();
 
     @Transactional
-    boolean saveOrUpdate(PurchaseStockIn stockIn);
+    boolean saveOrUpdate(PurchaseStockIn purchaseStockIn);
 
     @Transactional
-    boolean delete(Integer stockInId);
+    boolean delete(Integer purchaseStockInId);
 
-    String getNameById(Integer stockInId);
+    String getNameById(Integer purchaseStockInId);
 }
