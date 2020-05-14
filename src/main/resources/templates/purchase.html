@@ -196,7 +196,7 @@
         });
 
         //Ajax初始化采购员select
-        $.get("/emp/list", function (data, status) {
+        $.get("/emp/listByDeptId?deptId=1001", function (data, status) {
             if (status) {
                 $.each(data, function (i, v) {
                     $("#empId").append('<option value ="' + v.empId + '">' + v.name + '</option>');

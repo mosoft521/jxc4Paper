@@ -30,6 +30,15 @@ public class EmpServiceImpl implements EmpService {
     }
 
     @Override
+    public List<Emp> list(Integer deptId) {
+        EmpExample example = new EmpExample();
+        EmpExample.Criteria criteria = example.createCriteria();
+        criteria.andDeptIdEqualTo(deptId);
+        List<Emp> empList = empMapper.selectByExample(example);
+        return empList;
+    }
+
+    @Override
     public boolean saveOrUpdate(Emp emp) {
         int r = 0;
         if (null == emp.getEmpId()) {

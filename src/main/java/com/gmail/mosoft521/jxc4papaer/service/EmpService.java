@@ -10,6 +10,7 @@ public interface EmpService {
     boolean login(String userName, String password);
 
     List<Emp> list();
+    List<Emp> list(Integer deptId);
 
     @Transactional
     boolean saveOrUpdate(Emp emp);

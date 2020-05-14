@@ -70,6 +70,26 @@ public class EmpController {
     }
 
     /**
+     * 按部门获取员工列表
+     *
+     * @return
+     */
+    @RequestMapping("/listByDeptId")
+    @ResponseBody
+    public List<EmpVO> list(@RequestParam Integer deptId) {
+        List<Emp> empList = empService.list(deptId);
+        List<EmpVO> empVOList = new ArrayList<>(empList.size());
+        for (Emp emp : empList) {
+            EmpVO empVO = new EmpVO();
+            BeanUtils.copyProperties(emp, empVO);
+            empVO.setDeptName(deptService.getNameById(empVO.getDeptId()));
+            empVO.setManageTypeName(empTypeService.getNameById(empVO.getManageTypeId()));
+            empVOList.add(empVO);
+        }
+        return empVOList;
+    }
+
+    /**
      * 保存或修改员工
      *
      * @return
