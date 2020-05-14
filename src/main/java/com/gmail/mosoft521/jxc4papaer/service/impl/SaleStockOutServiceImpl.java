@@ -78,4 +78,9 @@ public class SaleStockOutServiceImpl implements SaleStockOutService {
     public String getNameById(Integer saleStockOutId) {
         return saleStockOutMapper.selectByPrimaryKey(saleStockOutId).getSaleStockOutNo();
     }
+
+    @Override
+    public SaleStockOut getById(Integer saleStockOutId) {
+        return saleStockOutMapper.selectByPrimaryKey(saleStockOutId);
+    }
 }

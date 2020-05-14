@@ -62,11 +62,12 @@ public class SaleStockOutController {
      */
     @PostMapping("/saveOrUpdate")
     @ResponseBody
-    public boolean saveOrUpdate(@RequestParam Integer stockOutId, @RequestParam String stockOutNo, @RequestParam Integer saleId, @RequestParam String strDay, @RequestParam Integer quantity, @RequestParam String remark) {
+    public boolean saveOrUpdate(@RequestParam Integer saleStockOutId, @RequestParam String saleStockOutNo, @RequestParam Integer saleId, @RequestParam Integer empId, @RequestParam String strDay, @RequestParam String remark) {
         SaleStockOut stockOut = new SaleStockOut();
-        stockOut.setSaleStockOutId(stockOutId);
-        stockOut.setSaleStockOutNo(stockOutNo);
+        stockOut.setSaleStockOutId(saleStockOutId);
+        stockOut.setSaleStockOutNo(saleStockOutNo);
         stockOut.setSaleId(saleId);
+        stockOut.setEmpId(empId);
         Date d = null;
         try {
             d = timeFormat.parse(strDay);
@@ -80,7 +81,7 @@ public class SaleStockOutController {
 
     @PostMapping("/delete")
     @ResponseBody
-    public boolean delete(@RequestParam Integer stockOutId) {
-        return saleStockOutService.delete(stockOutId);
+    public boolean delete(@RequestParam Integer saleStockOutId) {
+        return saleStockOutService.delete(saleStockOutId);
     }
 }

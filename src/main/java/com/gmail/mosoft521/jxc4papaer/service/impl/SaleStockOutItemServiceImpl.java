@@ -59,7 +59,7 @@ public class SaleStockOutItemServiceImpl implements SaleStockOutItemService {
     @Override
     public boolean saveOrUpdate(SaleStockOutItem saleStockOutItem) {
         int r = 0;
-        if (null == saleStockOutItem.getSaleStockOutId()) {
+        if (null == saleStockOutItem.getSaleStockOutItemId()) {
             r = saleStockOutItemMapper.insertSelective(saleStockOutItem);
 
         } else {

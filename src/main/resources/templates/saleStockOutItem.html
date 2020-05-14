@@ -78,6 +78,7 @@
     function newSaleStockOutItem() {
         $("#dlg").dialog("open").dialog('setTitle', '添加销售出库');
         $("#fm").form("clear");
+        $("#saleStockOutId").val(getURLParameter('saleStockOutId'));
         url = "/saleStockOutItem/saveOrUpdate";
     }
 
@@ -167,7 +168,6 @@
     }
 
     $(function () {
-
         var saleStockOutId = getURLParameter('saleStockOutId');
         //Ajax初始化商品select
         $.get("/product/listBySaleStockOutId?saleStockOutId=" + saleStockOutId, function (data, status) {

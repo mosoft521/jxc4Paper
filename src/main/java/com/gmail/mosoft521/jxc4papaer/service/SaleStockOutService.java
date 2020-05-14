@@ -17,4 +17,6 @@ public interface SaleStockOutService {
     boolean delete(Integer saleStockOutId);
 
     String getNameById(Integer saleStockOutId);
+
+    SaleStockOut getById(Integer saleStockOutId);
 }

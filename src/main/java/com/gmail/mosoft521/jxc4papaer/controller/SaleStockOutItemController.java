@@ -1,17 +1,12 @@
 package com.gmail.mosoft521.jxc4papaer.controller;
 
-import com.gmail.mosoft521.jxc4papaer.entity.Sale;
-import com.gmail.mosoft521.jxc4papaer.entity.SaleStockOut;
 import com.gmail.mosoft521.jxc4papaer.entity.SaleStockOutItem;
 import com.gmail.mosoft521.jxc4papaer.service.CustomerService;
 import com.gmail.mosoft521.jxc4papaer.service.EmpService;
 import com.gmail.mosoft521.jxc4papaer.service.ProductService;
 import com.gmail.mosoft521.jxc4papaer.service.SaleService;
 import com.gmail.mosoft521.jxc4papaer.service.SaleStockOutItemService;
-import com.gmail.mosoft521.jxc4papaer.service.SaleStockOutService;
 import com.gmail.mosoft521.jxc4papaer.vo.SaleStockOutItemVO;
-import com.gmail.mosoft521.jxc4papaer.vo.SaleStockOutVO;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,10 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -56,8 +48,8 @@ public class SaleStockOutItemController {
      */
     @RequestMapping("/list")
     @ResponseBody
-    public List<SaleStockOutItemVO> list() {
-        List<SaleStockOutItemVO> saleStockOutItemVOList = saleStockOutItemService.list();
+    public List<SaleStockOutItemVO> list(@RequestParam Integer saleStockOutId) {
+        List<SaleStockOutItemVO> saleStockOutItemVOList = saleStockOutItemService.list(saleStockOutId);
         return saleStockOutItemVOList;
     }
 
