@@ -75,7 +75,7 @@ public class PurchaseStockInController {
      */
     @PostMapping("/saveOrUpdate")
     @ResponseBody
-    public boolean saveOrUpdate(@RequestParam Integer purchaseStockInId, @RequestParam String purchaseStockInNo, @RequestParam Integer purchaseId, @RequestParam String strDay, @RequestParam Integer quantity, @RequestParam String remark) {
+    public boolean saveOrUpdate(@RequestParam Integer purchaseStockInId, @RequestParam String purchaseStockInNo, @RequestParam Integer purchaseId, @RequestParam String strDay, @RequestParam String remark) {
         PurchaseStockIn purchaseStockIn = new PurchaseStockIn();
         purchaseStockIn.setPurchaseStockInId(purchaseStockInId);
         purchaseStockIn.setPurchaseStockInNo(purchaseStockInNo);
