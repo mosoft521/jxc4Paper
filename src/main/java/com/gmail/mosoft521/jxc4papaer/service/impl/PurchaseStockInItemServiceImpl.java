@@ -34,6 +34,7 @@ public class PurchaseStockInItemServiceImpl implements PurchaseStockInItemServic
         for (PurchaseStockInItem purchaseStockInItem : purchaseStockInItemList) {
             PurchaseStockInItemVO purchaseStockInItemVO = new PurchaseStockInItemVO();
             BeanUtils.copyProperties(purchaseStockInItem, purchaseStockInItemVO);
+            purchaseStockInItemVO.setProductName(productMapper.selectByPrimaryKey(purchaseStockInItem.getProductId()).getProductName());
             purchaseStockInItemVOList.add(purchaseStockInItemVO);
         }
         return purchaseStockInItemVOList;

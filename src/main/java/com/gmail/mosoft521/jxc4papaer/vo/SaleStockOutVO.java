@@ -17,8 +17,6 @@ public class SaleStockOutVO extends SaleStockOut {
 
     private String empName;
 
-    private String productName;
-
     private String strDay;
 
     public SaleStockOutVO() {
@@ -46,14 +44,6 @@ public class SaleStockOutVO extends SaleStockOut {
 
     public void setEmpName(String empName) {
         this.empName = empName;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
     }
 
     public String getStrDay() {
