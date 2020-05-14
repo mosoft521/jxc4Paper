@@ -168,11 +168,6 @@
     }
 
     $(function () {
-
-        function getURLParameter(name) {
-            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
-        }
-
         var purchaseStockInId = getURLParameter('purchaseStockInId');
         //Ajax初始化商品select
         $.get("/product/listByPurchaseStockInId?purchaseStockInId=" + purchaseStockInId, function (data, status) {
