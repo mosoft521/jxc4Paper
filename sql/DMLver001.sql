@@ -46,6 +46,13 @@ INSERT INTO purchase_item (purchase_item_id, purchase_id, product_id, price, qua
 INSERT INTO purchase_item (purchase_item_id, purchase_id, product_id, price, quantity, remark) VALUES (7001, 6001, 4001, 5000, 10, '明细1');
 INSERT INTO purchase_item (purchase_item_id, purchase_id, product_id, price, quantity, remark) VALUES (7002, 6001, 4002, 2000, 10, '明细2');
 
+INSERT INTO purchase_stock_in (purchase_stock_in_id, purchase_id, emp_id, purchase_stock_in_no, day, remark) VALUES (1, 1, 2001, 'CGRK202005140001', '2020-05-14 06:59:05', '首单采购入库Test');
+INSERT INTO purchase_stock_in (purchase_stock_in_id, purchase_id, emp_id, purchase_stock_in_no, day, remark) VALUES (2, 6001, 2001, 'CGRK202005140002', '2020-05-14 06:59:15', '首单采购入库测试');
+
+INSERT INTO purchase_stock_in_item (purchase_stock_in_item_id, purchase_stock_in_id, product_id, quantity, remark) VALUES (1, 1, 4000, 10, '首单采购入库明细Test');
+INSERT INTO purchase_stock_in_item (purchase_stock_in_item_id, purchase_stock_in_id, product_id, quantity, remark) VALUES (2, 2, 4001, 8, '首单采购入库明细测试');
+INSERT INTO purchase_stock_in_item (purchase_stock_in_item_id, purchase_stock_in_id, product_id, quantity, remark) VALUES (3, 2, 4002, 10, '首单采购入库明细测试');
+
 INSERT INTO sale (sale_id, emp_id, customer_id, sale_no, day, remark) VALUES (1, 2002, 8000, 'XS202005130001', '2020-05-13 07:17:56', '首单测试');
 INSERT INTO sale (sale_id, emp_id, customer_id, sale_no, day, remark) VALUES (9001, 2002, 8001, 'XS202005080001', '2020-05-08 17:17:56', '首单测试');
 
