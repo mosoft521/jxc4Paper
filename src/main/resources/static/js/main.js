@@ -55,8 +55,8 @@ $(function () {
                     "url": "purchase.html"
                 },
                 {
-                    "text": "入库",
-                    "url": "stockIn.html"
+                    "text": "采购入库",
+                    "url": "purchaseStockIn.html"
                 }
             ]
         },
@@ -68,8 +68,8 @@ $(function () {
                     "url": "sale.html"
                 },
                 {
-                    "text": "出库",
-                    "url": "stockOut.html"
+                    "text": "销售出库",
+                    "url": "saleStockOut.html"
                 }
             ]
         }
