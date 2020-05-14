@@ -285,7 +285,6 @@ create table purchase_stock_in_item
    purchase_stock_in_item_id int not null auto_increment comment '入库ID',
    purchase_stock_in_id int comment '入库ID',
    product_id           int comment '商品ID',
-   day                  datetime not null comment '日期',
    quantity             int not null comment '数量',
    remark               varchar(50) comment '备注',
    primary key (purchase_stock_in_item_id)
