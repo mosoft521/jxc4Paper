@@ -16,4 +16,6 @@ public interface PurchaseStockInService {
     boolean delete(Integer purchaseStockInId);
 
     String getNameById(Integer purchaseStockInId);
+
+    PurchaseStockIn getById(Integer purchaseStockInId);
 }

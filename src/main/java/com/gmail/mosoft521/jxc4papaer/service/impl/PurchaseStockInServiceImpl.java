@@ -56,4 +56,9 @@ public class PurchaseStockInServiceImpl implements PurchaseStockInService {
     public String getNameById(Integer purchaseStockInId) {
         return purchaseStockInMapper.selectByPrimaryKey(purchaseStockInId).getPurchaseStockInNo();
     }
+
+    @Override
+    public PurchaseStockIn getById(Integer purchaseStockInId) {
+        return purchaseStockInMapper.selectByPrimaryKey(purchaseStockInId);
+    }
 }

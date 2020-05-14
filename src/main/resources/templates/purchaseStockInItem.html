@@ -12,11 +12,11 @@
 <body>
 <!-- 数据列表 start -->
 <table id="dg" title="采购入库明细" class="easyui-datagrid" style="width:850px;height:400px"
-       url="/purchaseStockInItem/list" toolbar="#toolbar" singleSelect="true"  method="get">
+       url="/purchaseStockInItem/list" toolbar="#toolbar" singleSelect="true" method="get">
     <thead>
     <tr>
         <th field="purchaseStockInItemId" width="120" align="center">采购入库明细ID</th>
-        <th field="purchaseStockInId" width="60" align="center">采购入库ID</th>
+        <th field="purchaseStockInId" width="120" align="center">采购入库ID</th>
         <th field="productName" width="100" align="center">商品</th>
         <th field="quantity" width="100" align="center">数量</th>
         <th field="remark" width="160" align="center">备注</th>
@@ -45,11 +45,11 @@
 
         <div class="fitem">
             <label>采购入库ID:</label>
-            <input name="purchaseStockInId" class="easyui-validatebox" required="true">
+            <input id="purchaseStockInId" name="purchaseStockInId" class="easyui-validatebox" required="true">
         </div>
         <div class="fitem">
             <label>商品:</label>
-            <select id="productId" name="productId"  required="true">
+            <select id="productId" name="productId" required="true">
             </select>
         </div>
         <div class="fitem">
@@ -76,32 +76,33 @@
 <script type="text/javascript">
     <!-- 新增采购入库明细窗口 -->
     function newPurchaseStockInItem() {
-        $("#dlg").dialog("open").dialog('setTitle','添加采购入库明细');
+        $("#dlg").dialog("open").dialog('setTitle', '添加采购入库明细');
         $("#fm").form("clear");
+        $("#purchaseStockInId").val(getURLParameter('purchaseStockInId'));
         url = "/purchaseStockInItem/saveOrUpdate";
     }
 
     <!-- 编辑入库窗口  -->
-    function editPurchaseStockInItem(){
+    function editPurchaseStockInItem() {
         var row = $("#dg").datagrid("getSelected");
-        if(row) {
-            $("#dlg").dialog("open").dialog("setTitle","修改采购入库明细");
-            $("#dlg").form("load",row);
-            url = "/purchaseStockInItem/saveOrUpdate?purchaseStockInItemId="+row.purchaseStockInItemId;
+        if (row) {
+            $("#dlg").dialog("open").dialog("setTitle", "修改采购入库明细");
+            $("#dlg").form("load", row);
+            url = "/purchaseStockInItem/saveOrUpdate?purchaseStockInItemId=" + row.purchaseStockInItemId;
         }
     }
 
     <!-- 保存采购入库 -->
     function savePurchaseStockInItem() {
-        $("#fm").form('submit',{
+        $("#fm").form('submit', {
             url: url,
-            method:"post",
-            onSubmit: function() {
+            method: "post",
+            onSubmit: function () {
                 return $(this).form('validate');
             },
             success: function (result) {
-                var result = eval('('+ result +')');
-                if (result.errorMsg){
+                var result = eval('(' + result + ')');
+                if (result.errorMsg) {
                     $.messager.show({
                         title: 'Error',
                         msg: result.errorMsg
@@ -117,20 +118,20 @@
     <!-- 删除采购入库  -->
     function destroyPurchaseStockInItem() {
         var row = $("#dg").datagrid("getSelected");
-        if(row) {
-            $.messager.confirm("确认","确定删除该采购入库明细吗?",function(r) {
-                if(r) {
-                    var url = "/purchaseStockInItem/delete?purchaseStockInItemId="+row.purchaseStockInItemId;
-                    $.post(url,{id:row.id},function(result) {
-                        if(result) {
+        if (row) {
+            $.messager.confirm("确认", "确定删除该采购入库明细吗?", function (r) {
+                if (r) {
+                    var url = "/purchaseStockInItem/delete?purchaseStockInItemId=" + row.purchaseStockInItemId;
+                    $.post(url, {id: row.id}, function (result) {
+                        if (result) {
                             $('#dg').datagrid('reload');     //reload the purchaseStockIn data
-                        }else {
+                        } else {
                             $.messager.show({                //show error msg
                                 title: "Error",
                                 msg: result.errorMsg
                             });
                         }
-                    },'json');
+                    }, 'json');
                 }
             });
         }
@@ -148,7 +149,7 @@
 
     function myparser(s) {
         if (!s) return new Date();
-        var ss = s.replace(" ",":").replace(/\:/g,"-").split("-");
+        var ss = s.replace(" ", ":").replace(/\:/g, "-").split("-");
         var y = parseInt(ss[0], 10);
         var m = parseInt(ss[1], 10);
         var d = parseInt(ss[2], 10);
@@ -163,16 +164,21 @@
     }
 
     function getURLParameter(name) {
-        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
     }
 
     $(function () {
 
-        //Ajax初始化采购入库单select
-        $.get("/purchaseStockIn/list", function (data, status) {
+        function getURLParameter(name) {
+            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
+        }
+
+        var purchaseStockInId = getURLParameter('purchaseStockInId');
+        //Ajax初始化商品select
+        $.get("/product/listByPurchaseStockInId?purchaseStockInId=" + purchaseStockInId, function (data, status) {
             if (status) {
                 $.each(data, function (i, v) {
-                    $("#purchaseId").append('<option value ="' + v.purchaseId + '">' + v.purchaseNo + '</option>');
+                    $("#productId").append('<option value ="' + v.productId + '">' + v.productName + '</option>');
                 })
 
             }
@@ -181,7 +187,7 @@
         //按传进来的采购入库id初始化之
         //$("#dg").attr("url", "/purchaseStockInItem/list?purchaseId=" + getURLParameter('purchaseStockIn'));
         $('#dg').datagrid('load', {
-            purchaseStockInId: getURLParameter('purchaseStockInId')
+            purchaseStockInId: purchaseStockInId
         });
     })
 </script>

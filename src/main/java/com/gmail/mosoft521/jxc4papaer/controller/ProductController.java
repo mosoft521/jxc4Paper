@@ -1,9 +1,13 @@
 package com.gmail.mosoft521.jxc4papaer.controller;
 
 import com.gmail.mosoft521.jxc4papaer.entity.Product;
+import com.gmail.mosoft521.jxc4papaer.entity.PurchaseStockIn;
 import com.gmail.mosoft521.jxc4papaer.service.ProductService;
+import com.gmail.mosoft521.jxc4papaer.service.PurchaseItemService;
+import com.gmail.mosoft521.jxc4papaer.service.PurchaseStockInService;
 import com.gmail.mosoft521.jxc4papaer.service.WarehouseService;
 import com.gmail.mosoft521.jxc4papaer.vo.ProductVO;
+import com.gmail.mosoft521.jxc4papaer.vo.PurchaseItemVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +29,12 @@ public class ProductController {
     @Autowired
     private WarehouseService warehouseService;
 
+    @Autowired
+    private PurchaseStockInService purchaseStockInService;
+
+    @Autowired
+    private PurchaseItemService purchaseItemService;
+
     /**
      * 获取所有商品列表
      *
@@ -37,6 +47,27 @@ public class ProductController {
         List<ProductVO> productVOList = new ArrayList<>(productList.size());
         for (Product product : productList) {
             ProductVO productVO = new ProductVO();
+            BeanUtils.copyProperties(product, productVO);
+            productVO.setWarehouseName(warehouseService.getNameById(productVO.getWarehouseId()));
+            productVOList.add(productVO);
+        }
+        return productVOList;
+    }
+
+    /**
+     * 根据采购入库单id获取所有商品列表
+     *
+     * @return
+     */
+    @RequestMapping("/listByPurchaseStockInId")
+    @ResponseBody
+    public List<ProductVO> listByPurchaseStockInId(@RequestParam Integer purchaseStockInId) {
+        PurchaseStockIn purchaseStockIn = purchaseStockInService.getById(purchaseStockInId);
+        List<PurchaseItemVO> purchaseItemVOList = purchaseItemService.list(purchaseStockIn.getPurchaseId());
+        List<ProductVO> productVOList = new ArrayList<>(purchaseItemVOList.size());
+        for (PurchaseItemVO purchaseItemVO : purchaseItemVOList) {
+            ProductVO productVO = new ProductVO();
+            Product product = productService.getById(purchaseItemVO.getProductId());
             BeanUtils.copyProperties(product, productVO);
             productVO.setWarehouseName(warehouseService.getNameById(productVO.getWarehouseId()));
             productVOList.add(productVO);

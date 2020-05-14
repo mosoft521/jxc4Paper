@@ -57,7 +57,7 @@ public class PurchaseStockInItemServiceImpl implements PurchaseStockInItemServic
     @Override
     public boolean saveOrUpdate(PurchaseStockInItem purchaseStockInItem) {
         int r = 0;
-        if (null == purchaseStockInItem.getPurchaseStockInId()) {
+        if (null == purchaseStockInItem.getPurchaseStockInItemId()) {
             r = purchaseStockInItemMapper.insertSelective(purchaseStockInItem);
             //todo:更新一下库存
         } else {

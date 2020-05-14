@@ -12,12 +12,12 @@
 <body>
 <!-- 数据列表 start -->
 <table id="dg" title="采购入库列表" class="easyui-datagrid" style="width:850px;height:400px"
-       url="/purchaseStockIn/list" toolbar="#toolbar" singleSelect="true"  method="get">
+       url="/purchaseStockIn/list" toolbar="#toolbar" singleSelect="true" method="get">
     <thead>
     <tr>
         <th field="purchaseStockInId" width="60" align="center">采购入库ID</th>
-        <th field="purchaseStockInNo" width="150" align="center">采购入库单号</th>
-        <th field="purchaseNo" width="150" align="center">采购单号</th>
+        <th field="purchaseStockInNo" width="200" align="center">采购入库单号</th>
+        <th field="purchaseNo" width="200" align="center">采购单号</th>
         <th field="providerName" width="150" align="center">供应商</th>
         <th field="empName" width="150" align="center">采购员工</th>
         <th field="strDay" width="220" align="center">日期</th>
@@ -79,7 +79,7 @@
     <!-- 编辑采购入库明细 -->
     function openPurchaseStockInItem() {
         var row = $("#dg").datagrid("getSelected");
-        if(row) {
+        if (row) {
             // var b = window.parent==window.self;
             // alert( "当前窗口是否是顶层窗口："+b );//false
 
@@ -96,32 +96,32 @@
 
     <!-- 新增采购入库窗口 -->
     function newPurchaseStockIn() {
-        $("#dlg").dialog("open").dialog('setTitle','添加采购入库');
+        $("#dlg").dialog("open").dialog('setTitle', '添加采购入库');
         $("#fm").form("clear");
         url = "/purchaseStockIn/saveOrUpdate";
     }
 
     <!-- 编辑入库窗口  -->
-    function editPurchaseStockIn(){
+    function editPurchaseStockIn() {
         var row = $("#dg").datagrid("getSelected");
-        if(row) {
-            $("#dlg").dialog("open").dialog("setTitle","修改采购入库");
-            $("#dlg").form("load",row);
-            url = "/purchaseStockIn/saveOrUpdate?purchaseStockInId="+row.purchaseStockInId;
+        if (row) {
+            $("#dlg").dialog("open").dialog("setTitle", "修改采购入库");
+            $("#dlg").form("load", row);
+            url = "/purchaseStockIn/saveOrUpdate?purchaseStockInId=" + row.purchaseStockInId;
         }
     }
 
     <!-- 保存采购入库 -->
     function savePurchaseStockIn() {
-        $("#fm").form('submit',{
+        $("#fm").form('submit', {
             url: url,
-            method:"post",
-            onSubmit: function() {
+            method: "post",
+            onSubmit: function () {
                 return $(this).form('validate');
             },
             success: function (result) {
-                var result = eval('('+ result +')');
-                if (result.errorMsg){
+                var result = eval('(' + result + ')');
+                if (result.errorMsg) {
                     $.messager.show({
                         title: 'Error',
                         msg: result.errorMsg
@@ -137,20 +137,20 @@
     <!-- 删除采购入库  -->
     function destroyPurchaseStockIn() {
         var row = $("#dg").datagrid("getSelected");
-        if(row) {
-            $.messager.confirm("确认","确定删除该采购入库吗?",function(r) {
-                if(r) {
-                    var url = "/purchaseStockIn/delete?purchaseStockInId="+row.purchaseStockInId;
-                    $.post(url,{id:row.id},function(result) {
-                        if(result) {
+        if (row) {
+            $.messager.confirm("确认", "确定删除该采购入库吗?", function (r) {
+                if (r) {
+                    var url = "/purchaseStockIn/delete?purchaseStockInId=" + row.purchaseStockInId;
+                    $.post(url, {id: row.id}, function (result) {
+                        if (result) {
                             $('#dg').datagrid('reload');     //reload the purchaseStockIn data
-                        }else {
+                        } else {
                             $.messager.show({                //show error msg
                                 title: "Error",
                                 msg: result.errorMsg
                             });
                         }
-                    },'json');
+                    }, 'json');
                 }
             });
         }
@@ -168,7 +168,7 @@
 
     function myparser(s) {
         if (!s) return new Date();
-        var ss = s.replace(" ",":").replace(/\:/g,"-").split("-");
+        var ss = s.replace(" ", ":").replace(/\:/g, "-").split("-");
         var y = parseInt(ss[0], 10);
         var m = parseInt(ss[1], 10);
         var d = parseInt(ss[2], 10);

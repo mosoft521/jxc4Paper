@@ -53,4 +53,9 @@ public class ProductServiceImpl implements ProductService {
     public String getNameById(Integer productId) {
         return productMapper.selectByPrimaryKey(productId).getProductName();
     }
+
+    @Override
+    public Product getById(Integer productId) {
+        return productMapper.selectByPrimaryKey(productId);
+    }
 }

@@ -16,4 +16,5 @@ public interface ProductService {
     boolean delete(Integer productId);
 
     String getNameById(Integer productId);
+    Product getById(Integer productId);
 }
