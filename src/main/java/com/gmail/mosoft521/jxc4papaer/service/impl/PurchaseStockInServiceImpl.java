@@ -1,10 +1,13 @@
 package com.gmail.mosoft521.jxc4papaer.service.impl;
 
 import com.gmail.mosoft521.jxc4papaer.dao.PurchaseMapper;
+import com.gmail.mosoft521.jxc4papaer.dao.PurchaseStockInItemMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.PurchaseStockInMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.StockMapper;
 import com.gmail.mosoft521.jxc4papaer.entity.Purchase;
 import com.gmail.mosoft521.jxc4papaer.entity.PurchaseStockIn;
+import com.gmail.mosoft521.jxc4papaer.entity.PurchaseStockInItem;
+import com.gmail.mosoft521.jxc4papaer.entity.PurchaseStockInItemExample;
 import com.gmail.mosoft521.jxc4papaer.service.PurchaseStockInService;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,8 @@ public class PurchaseStockInServiceImpl implements PurchaseStockInService {
 
     @Resource
     private PurchaseStockInMapper purchaseStockInMapper;
+    @Resource
+    private PurchaseStockInItemMapper purchaseStockInItemMapper;
 
     @Resource
     private StockMapper stockMapper;
@@ -46,10 +51,23 @@ public class PurchaseStockInServiceImpl implements PurchaseStockInService {
 
     @Override
     public boolean delete(Integer purchaseStockInId) {
-        //更新库存
-        PurchaseStockIn stockIn = purchaseStockInMapper.selectByPrimaryKey(purchaseStockInId);
-        Purchase purchase = purchaseMapper.selectByPrimaryKey(stockIn.getPurchaseId());
-        return purchaseStockInMapper.deleteByPrimaryKey(purchaseStockInId) > 0 ? true : false;
+        //把明细也删除了
+        PurchaseStockInItemExample purchaseStockInItemExample = new PurchaseStockInItemExample();
+        PurchaseStockInItemExample.Criteria purchaseStockInItemExampleCriteria = purchaseStockInItemExample.createCriteria();
+        purchaseStockInItemExampleCriteria.andPurchaseStockInIdEqualTo(purchaseStockInId);
+        List<PurchaseStockInItem> purchaseStockInItemList = purchaseStockInItemMapper.selectByExample(purchaseStockInItemExample);
+        for (PurchaseStockInItem purchaseStockInItem : purchaseStockInItemList) {
+            purchaseStockInItemMapper.deleteByPrimaryKey(purchaseStockInItem.getPurchaseStockInItemId());
+        }
+
+        PurchaseStockIn purchaseStockIn = purchaseStockInMapper.selectByPrimaryKey(purchaseStockInId);
+        if(null!=purchaseStockIn) {
+            Purchase purchase = purchaseMapper.selectByPrimaryKey(purchaseStockIn.getPurchaseId());
+            //todo:更新库存
+            return purchaseStockInMapper.deleteByPrimaryKey(purchaseStockInId) > 0 ? true : false;
+        } else {
+            return true;
+        }
     }
 
     @Override

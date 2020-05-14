@@ -19,7 +19,7 @@
         <th field="purchaseStockInNo" width="200" align="center">采购入库单号</th>
         <th field="purchaseNo" width="200" align="center">采购单号</th>
         <th field="providerName" width="150" align="center">供应商</th>
-        <th field="empName" width="150" align="center">采购员工</th>
+        <th field="empName" width="150" align="center">库管员</th>
         <th field="strDay" width="220" align="center">日期</th>
         <th field="remark" width="160" align="center">备注</th>
     </tr>
@@ -45,7 +45,6 @@
             <label>purchaseStockInId:</label>
             <input type="hidden" name="purchaseStockInId">
         </div>
-
         <div class="fitem">
             <label>采购入库单号:</label>
             <input name="purchaseStockInNo" class="easyui-validatebox" required="true">
@@ -53,6 +52,11 @@
         <div class="fitem">
             <label>采购单号:</label>
             <select id="purchaseId" name="purchaseId" required="true">
+            </select>
+        </div>
+        <div class="fitem">
+            <label>库管员:</label>
+            <select id="empId" name="empId"  required="true">
             </select>
         </div>
         <div class="fitem">
@@ -185,10 +189,20 @@
     $(function () {
 
         //Ajax初始化采购单select
-        $.get("/purchaseStockIn/list", function (data, status) {
+        $.get("/purchase/list", function (data, status) {
             if (status) {
                 $.each(data, function (i, v) {
                     $("#purchaseId").append('<option value ="' + v.purchaseId + '">' + v.purchaseNo + '</option>');
+                })
+
+            }
+        });
+
+        //Ajax初始化库管员select
+        $.get("/emp/listByDeptId?deptId=1003", function (data, status) {
+            if (status) {
+                $.each(data, function (i, v) {
+                    $("#empId").append('<option value ="' + v.empId + '">' + v.name + '</option>');
                 })
 
             }

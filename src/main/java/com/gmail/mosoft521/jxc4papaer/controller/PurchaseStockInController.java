@@ -6,6 +6,7 @@ import com.gmail.mosoft521.jxc4papaer.service.EmpService;
 import com.gmail.mosoft521.jxc4papaer.service.ProductService;
 import com.gmail.mosoft521.jxc4papaer.service.ProviderService;
 import com.gmail.mosoft521.jxc4papaer.service.PurchaseService;
+import com.gmail.mosoft521.jxc4papaer.service.PurchaseStockInItemService;
 import com.gmail.mosoft521.jxc4papaer.service.PurchaseStockInService;
 import com.gmail.mosoft521.jxc4papaer.vo.PurchaseStockInVO;
 import org.springframework.beans.BeanUtils;
@@ -62,7 +63,7 @@ public class PurchaseStockInController {
             purchaseStockInVO.setPurchaseNo(purchaseService.getNoById(purchaseStockIn.getPurchaseId()));
             Purchase purchase = purchaseService.getById(purchaseStockIn.getPurchaseId());
             purchaseStockInVO.setProviderName(providerService.getNameById(purchase.getProviderId()));
-            purchaseStockInVO.setEmpName(empService.getNameById(purchase.getEmpId()));
+            purchaseStockInVO.setEmpName(empService.getNameById(purchaseStockIn.getEmpId()));
             purchaseStockInVOList.add(purchaseStockInVO);
         }
         return purchaseStockInVOList;
@@ -75,11 +76,12 @@ public class PurchaseStockInController {
      */
     @PostMapping("/saveOrUpdate")
     @ResponseBody
-    public boolean saveOrUpdate(@RequestParam Integer purchaseStockInId, @RequestParam String purchaseStockInNo, @RequestParam Integer purchaseId, @RequestParam String strDay, @RequestParam String remark) {
+    public boolean saveOrUpdate(@RequestParam Integer purchaseStockInId, @RequestParam String purchaseStockInNo, @RequestParam Integer purchaseId, @RequestParam Integer empId, @RequestParam String strDay, @RequestParam String remark) {
         PurchaseStockIn purchaseStockIn = new PurchaseStockIn();
         purchaseStockIn.setPurchaseStockInId(purchaseStockInId);
         purchaseStockIn.setPurchaseStockInNo(purchaseStockInNo);
         purchaseStockIn.setPurchaseId(purchaseId);
+        purchaseStockIn.setEmpId(empId);
         Date d = null;
         try {
             d = timeFormat.parse(strDay);
@@ -94,6 +96,7 @@ public class PurchaseStockInController {
     @PostMapping("/delete")
     @ResponseBody
     public boolean delete(@RequestParam Integer purchaseStockInId) {
+        purchaseStockInService.delete(purchaseStockInId);
         return purchaseStockInService.delete(purchaseStockInId);
     }
 }

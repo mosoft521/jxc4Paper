@@ -16,7 +16,7 @@ VALUES (2002, 1002, 1, '王五', '2002', '13412345678', 'wangwu', 'wangwu', 'F',
 INSERT INTO emp (emp_id, dept_id, manage_type_id, name, emp_no, tel, user_name, password, sex, birthday, degree)
 VALUES ( 2003, 1001, 2, '李四','2003',  '13812345678', 'lisi', 'lisi', 'F', '1990-01-23 00:00:00', '研究生');
 INSERT INTO emp (emp_id, dept_id, manage_type_id, name, emp_no, tel, user_name, password, sex, birthday, degree)
-VALUES ( 2004, 1003, 1, '库管员', '2004', '13112345678', 'kgy', 'kgy', 'M', '1988-08-28 00:00:00', '中专');
+VALUES ( 2004, 1003, 1, '钱小明', '2004', '13112345678', 'kgy', 'kgy', 'M', '1988-08-28 00:00:00', '中专');
 
 INSERT INTO provider (provider_id, name, linkman, tel, address, zip, fax, remark) VALUES (3000, '老庙黄金', '李三', '18410345678', '上海卢湾', '200032', '63451234', '老庙');
 INSERT INTO provider (provider_id, name, linkman, tel, address, zip, fax, remark) VALUES (3001, '艾玛通讯', '赵六', '18612345678', '上海徐汇', '200060', '64761234', '艾玛');
@@ -46,8 +46,8 @@ INSERT INTO purchase_item (purchase_item_id, purchase_id, product_id, price, qua
 INSERT INTO purchase_item (purchase_item_id, purchase_id, product_id, price, quantity, remark) VALUES (7001, 6001, 4001, 5000, 10, '明细1');
 INSERT INTO purchase_item (purchase_item_id, purchase_id, product_id, price, quantity, remark) VALUES (7002, 6001, 4002, 2000, 10, '明细2');
 
-INSERT INTO purchase_stock_in (purchase_stock_in_id, purchase_id, emp_id, purchase_stock_in_no, day, remark) VALUES (1, 1, 2001, 'CGRK202005140001', '2020-05-14 06:59:05', '首单采购入库Test');
-INSERT INTO purchase_stock_in (purchase_stock_in_id, purchase_id, emp_id, purchase_stock_in_no, day, remark) VALUES (2, 6001, 2001, 'CGRK202005140002', '2020-05-14 06:59:15', '首单采购入库测试');
+INSERT INTO purchase_stock_in (purchase_stock_in_id, purchase_id, emp_id, purchase_stock_in_no, day, remark) VALUES (1, 1, 2004, 'CGRK202005140001', '2020-05-14 06:59:05', '首单采购入库Test');
+INSERT INTO purchase_stock_in (purchase_stock_in_id, purchase_id, emp_id, purchase_stock_in_no, day, remark) VALUES (2, 6001, 2004, 'CGRK202005140002', '2020-05-14 06:59:15', '首单采购入库测试');
 
 INSERT INTO purchase_stock_in_item (purchase_stock_in_item_id, purchase_stock_in_id, product_id, quantity, remark) VALUES (1, 1, 4000, 10, '首单采购入库明细Test');
 INSERT INTO purchase_stock_in_item (purchase_stock_in_item_id, purchase_stock_in_id, product_id, quantity, remark) VALUES (2, 2, 4001, 8, '首单采购入库明细测试');
