@@ -71,80 +71,80 @@
 
 
         <!-- ################################################################################################################### -->
-        <table schema="" tableName="customer" domainObjectName="Customer">
-            <generatedKey column="customer_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="customer_type" domainObjectName="CustomerType">
-            <generatedKey column="customer_type_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="dept" domainObjectName="Dept">
-            <generatedKey column="dept_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="emp_type" domainObjectName="EmpType">
-            <generatedKey column="emp_type_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="emp" domainObjectName="Emp">
-            <generatedKey column="emp_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="product" domainObjectName="Product">
-            <generatedKey column="product_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="provider" domainObjectName="Provider">
-            <generatedKey column="provider_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="purchase" domainObjectName="Purchase">
-            <generatedKey column="purchase_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="purchase_item" domainObjectName="PurchaseItem">
-            <generatedKey column="purchase_item_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="purchase_return" domainObjectName="PurchaseReturn">
-            <generatedKey column="purchase_return_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="purchase_return_item" domainObjectName="PurchaseReturnItem">
-            <generatedKey column="purchase_return_item_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="purchase_return_stock_out" domainObjectName="PurchaseReturnStockOut">
-            <generatedKey column="purchase_return_stock_out_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="purchase_return_stock_out_item" domainObjectName="PurchaseReturnStockOutItem">
-            <generatedKey column="purchase_return_stock_out_item_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="purchase_stock_in" domainObjectName="PurchaseStockIn">
-            <generatedKey column="purchase_stock_in_id" sqlStatement="MySql" identity="true"/>
-        </table>
+<!--        <table schema="" tableName="customer" domainObjectName="Customer">-->
+<!--            <generatedKey column="customer_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="customer_type" domainObjectName="CustomerType">-->
+<!--            <generatedKey column="customer_type_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="dept" domainObjectName="Dept">-->
+<!--            <generatedKey column="dept_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="emp_type" domainObjectName="EmpType">-->
+<!--            <generatedKey column="emp_type_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="emp" domainObjectName="Emp">-->
+<!--            <generatedKey column="emp_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="product" domainObjectName="Product">-->
+<!--            <generatedKey column="product_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="provider" domainObjectName="Provider">-->
+<!--            <generatedKey column="provider_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="purchase" domainObjectName="Purchase">-->
+<!--            <generatedKey column="purchase_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="purchase_item" domainObjectName="PurchaseItem">-->
+<!--            <generatedKey column="purchase_item_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="purchase_return" domainObjectName="PurchaseReturn">-->
+<!--            <generatedKey column="purchase_return_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="purchase_return_item" domainObjectName="PurchaseReturnItem">-->
+<!--            <generatedKey column="purchase_return_item_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="purchase_return_stock_out" domainObjectName="PurchaseReturnStockOut">-->
+<!--            <generatedKey column="purchase_return_stock_out_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="purchase_return_stock_out_item" domainObjectName="PurchaseReturnStockOutItem">-->
+<!--            <generatedKey column="purchase_return_stock_out_item_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="purchase_stock_in" domainObjectName="PurchaseStockIn">-->
+<!--            <generatedKey column="purchase_stock_in_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
         <table schema="" tableName="purchase_stock_in_item" domainObjectName="PurchaseStockInItem">
             <generatedKey column="purchase_stock_in_item_id" sqlStatement="MySql" identity="true"/>
         </table>
-        <table schema="" tableName="sale" domainObjectName="Sale">
-            <generatedKey column="sale_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="sale_item" domainObjectName="SaleItem">
-            <generatedKey column="sale_item_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="sale_return" domainObjectName="SaleReturn">
-            <generatedKey column="sale_return_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="sale_return_item" domainObjectName="SaleReturnItem">
-            <generatedKey column="sale_return_item_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="sale_return_stock_in" domainObjectName="SaleReturnStockIn">
-            <generatedKey column="sale_return_stock_in_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="sale_return_stock_in_item" domainObjectName="SaleReturnStockInItem">
-            <generatedKey column="sale_return_stock_in_item_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="sale_stock_out" domainObjectName="SaleStockOut">
-            <generatedKey column="sale_stock_out_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="sale_stock_out_item" domainObjectName="SaleStockOutItem">
-            <generatedKey column="sale_stock_out_item_id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="" tableName="stock" domainObjectName="Stock">
-        </table>
-        <table schema="" tableName="warehouse" domainObjectName="Warehouse">
-            <generatedKey column="warehouse_id" sqlStatement="MySql" identity="true"/>
-        </table>
+<!--        <table schema="" tableName="sale" domainObjectName="Sale">-->
+<!--            <generatedKey column="sale_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="sale_item" domainObjectName="SaleItem">-->
+<!--            <generatedKey column="sale_item_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="sale_return" domainObjectName="SaleReturn">-->
+<!--            <generatedKey column="sale_return_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="sale_return_item" domainObjectName="SaleReturnItem">-->
+<!--            <generatedKey column="sale_return_item_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="sale_return_stock_in" domainObjectName="SaleReturnStockIn">-->
+<!--            <generatedKey column="sale_return_stock_in_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="sale_return_stock_in_item" domainObjectName="SaleReturnStockInItem">-->
+<!--            <generatedKey column="sale_return_stock_in_item_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="sale_stock_out" domainObjectName="SaleStockOut">-->
+<!--            <generatedKey column="sale_stock_out_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="sale_stock_out_item" domainObjectName="SaleStockOutItem">-->
+<!--            <generatedKey column="sale_stock_out_item_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table schema="" tableName="stock" domainObjectName="Stock">-->
+<!--        </table>-->
+<!--        <table schema="" tableName="warehouse" domainObjectName="Warehouse">-->
+<!--            <generatedKey column="warehouse_id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
         <!-- ################################################################################################################### -->
     </context>
 </generatorConfiguration>
