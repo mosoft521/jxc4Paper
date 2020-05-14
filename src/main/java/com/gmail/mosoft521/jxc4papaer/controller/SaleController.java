@@ -68,8 +68,8 @@ public class SaleController {
      */
     @PostMapping("/saveOrUpdate")
     @ResponseBody
-    public boolean saveOrUpdate(@RequestParam Integer saleId, @RequestParam String saleNo, @RequestParam Integer customerId, @RequestParam Integer empId, @RequestParam Integer productId,
-                                @RequestParam String strDay, @RequestParam Float price, @RequestParam Integer quantity, @RequestParam String remark) {
+    public boolean saveOrUpdate(@RequestParam Integer saleId, @RequestParam String saleNo, @RequestParam Integer customerId, @RequestParam Integer empId,
+                                @RequestParam String strDay, @RequestParam String remark) {
         Sale sale = new Sale();
         sale.setSaleId(saleId);
         sale.setSaleNo(saleNo);
