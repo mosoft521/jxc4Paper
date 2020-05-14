@@ -96,7 +96,6 @@ public class PurchaseStockInController {
     @PostMapping("/delete")
     @ResponseBody
     public boolean delete(@RequestParam Integer purchaseStockInId) {
-        purchaseStockInService.delete(purchaseStockInId);
         return purchaseStockInService.delete(purchaseStockInId);
     }
 }
