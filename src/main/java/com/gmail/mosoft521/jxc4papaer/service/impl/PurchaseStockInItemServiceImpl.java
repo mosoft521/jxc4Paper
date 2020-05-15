@@ -3,16 +3,20 @@ package com.gmail.mosoft521.jxc4papaer.service.impl;
 import com.gmail.mosoft521.jxc4papaer.dao.ProductMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.PurchaseStockInItemMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.StockMapper;
+import com.gmail.mosoft521.jxc4papaer.dao.SupplementMapper;
 import com.gmail.mosoft521.jxc4papaer.entity.PurchaseStockInItem;
 import com.gmail.mosoft521.jxc4papaer.entity.PurchaseStockInItemExample;
 import com.gmail.mosoft521.jxc4papaer.entity.Stock;
+import com.gmail.mosoft521.jxc4papaer.entity.Supplement;
 import com.gmail.mosoft521.jxc4papaer.service.PurchaseStockInItemService;
 import com.gmail.mosoft521.jxc4papaer.vo.PurchaseStockInItemVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -26,6 +30,9 @@ public class PurchaseStockInItemServiceImpl implements PurchaseStockInItemServic
 
     @Resource
     private StockMapper stockMapper;
+
+    @Resource
+    private SupplementMapper supplementMapper;
 
     @Override
     public List<PurchaseStockInItemVO> list() {
@@ -56,6 +63,16 @@ public class PurchaseStockInItemServiceImpl implements PurchaseStockInItemServic
         return purchaseStockInItemVOList;
     }
 
+    /**
+     * 生成随机图片文件名，年月日时分秒格式
+     */
+    private static String getString() {
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        String string = simpleDateFormat.format(date);
+        return string;
+    }
+
     @Override
     public boolean saveOrUpdate(PurchaseStockInItem purchaseStockInItem) {
         int r = 0;
@@ -70,9 +87,18 @@ public class PurchaseStockInItemServiceImpl implements PurchaseStockInItemServic
         }
         //更新一下库存
         Stock stock = stockMapper.selectByPrimaryKey(purchaseStockInItem.getProductId());
-        stock.setQuantityCurrent(stock.getQuantityCurrent() + delta);
+        int quantityCurrent = stock.getQuantityCurrent() + delta;
+        stock.setQuantityCurrent(quantityCurrent);
         stockMapper.updateByPrimaryKey(stock);
-        //todo:最小库存判断
+        //最小库存判断
+        if (quantityCurrent < stock.getQuantityMin()) {
+            Supplement supplement = new Supplement();
+            supplement.setSupplementNo("BH" + getString());
+            supplement.setProductId(purchaseStockInItem.getProductId());
+            supplement.setQuantity(stock.getQuantityMin() - quantityCurrent);
+            supplement.setRemark("采购入库明细insert或update产生");
+            supplementMapper.insert(supplement);
+        }
         return r > 0 ? true : false;
     }
 
