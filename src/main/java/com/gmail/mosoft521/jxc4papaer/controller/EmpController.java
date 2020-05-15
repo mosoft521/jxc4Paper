@@ -96,13 +96,14 @@ public class EmpController {
      */
     @PostMapping("/saveOrUpdate")
     @ResponseBody
-    public boolean saveOrUpdate(@RequestParam Integer empId, @RequestParam Integer deptId, @RequestParam Integer manageTypeId, @RequestParam String name, @RequestParam String tel,
+    public boolean saveOrUpdate(@RequestParam Integer empId, @RequestParam Integer deptId, @RequestParam Integer manageTypeId, @RequestParam String name, @RequestParam String empNo, @RequestParam String tel,
                                 @RequestParam String userName, @RequestParam String password, @RequestParam String sex, @RequestParam String birthday, @RequestParam String degree) {
         Emp emp = new Emp();
         emp.setEmpId(empId);
         emp.setDeptId(deptId);
         emp.setManageTypeId(manageTypeId);
         emp.setName(name);
+        emp.setEmpNo(empNo);
         emp.setTel(tel);
         emp.setUserName(userName);
         emp.setPassword(password);
