@@ -42,7 +42,7 @@ public class SaleStockOutItemController {
     private ProductService productService;
 
     /**
-     * 获取所有出库列表
+     * 根据销售出库单ID获取其所有销售出库明细
      *
      * @return
      */
@@ -54,7 +54,7 @@ public class SaleStockOutItemController {
     }
 
     /**
-     * 保存或修改出库
+     * 保存或修改销售出库明细
      *
      * @return
      */

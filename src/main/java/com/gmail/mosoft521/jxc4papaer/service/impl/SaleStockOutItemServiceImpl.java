@@ -92,7 +92,7 @@ public class SaleStockOutItemServiceImpl implements SaleStockOutItemService {
         int quantityCurrent = stock.getQuantityCurrent() - delta;
         stock.setQuantityCurrent(quantityCurrent);
         stockMapper.updateByPrimaryKey(stock);
-        //最小库存判断
+        //最小库存判断 生成补货通知
         if (quantityCurrent < stock.getQuantityMin()) {
             Supplement supplement = new Supplement();
             supplement.setSupplementNo("BH" + getString());

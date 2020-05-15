@@ -56,7 +56,7 @@ public class SaleStockOutController {
     }
 
     /**
-     * 保存或修改出库
+     * 保存或修改销售出库单
      *
      * @return
      */
