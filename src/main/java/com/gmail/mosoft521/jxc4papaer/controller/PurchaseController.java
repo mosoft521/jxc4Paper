@@ -60,8 +60,8 @@ public class PurchaseController {
      */
     @PostMapping("/saveOrUpdate")
     @ResponseBody
-    public boolean saveOrUpdate(@RequestParam Integer purchaseId, @RequestParam String purchaseNo,@RequestParam Integer providerId, @RequestParam Integer empId, @RequestParam Integer productId,
-                                @RequestParam String strDay, @RequestParam Float price, @RequestParam Integer quantity, @RequestParam String remark) {
+    public boolean saveOrUpdate(@RequestParam Integer purchaseId, @RequestParam String purchaseNo,@RequestParam Integer providerId, @RequestParam Integer empId,
+                                @RequestParam String strDay, @RequestParam String remark) {
         Purchase purchase = new Purchase();
         purchase.setPurchaseId(purchaseId);
         purchase.setPurchaseNo(purchaseNo);
