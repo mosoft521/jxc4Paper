@@ -1,7 +1,6 @@
 package com.gmail.mosoft521.jxc4papaer.entity;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class SaleReturnItemExample {
@@ -282,66 +281,6 @@ public class SaleReturnItemExample {
 
         public Criteria andProductIdNotBetween(Integer value1, Integer value2) {
             addCriterion("product_id not between", value1, value2, "productId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayIsNull() {
-            addCriterion("day is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayIsNotNull() {
-            addCriterion("day is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayEqualTo(Date value) {
-            addCriterion("day =", value, "day");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayNotEqualTo(Date value) {
-            addCriterion("day <>", value, "day");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayGreaterThan(Date value) {
-            addCriterion("day >", value, "day");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayGreaterThanOrEqualTo(Date value) {
-            addCriterion("day >=", value, "day");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayLessThan(Date value) {
-            addCriterion("day <", value, "day");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayLessThanOrEqualTo(Date value) {
-            addCriterion("day <=", value, "day");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayIn(List<Date> values) {
-            addCriterion("day in", values, "day");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayNotIn(List<Date> values) {
-            addCriterion("day not in", values, "day");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayBetween(Date value1, Date value2) {
-            addCriterion("day between", value1, value2, "day");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayNotBetween(Date value1, Date value2) {
-            addCriterion("day not between", value1, value2, "day");
             return (Criteria) this;
         }
 

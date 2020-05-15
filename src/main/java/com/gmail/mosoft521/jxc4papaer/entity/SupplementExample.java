@@ -3,14 +3,14 @@ package com.gmail.mosoft521.jxc4papaer.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PurchaseReturnItemExample {
+public class SupplementExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public PurchaseReturnItemExample() {
+    public SupplementExample() {
         oredCriteria = new ArrayList<>();
     }
 
@@ -104,123 +104,133 @@ public class PurchaseReturnItemExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andPurchaseReturnItemIdIsNull() {
-            addCriterion("purchase_return_item_id is null");
+        public Criteria andSupplementIdIsNull() {
+            addCriterion("supplement_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnItemIdIsNotNull() {
-            addCriterion("purchase_return_item_id is not null");
+        public Criteria andSupplementIdIsNotNull() {
+            addCriterion("supplement_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnItemIdEqualTo(Integer value) {
-            addCriterion("purchase_return_item_id =", value, "purchaseReturnItemId");
+        public Criteria andSupplementIdEqualTo(Integer value) {
+            addCriterion("supplement_id =", value, "supplementId");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnItemIdNotEqualTo(Integer value) {
-            addCriterion("purchase_return_item_id <>", value, "purchaseReturnItemId");
+        public Criteria andSupplementIdNotEqualTo(Integer value) {
+            addCriterion("supplement_id <>", value, "supplementId");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnItemIdGreaterThan(Integer value) {
-            addCriterion("purchase_return_item_id >", value, "purchaseReturnItemId");
+        public Criteria andSupplementIdGreaterThan(Integer value) {
+            addCriterion("supplement_id >", value, "supplementId");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnItemIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("purchase_return_item_id >=", value, "purchaseReturnItemId");
+        public Criteria andSupplementIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("supplement_id >=", value, "supplementId");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnItemIdLessThan(Integer value) {
-            addCriterion("purchase_return_item_id <", value, "purchaseReturnItemId");
+        public Criteria andSupplementIdLessThan(Integer value) {
+            addCriterion("supplement_id <", value, "supplementId");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnItemIdLessThanOrEqualTo(Integer value) {
-            addCriterion("purchase_return_item_id <=", value, "purchaseReturnItemId");
+        public Criteria andSupplementIdLessThanOrEqualTo(Integer value) {
+            addCriterion("supplement_id <=", value, "supplementId");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnItemIdIn(List<Integer> values) {
-            addCriterion("purchase_return_item_id in", values, "purchaseReturnItemId");
+        public Criteria andSupplementIdIn(List<Integer> values) {
+            addCriterion("supplement_id in", values, "supplementId");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnItemIdNotIn(List<Integer> values) {
-            addCriterion("purchase_return_item_id not in", values, "purchaseReturnItemId");
+        public Criteria andSupplementIdNotIn(List<Integer> values) {
+            addCriterion("supplement_id not in", values, "supplementId");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnItemIdBetween(Integer value1, Integer value2) {
-            addCriterion("purchase_return_item_id between", value1, value2, "purchaseReturnItemId");
+        public Criteria andSupplementIdBetween(Integer value1, Integer value2) {
+            addCriterion("supplement_id between", value1, value2, "supplementId");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnItemIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("purchase_return_item_id not between", value1, value2, "purchaseReturnItemId");
+        public Criteria andSupplementIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("supplement_id not between", value1, value2, "supplementId");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnIdIsNull() {
-            addCriterion("purchase_return_id is null");
+        public Criteria andSupplementNoIsNull() {
+            addCriterion("supplement_no is null");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnIdIsNotNull() {
-            addCriterion("purchase_return_id is not null");
+        public Criteria andSupplementNoIsNotNull() {
+            addCriterion("supplement_no is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnIdEqualTo(Integer value) {
-            addCriterion("purchase_return_id =", value, "purchaseReturnId");
+        public Criteria andSupplementNoEqualTo(String value) {
+            addCriterion("supplement_no =", value, "supplementNo");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnIdNotEqualTo(Integer value) {
-            addCriterion("purchase_return_id <>", value, "purchaseReturnId");
+        public Criteria andSupplementNoNotEqualTo(String value) {
+            addCriterion("supplement_no <>", value, "supplementNo");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnIdGreaterThan(Integer value) {
-            addCriterion("purchase_return_id >", value, "purchaseReturnId");
+        public Criteria andSupplementNoGreaterThan(String value) {
+            addCriterion("supplement_no >", value, "supplementNo");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("purchase_return_id >=", value, "purchaseReturnId");
+        public Criteria andSupplementNoGreaterThanOrEqualTo(String value) {
+            addCriterion("supplement_no >=", value, "supplementNo");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnIdLessThan(Integer value) {
-            addCriterion("purchase_return_id <", value, "purchaseReturnId");
+        public Criteria andSupplementNoLessThan(String value) {
+            addCriterion("supplement_no <", value, "supplementNo");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnIdLessThanOrEqualTo(Integer value) {
-            addCriterion("purchase_return_id <=", value, "purchaseReturnId");
+        public Criteria andSupplementNoLessThanOrEqualTo(String value) {
+            addCriterion("supplement_no <=", value, "supplementNo");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnIdIn(List<Integer> values) {
-            addCriterion("purchase_return_id in", values, "purchaseReturnId");
+        public Criteria andSupplementNoLike(String value) {
+            addCriterion("supplement_no like", value, "supplementNo");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnIdNotIn(List<Integer> values) {
-            addCriterion("purchase_return_id not in", values, "purchaseReturnId");
+        public Criteria andSupplementNoNotLike(String value) {
+            addCriterion("supplement_no not like", value, "supplementNo");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnIdBetween(Integer value1, Integer value2) {
-            addCriterion("purchase_return_id between", value1, value2, "purchaseReturnId");
+        public Criteria andSupplementNoIn(List<String> values) {
+            addCriterion("supplement_no in", values, "supplementNo");
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseReturnIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("purchase_return_id not between", value1, value2, "purchaseReturnId");
+        public Criteria andSupplementNoNotIn(List<String> values) {
+            addCriterion("supplement_no not in", values, "supplementNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupplementNoBetween(String value1, String value2) {
+            addCriterion("supplement_no between", value1, value2, "supplementNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupplementNoNotBetween(String value1, String value2) {
+            addCriterion("supplement_no not between", value1, value2, "supplementNo");
             return (Criteria) this;
         }
 

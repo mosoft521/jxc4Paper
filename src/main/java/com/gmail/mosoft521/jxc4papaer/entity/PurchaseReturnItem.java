@@ -1,15 +1,11 @@
 package com.gmail.mosoft521.jxc4papaer.entity;
 
-import java.util.Date;
-
 public class PurchaseReturnItem {
     private Integer purchaseReturnItemId;
 
     private Integer purchaseReturnId;
 
     private Integer productId;
-
-    private Date day;
 
     private Integer quantity;
 
@@ -37,14 +33,6 @@ public class PurchaseReturnItem {
 
     public void setProductId(Integer productId) {
         this.productId = productId;
-    }
-
-    public Date getDay() {
-        return day;
-    }
-
-    public void setDay(Date day) {
-        this.day = day;
     }
 
     public Integer getQuantity() {

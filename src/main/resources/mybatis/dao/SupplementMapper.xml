@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gmail.mosoft521.jxc4papaer.dao.SaleReturnItemMapper">
-  <resultMap id="BaseResultMap" type="com.gmail.mosoft521.jxc4papaer.entity.SaleReturnItem">
-    <id column="sale_return_item_id" jdbcType="INTEGER" property="saleReturnItemId" />
-    <result column="sale_return_id" jdbcType="INTEGER" property="saleReturnId" />
+<mapper namespace="com.gmail.mosoft521.jxc4papaer.dao.SupplementMapper">
+  <resultMap id="BaseResultMap" type="com.gmail.mosoft521.jxc4papaer.entity.Supplement">
+    <id column="supplement_id" jdbcType="INTEGER" property="supplementId" />
+    <result column="supplement_no" jdbcType="VARCHAR" property="supplementNo" />
     <result column="product_id" jdbcType="INTEGER" property="productId" />
     <result column="quantity" jdbcType="INTEGER" property="quantity" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
@@ -67,15 +67,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    sale_return_item_id, sale_return_id, product_id, quantity, remark
+    supplement_id, supplement_no, product_id, quantity, remark
   </sql>
-  <select id="selectByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.SaleReturnItemExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.SupplementExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from sale_return_item
+    from supplement
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,36 +86,36 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from sale_return_item
-    where sale_return_item_id = #{saleReturnItemId,jdbcType=INTEGER}
+    from supplement
+    where supplement_id = #{supplementId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from sale_return_item
-    where sale_return_item_id = #{saleReturnItemId,jdbcType=INTEGER}
+    delete from supplement
+    where supplement_id = #{supplementId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.SaleReturnItemExample">
-    delete from sale_return_item
+  <delete id="deleteByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.SupplementExample">
+    delete from supplement
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.gmail.mosoft521.jxc4papaer.entity.SaleReturnItem">
-    <selectKey keyProperty="saleReturnItemId" order="AFTER" resultType="java.lang.Integer">
+  <insert id="insert" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Supplement">
+    <selectKey keyProperty="supplementId" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into sale_return_item (sale_return_id, product_id, quantity, 
+    insert into supplement (supplement_no, product_id, quantity, 
       remark)
-    values (#{saleReturnId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{quantity,jdbcType=INTEGER}, 
+    values (#{supplementNo,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, #{quantity,jdbcType=INTEGER}, 
       #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.gmail.mosoft521.jxc4papaer.entity.SaleReturnItem">
-    <selectKey keyProperty="saleReturnItemId" order="AFTER" resultType="java.lang.Integer">
+  <insert id="insertSelective" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Supplement">
+    <selectKey keyProperty="supplementId" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into sale_return_item
+    insert into supplement
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="saleReturnId != null">
-        sale_return_id,
+      <if test="supplementNo != null">
+        supplement_no,
       </if>
       <if test="productId != null">
         product_id,
@@ -128,8 +128,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="saleReturnId != null">
-        #{saleReturnId,jdbcType=INTEGER},
+      <if test="supplementNo != null">
+        #{supplementNo,jdbcType=VARCHAR},
       </if>
       <if test="productId != null">
         #{productId,jdbcType=INTEGER},
@@ -142,20 +142,20 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.SaleReturnItemExample" resultType="java.lang.Long">
-    select count(*) from sale_return_item
+  <select id="countByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.SupplementExample" resultType="java.lang.Long">
+    select count(*) from supplement
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update sale_return_item
+    update supplement
     <set>
-      <if test="record.saleReturnItemId != null">
-        sale_return_item_id = #{record.saleReturnItemId,jdbcType=INTEGER},
+      <if test="record.supplementId != null">
+        supplement_id = #{record.supplementId,jdbcType=INTEGER},
       </if>
-      <if test="record.saleReturnId != null">
-        sale_return_id = #{record.saleReturnId,jdbcType=INTEGER},
+      <if test="record.supplementNo != null">
+        supplement_no = #{record.supplementNo,jdbcType=VARCHAR},
       </if>
       <if test="record.productId != null">
         product_id = #{record.productId,jdbcType=INTEGER},
@@ -172,9 +172,9 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update sale_return_item
-    set sale_return_item_id = #{record.saleReturnItemId,jdbcType=INTEGER},
-      sale_return_id = #{record.saleReturnId,jdbcType=INTEGER},
+    update supplement
+    set supplement_id = #{record.supplementId,jdbcType=INTEGER},
+      supplement_no = #{record.supplementNo,jdbcType=VARCHAR},
       product_id = #{record.productId,jdbcType=INTEGER},
       quantity = #{record.quantity,jdbcType=INTEGER},
       remark = #{record.remark,jdbcType=VARCHAR}
@@ -182,11 +182,11 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.gmail.mosoft521.jxc4papaer.entity.SaleReturnItem">
-    update sale_return_item
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Supplement">
+    update supplement
     <set>
-      <if test="saleReturnId != null">
-        sale_return_id = #{saleReturnId,jdbcType=INTEGER},
+      <if test="supplementNo != null">
+        supplement_no = #{supplementNo,jdbcType=VARCHAR},
       </if>
       <if test="productId != null">
         product_id = #{productId,jdbcType=INTEGER},
@@ -198,14 +198,14 @@
         remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
-    where sale_return_item_id = #{saleReturnItemId,jdbcType=INTEGER}
+    where supplement_id = #{supplementId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.gmail.mosoft521.jxc4papaer.entity.SaleReturnItem">
-    update sale_return_item
-    set sale_return_id = #{saleReturnId,jdbcType=INTEGER},
+  <update id="updateByPrimaryKey" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Supplement">
+    update supplement
+    set supplement_no = #{supplementNo,jdbcType=VARCHAR},
       product_id = #{productId,jdbcType=INTEGER},
       quantity = #{quantity,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR}
-    where sale_return_item_id = #{saleReturnItemId,jdbcType=INTEGER}
+    where supplement_id = #{supplementId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,9 +1,9 @@
 package com.gmail.mosoft521.jxc4papaer.entity;
 
-public class SaleReturnItem {
-    private Integer saleReturnItemId;
+public class Supplement {
+    private Integer supplementId;
 
-    private Integer saleReturnId;
+    private String supplementNo;
 
     private Integer productId;
 
@@ -11,20 +11,20 @@ public class SaleReturnItem {
 
     private String remark;
 
-    public Integer getSaleReturnItemId() {
-        return saleReturnItemId;
+    public Integer getSupplementId() {
+        return supplementId;
     }
 
-    public void setSaleReturnItemId(Integer saleReturnItemId) {
-        this.saleReturnItemId = saleReturnItemId;
+    public void setSupplementId(Integer supplementId) {
+        this.supplementId = supplementId;
     }
 
-    public Integer getSaleReturnId() {
-        return saleReturnId;
+    public String getSupplementNo() {
+        return supplementNo;
     }
 
-    public void setSaleReturnId(Integer saleReturnId) {
-        this.saleReturnId = saleReturnId;
+    public void setSupplementNo(String supplementNo) {
+        this.supplementNo = supplementNo == null ? null : supplementNo.trim();
     }
 
     public Integer getProductId() {
