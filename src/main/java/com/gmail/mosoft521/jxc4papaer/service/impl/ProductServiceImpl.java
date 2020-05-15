@@ -2,12 +2,17 @@ package com.gmail.mosoft521.jxc4papaer.service.impl;
 
 import com.gmail.mosoft521.jxc4papaer.dao.ProductMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.StockMapper;
+import com.gmail.mosoft521.jxc4papaer.dao.WarehouseMapper;
 import com.gmail.mosoft521.jxc4papaer.entity.Product;
+import com.gmail.mosoft521.jxc4papaer.entity.ProductExample;
 import com.gmail.mosoft521.jxc4papaer.entity.Stock;
 import com.gmail.mosoft521.jxc4papaer.service.ProductService;
+import com.gmail.mosoft521.jxc4papaer.vo.ProductVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,9 +24,36 @@ public class ProductServiceImpl implements ProductService {
     @Resource
     private StockMapper stockMapper;
 
+    @Resource
+    private WarehouseMapper warehouseMapper;
+
     @Override
-    public List<Product> list() {
-        return productMapper.selectByExample(null);
+    public List<ProductVO> list() {
+        List<Product> productList = productMapper.selectByExample(null);
+        List<ProductVO> productVOList = new ArrayList<>(productList.size());
+        for (Product product : productList) {
+            ProductVO productVO = new ProductVO();
+            BeanUtils.copyProperties(product, productVO);
+            productVO.setWarehouseName(warehouseMapper.selectByPrimaryKey(productVO.getWarehouseId()).getWarehouseName());
+            productVOList.add(productVO);
+        }
+        return productVOList;
+    }
+
+    @Override
+    public List<ProductVO> list(Integer providerId) {
+        ProductExample productExample = new ProductExample();
+        ProductExample.Criteria productExampleCriteria = productExample.createCriteria();
+        productExampleCriteria.andProviderIdEqualTo(providerId);
+        List<Product> productList = productMapper.selectByExample(productExample);
+        List<ProductVO> productVOList = new ArrayList<>(productList.size());
+        for (Product product : productList) {
+            ProductVO productVO = new ProductVO();
+            BeanUtils.copyProperties(product, productVO);
+            productVO.setWarehouseName(warehouseMapper.selectByPrimaryKey(productVO.getWarehouseId()).getWarehouseName());
+            productVOList.add(productVO);
+        }
+        return productVOList;
     }
 
     @Override

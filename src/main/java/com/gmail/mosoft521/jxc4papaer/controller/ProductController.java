@@ -1,10 +1,12 @@
 package com.gmail.mosoft521.jxc4papaer.controller;
 
 import com.gmail.mosoft521.jxc4papaer.entity.Product;
+import com.gmail.mosoft521.jxc4papaer.entity.Purchase;
 import com.gmail.mosoft521.jxc4papaer.entity.PurchaseStockIn;
 import com.gmail.mosoft521.jxc4papaer.entity.SaleStockOut;
 import com.gmail.mosoft521.jxc4papaer.service.ProductService;
 import com.gmail.mosoft521.jxc4papaer.service.PurchaseItemService;
+import com.gmail.mosoft521.jxc4papaer.service.PurchaseService;
 import com.gmail.mosoft521.jxc4papaer.service.PurchaseStockInService;
 import com.gmail.mosoft521.jxc4papaer.service.SaleItemService;
 import com.gmail.mosoft521.jxc4papaer.service.SaleStockOutService;
@@ -34,6 +36,9 @@ public class ProductController {
     private WarehouseService warehouseService;
 
     @Autowired
+    private PurchaseService purchaseService;
+
+    @Autowired
     private PurchaseStockInService purchaseStockInService;
 
     @Autowired
@@ -53,14 +58,19 @@ public class ProductController {
     @RequestMapping("/list")
     @ResponseBody
     public List<ProductVO> list() {
-        List<Product> productList = productService.list();
-        List<ProductVO> productVOList = new ArrayList<>(productList.size());
-        for (Product product : productList) {
-            ProductVO productVO = new ProductVO();
-            BeanUtils.copyProperties(product, productVO);
-            productVO.setWarehouseName(warehouseService.getNameById(productVO.getWarehouseId()));
-            productVOList.add(productVO);
-        }
+        return productService.list();
+    }
+
+    /**
+     * 根据采购单id获取所有商品列表
+     *
+     * @return
+     */
+    @RequestMapping("/listByPurchaseId")
+    @ResponseBody
+    public List<ProductVO> listByPurchaseId(@RequestParam Integer purchaseId) {
+        Purchase purchase = purchaseService.getById(purchaseId);
+        List<ProductVO> productVOList = productService.list(purchase.getProviderId());
         return productVOList;
     }
 

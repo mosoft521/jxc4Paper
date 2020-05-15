@@ -173,6 +173,7 @@
     }
 
     $(function () {
+        var purchaseId = getURLParameter('purchaseId');
 
         //Ajax初始化供应商select
         $.get("/provider/list", function (data, status) {
@@ -195,7 +196,7 @@
         });
 
         //Ajax初始化商品select
-        $.get("/product/list", function (data, status) {
+        $.get("/product/listByPurchaseId?purchaseId=" + purchaseId, function (data, status) {
             if (status) {
                 $.each(data, function (i, v) {
                     $("#productId").append('<option value ="' + v.productId + '">' + v.productName + '</option>');
@@ -207,7 +208,7 @@
         //按传进来的采购id初始化之
         //$("#dg").attr("url", "/purchaseItem/list?purchaseId=" + getURLParameter('purchaseId'));
         $('#dg').datagrid('load', {
-            purchaseId: getURLParameter('purchaseId')
+            purchaseId: purchaseId
         });
 
     })
