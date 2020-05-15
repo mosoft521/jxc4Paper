@@ -190,7 +190,7 @@ alter table purchase comment '采购';
 create table purchase_item
 (
    purchase_item_id     int not null auto_increment comment '采购明细ID',
-   purchase_id          int comment '采购单ID',
+   purchase_id          int not null comment '采购单ID',
    product_id           int not null comment '商品ID',
    price                float not null comment '单价',
    quantity             int not null comment '数量',
@@ -207,7 +207,7 @@ create table purchase_return
 (
    purchase_return_id   int not null auto_increment comment '采购退货ID',
    purchase_id          int not null comment '采购单id',
-   emp_id               int comment '员工ID',
+   emp_id               int not null comment '员工ID',
    purchase_return_no   varchar(32) not null comment '入库单号',
    day                  datetime not null comment '日期',
    remark               varchar(50) comment '备注',
@@ -222,8 +222,8 @@ alter table purchase_return comment '采购退货';
 create table purchase_return_item
 (
    purchase_return_item_id int not null auto_increment comment '采购退货明细ID',
-   purchase_return_id   int comment '采购退货ID',
-   product_id           int comment '商品ID',
+   purchase_return_id   int not null comment '采购退货ID',
+   product_id           int not null comment '商品ID',
    quantity             int not null comment '数量',
    remark               varchar(50) comment '备注',
    primary key (purchase_return_item_id)
@@ -237,8 +237,8 @@ alter table purchase_return_item comment '采购退货明细';
 create table purchase_return_stock_out
 (
    purchase_return_stock_out_id int not null auto_increment comment '采购退货出库ID',
-   purchase_return_id   int comment '采购退货单ID',
-   emp_id               int comment '员工ID',
+   purchase_return_id   int not null comment '采购退货单ID',
+   emp_id               int not null comment '员工ID',
    purchase_return_stock_out_no varchar(32) not null comment '出库单号',
    day                  datetime not null comment '日期',
    remark               varchar(50) comment '备注',
@@ -253,8 +253,8 @@ alter table purchase_return_stock_out comment '采购退货出库';
 create table purchase_return_stock_out_item
 (
    purchase_return_stock_out_item_id int not null auto_increment comment '采购退货出库明细ID',
-   purchase_return_stock_out_id int comment '采购退货出库ID',
-   product_id           int comment '商品ID',
+   purchase_return_stock_out_id int not null comment '采购退货出库ID',
+   product_id           int not null comment '商品ID',
    quantity             int not null comment '数量',
    remark               varchar(50) comment '备注',
    primary key (purchase_return_stock_out_item_id)
@@ -269,7 +269,7 @@ create table purchase_stock_in
 (
    purchase_stock_in_id int not null auto_increment comment '采购入库ID',
    purchase_id          int not null comment '采购单id',
-   emp_id               int comment '员工ID',
+   emp_id               int not null comment '员工ID',
    purchase_stock_in_no varchar(32) not null comment '入库单号',
    day                  datetime not null comment '日期',
    remark               varchar(50) comment '备注',
@@ -284,8 +284,8 @@ alter table purchase_stock_in comment '采购入库';
 create table purchase_stock_in_item
 (
    purchase_stock_in_item_id int not null auto_increment comment '采购入库明细ID',
-   purchase_stock_in_id int comment '采购入库ID',
-   product_id           int comment '商品ID',
+   purchase_stock_in_id int not null comment '采购入库ID',
+   product_id           int not null comment '商品ID',
    quantity             int not null comment '数量',
    remark               varchar(50) comment '备注',
    primary key (purchase_stock_in_item_id)
@@ -315,7 +315,7 @@ alter table sale comment '销售';
 create table sale_item
 (
    sale_item_id         int not null auto_increment comment '销售明细ID',
-   sale_id              int comment '销售ID',
+   sale_id              int not null comment '销售ID',
    product_id           int not null comment '商品ID',
    price                float not null comment '单价',
    quantity             int not null comment '数量',
@@ -332,7 +332,7 @@ create table sale_return
 (
    sale_return_id       int not null auto_increment comment '销售退货ID',
    sale_id              int not null comment '销售单ID',
-   emp_id               int comment '员工ID',
+   emp_id               int not null comment '员工ID',
    sale_return_no       varchar(32) not null comment '销售退货单号',
    day                  datetime not null comment '日期',
    remark               varchar(50) comment '备注',
@@ -347,8 +347,8 @@ alter table sale_return comment '销售退货';
 create table sale_return_item
 (
    sale_return_item_id  int not null auto_increment comment '销售退货明细ID',
-   sale_return_id       int comment '销售退货ID',
-   product_id           int comment '商品ID',
+   sale_return_id       int not null comment '销售退货ID',
+   product_id           int not null comment '商品ID',
    quantity             int not null comment '数量',
    remark               varchar(50) comment '备注',
    primary key (sale_return_item_id)
@@ -362,8 +362,8 @@ alter table sale_return_item comment '销售退货明细';
 create table sale_return_stock_in
 (
    sale_return_stock_in_id int not null auto_increment comment '销售退货入库ID',
-   sale_return_id       int comment '销售退货单ID',
-   emp_id               int comment '员工ID',
+   sale_return_id       int not null comment '销售退货单ID',
+   emp_id               int not null comment '员工ID',
    sale_return_stock_in_no varchar(32) not null comment '销售退货入库单号',
    day                  datetime not null comment '日期',
    remark               varchar(50) comment '备注',
@@ -378,8 +378,8 @@ alter table sale_return_stock_in comment '销售退货入库';
 create table sale_return_stock_in_item
 (
    sale_return_stock_in_item_id int not null auto_increment comment '销售退货入库明细ID',
-   sale_return_stock_in_id int comment '销售退货入库ID',
-   product_id           int comment '商品ID',
+   sale_return_stock_in_id int not null comment '销售退货入库ID',
+   product_id           int not null comment '商品ID',
    quantity             int not null comment '数量',
    remark               varchar(50) comment '备注',
    primary key (sale_return_stock_in_item_id)
@@ -394,7 +394,7 @@ create table sale_stock_out
 (
    sale_stock_out_id    int not null auto_increment comment '销售出库ID',
    sale_id              int not null comment '销售单ID',
-   emp_id               int comment '员工ID',
+   emp_id               int not null comment '员工ID',
    sale_stock_out_no    varchar(32) not null comment '出库单号',
    day                  datetime not null comment '日期',
    remark               varchar(50) comment '备注',
@@ -409,8 +409,8 @@ alter table sale_stock_out comment '销售出库';
 create table sale_stock_out_item
 (
    sale_stock_out_item_id int not null auto_increment comment '销售出库明细ID',
-   sale_stock_out_id    int comment '销售出库ID',
-   product_id           int comment '商品ID',
+   sale_stock_out_id    int not null comment '销售出库ID',
+   product_id           int not null comment '商品ID',
    quantity             int not null comment '数量',
    remark               varchar(50) comment '备注',
    primary key (sale_stock_out_item_id)
@@ -426,7 +426,7 @@ create table stock
    product_id           int not null comment '商品ID',
    quantity_current     int not null comment '当前库存量',
    quantity_min         int not null comment '最小库存量',
-   quantity_max         int not null comment '最大库存量',
+   quantity_max         int comment '最大库存量',
    primary key (product_id)
 );
 
@@ -439,7 +439,7 @@ create table supplement
 (
    supplement_id        int not null auto_increment comment '补货单ID',
    supplement_no        varchar(32) not null comment '补货单号',
-   product_id           int comment '商品ID',
+   product_id           int not null comment '商品ID',
    quantity             int not null comment '数量',
    remark               varchar(50) comment '备注',
    primary key (supplement_id)
