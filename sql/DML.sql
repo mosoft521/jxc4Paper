@@ -53,10 +53,6 @@ INSERT INTO purchase_stock_in_item (purchase_stock_in_item_id, purchase_stock_in
 INSERT INTO purchase_stock_in_item (purchase_stock_in_item_id, purchase_stock_in_id, product_id, quantity, remark) VALUES (2, 2, 4001, 8, '首单采购入库明细测试');
 INSERT INTO purchase_stock_in_item (purchase_stock_in_item_id, purchase_stock_in_id, product_id, quantity, remark) VALUES (3, 2, 4002, 10, '首单采购入库明细测试');
 
--- INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4000, 10, 10, 10000);
--- INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4001, 8, 5, 10000);
--- INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4002, 10, 10, 10000);
-
 INSERT INTO sale (sale_id, emp_id, customer_id, sale_no, day, remark) VALUES (1, 2002, 8000, 'XS202005130001', '2020-05-13 07:17:56', '首单测试');
 INSERT INTO sale (sale_id, emp_id, customer_id, sale_no, day, remark) VALUES (9001, 2002, 8001, 'XS202005080001', '2020-05-08 17:17:56', '首单测试Test');
 
