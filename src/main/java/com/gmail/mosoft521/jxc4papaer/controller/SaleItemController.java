@@ -42,7 +42,7 @@ public class SaleItemController {
     private ProductService productService;
 
     /**
-     * 获取所有销售列表
+     * 根据销售单ID获取其所有销售明细
      *
      * @return
      */
@@ -54,7 +54,7 @@ public class SaleItemController {
     }
 
     /**
-     * 保存或修改销售
+     * 保存或修改销售明细
      *
      * @return
      */
