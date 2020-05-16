@@ -39,7 +39,7 @@ $(function () {
             ]
         },
         {
-            "text": "库存",
+            "text": "库存及补货",
             "children": [
                 {
                     "text": "库存",
@@ -52,7 +52,7 @@ $(function () {
             ]
         },
         {
-            "text": "采购入库",
+            "text": "采购及入库",
             "children": [
                 {
                     "text": "采购",
@@ -65,7 +65,7 @@ $(function () {
             ]
         },
         {
-            "text": "销售出库",
+            "text": "销售及出库",
             "children": [
                 {
                     "text": "销售",
