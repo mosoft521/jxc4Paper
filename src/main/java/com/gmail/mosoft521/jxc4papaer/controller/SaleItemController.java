@@ -1,11 +1,8 @@
 package com.gmail.mosoft521.jxc4papaer.controller;
 
 import com.gmail.mosoft521.jxc4papaer.entity.SaleItem;
-import com.gmail.mosoft521.jxc4papaer.service.CustomerService;
-import com.gmail.mosoft521.jxc4papaer.service.EmpService;
-import com.gmail.mosoft521.jxc4papaer.service.ProductService;
 import com.gmail.mosoft521.jxc4papaer.service.SaleItemService;
-import com.gmail.mosoft521.jxc4papaer.service.SaleService;
+import com.gmail.mosoft521.jxc4papaer.vo.ResponseVO;
 import com.gmail.mosoft521.jxc4papaer.vo.SaleItemVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,19 +24,7 @@ public class SaleItemController {
     private SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Autowired
-    private SaleService saleService;
-
-    @Autowired
     private SaleItemService saleItemService;
-
-    @Autowired
-    private CustomerService customerService;
-
-    @Autowired
-    private EmpService empService;
-
-    @Autowired
-    private ProductService productService;
 
     /**
      * 根据销售单ID获取其所有销售明细
@@ -60,8 +45,8 @@ public class SaleItemController {
      */
     @PostMapping("/saveOrUpdate")
     @ResponseBody
-    public boolean saveOrUpdate(@RequestParam Integer saleItemId, @RequestParam Integer saleId, @RequestParam Integer productId,
-                                @RequestParam Float price, @RequestParam Integer quantity, @RequestParam String remark) {
+    public ResponseVO saveOrUpdate(@RequestParam Integer saleItemId, @RequestParam Integer saleId, @RequestParam Integer productId,
+                                   @RequestParam Float price, @RequestParam Integer quantity, @RequestParam String remark) {
         SaleItem saleItem = new SaleItem();
         saleItem.setSaleItemId(saleItemId);
         saleItem.setSaleId(saleId);

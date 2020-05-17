@@ -1,11 +1,8 @@
 package com.gmail.mosoft521.jxc4papaer.controller;
 
 import com.gmail.mosoft521.jxc4papaer.entity.SaleStockOutItem;
-import com.gmail.mosoft521.jxc4papaer.service.CustomerService;
-import com.gmail.mosoft521.jxc4papaer.service.EmpService;
-import com.gmail.mosoft521.jxc4papaer.service.ProductService;
-import com.gmail.mosoft521.jxc4papaer.service.SaleService;
 import com.gmail.mosoft521.jxc4papaer.service.SaleStockOutItemService;
+import com.gmail.mosoft521.jxc4papaer.vo.ResponseVO;
 import com.gmail.mosoft521.jxc4papaer.vo.SaleStockOutItemVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,18 +26,6 @@ public class SaleStockOutItemController {
     @Autowired
     private SaleStockOutItemService saleStockOutItemService;
 
-    @Autowired
-    private SaleService saleService;
-
-    @Autowired
-    private CustomerService customerService;
-
-    @Autowired
-    private EmpService empService;
-
-    @Autowired
-    private ProductService productService;
-
     /**
      * 根据销售出库单ID获取其所有销售出库明细
      *
@@ -60,7 +45,7 @@ public class SaleStockOutItemController {
      */
     @PostMapping("/saveOrUpdate")
     @ResponseBody
-    public boolean saveOrUpdate(@RequestParam Integer saleStockOutItemId, @RequestParam Integer saleStockOutId, @RequestParam Integer productId, @RequestParam Integer quantity, @RequestParam String remark) {
+    public ResponseVO saveOrUpdate(@RequestParam Integer saleStockOutItemId, @RequestParam Integer saleStockOutId, @RequestParam Integer productId, @RequestParam Integer quantity, @RequestParam String remark) {
         SaleStockOutItem saleStockOutItem = new SaleStockOutItem();
         saleStockOutItem.setSaleStockOutItemId(saleStockOutItemId);
         saleStockOutItem.setSaleStockOutId(saleStockOutId);

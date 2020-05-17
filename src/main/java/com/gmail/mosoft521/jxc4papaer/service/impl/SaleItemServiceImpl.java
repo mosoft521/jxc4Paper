@@ -2,9 +2,12 @@ package com.gmail.mosoft521.jxc4papaer.service.impl;
 
 import com.gmail.mosoft521.jxc4papaer.dao.ProductMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.SaleItemMapper;
+import com.gmail.mosoft521.jxc4papaer.dao.StockMapper;
 import com.gmail.mosoft521.jxc4papaer.entity.SaleItem;
 import com.gmail.mosoft521.jxc4papaer.entity.SaleItemExample;
+import com.gmail.mosoft521.jxc4papaer.entity.Stock;
 import com.gmail.mosoft521.jxc4papaer.service.SaleItemService;
+import com.gmail.mosoft521.jxc4papaer.vo.ResponseVO;
 import com.gmail.mosoft521.jxc4papaer.vo.SaleItemVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,9 @@ public class SaleItemServiceImpl implements SaleItemService {
 
     @Resource
     private ProductMapper productMapper;
+
+    @Resource
+    private StockMapper stockMapper;
 
     @Override
     public List<SaleItemVO> list() {
@@ -52,14 +58,21 @@ public class SaleItemServiceImpl implements SaleItemService {
     }
 
     @Override
-    public boolean saveOrUpdate(SaleItem saleItem) {
+    public ResponseVO saveOrUpdate(SaleItem saleItem) {
+        ResponseVO responseVO = new ResponseVO();
         int r = 0;
         if (null == saleItem.getSaleItemId()) {
             r = saleItemMapper.insertSelective(saleItem);
         } else {
             r = saleItemMapper.updateByPrimaryKey(saleItem);
         }
-        return r > 0 ? true : false;
+        responseVO.setSuccess(r > 0 ? true : false);
+        //查询库存，比销售明细商品数量少就报缺货
+        Stock stock = stockMapper.selectByPrimaryKey(saleItem.getProductId());
+        if (stock.getQuantityCurrent() < saleItem.getQuantity()) {
+            responseVO.setMsg("商品: " + productMapper.selectByPrimaryKey(saleItem.getProductId()).getProductName() + " 缺货，请立即采购" + (saleItem.getQuantity() - stock.getQuantityCurrent()) + "件");
+        }
+        return responseVO;
     }
 
     @Override

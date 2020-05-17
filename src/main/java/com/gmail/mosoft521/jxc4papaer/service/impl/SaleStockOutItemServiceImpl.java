@@ -1,16 +1,15 @@
 package com.gmail.mosoft521.jxc4papaer.service.impl;
 
 import com.gmail.mosoft521.jxc4papaer.dao.ProductMapper;
-import com.gmail.mosoft521.jxc4papaer.dao.SaleMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.SaleStockOutItemMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.StockMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.SupplementMapper;
-import com.gmail.mosoft521.jxc4papaer.entity.PurchaseStockInItem;
 import com.gmail.mosoft521.jxc4papaer.entity.SaleStockOutItem;
 import com.gmail.mosoft521.jxc4papaer.entity.SaleStockOutItemExample;
 import com.gmail.mosoft521.jxc4papaer.entity.Stock;
 import com.gmail.mosoft521.jxc4papaer.entity.Supplement;
 import com.gmail.mosoft521.jxc4papaer.service.SaleStockOutItemService;
+import com.gmail.mosoft521.jxc4papaer.vo.ResponseVO;
 import com.gmail.mosoft521.jxc4papaer.vo.SaleStockOutItemVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -76,7 +75,8 @@ public class SaleStockOutItemServiceImpl implements SaleStockOutItemService {
     }
 
     @Override
-    public boolean saveOrUpdate(SaleStockOutItem saleStockOutItem) {
+    public ResponseVO saveOrUpdate(SaleStockOutItem saleStockOutItem) {
+        ResponseVO responseVO = new ResponseVO();
         int r = 0;
         int delta = 0;
         if (null == saleStockOutItem.getSaleStockOutItemId()) {
@@ -87,12 +87,13 @@ public class SaleStockOutItemServiceImpl implements SaleStockOutItemService {
             delta = saleStockOutItem.getQuantity() - saleStockOutItemOld.getQuantity();
             r = saleStockOutItemMapper.updateByPrimaryKey(saleStockOutItem);
         }
+        responseVO.setSuccess(r > 0 ? true : false);
         //更新一下库存
         Stock stock = stockMapper.selectByPrimaryKey(saleStockOutItem.getProductId());
         int quantityCurrent = stock.getQuantityCurrent() - delta;
         stock.setQuantityCurrent(quantityCurrent);
         stockMapper.updateByPrimaryKey(stock);
-        //最小库存判断 生成补货通知
+        //最小库存判断 生成补货单
         if (quantityCurrent < stock.getQuantityMin()) {
             Supplement supplement = new Supplement();
             supplement.setSupplementNo("BH" + getString());
@@ -100,8 +101,10 @@ public class SaleStockOutItemServiceImpl implements SaleStockOutItemService {
             supplement.setQuantity(stock.getQuantityMin() - quantityCurrent);
             supplement.setRemark("销售出库明细insert或update产生");
             supplementMapper.insert(supplement);
+
+            responseVO.setMsg("商品: " + productMapper.selectByPrimaryKey(saleStockOutItem.getProductId()).getProductName() + " 缺货，请补货" + (stock.getQuantityMin() - quantityCurrent) + "件");
         }
-        return r > 0 ? true : false;
+        return responseVO;
     }
 
     @Override
