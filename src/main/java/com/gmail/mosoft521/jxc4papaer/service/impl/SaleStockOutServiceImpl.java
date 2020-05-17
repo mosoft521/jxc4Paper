@@ -90,7 +90,7 @@ public class SaleStockOutServiceImpl implements SaleStockOutService {
         //把明细也删除了
         SaleStockOutItemExample saleStockOutItemExample = new SaleStockOutItemExample();
         SaleStockOutItemExample.Criteria saleStockOutItemExampleCriteria = saleStockOutItemExample.createCriteria();
-        saleStockOutItemExampleCriteria.andSaleStockOutIdEqualTo(saleStockOutId);
+        saleStockOutItemExampleCriteria.andSaleStockOutIdEqualTo(saleStockOutId);//查询该销售出库单下所有销售出库明细
         List<SaleStockOutItem> saleStockOutItemList = saleStockOutItemMapper.selectByExample(saleStockOutItemExample);
         for(SaleStockOutItem saleStockOutItem : saleStockOutItemList) {
             saleStockOutItemMapper.deleteByPrimaryKey(saleStockOutItem.getSaleStockOutItemId());

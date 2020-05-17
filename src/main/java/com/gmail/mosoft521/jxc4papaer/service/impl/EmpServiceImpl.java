@@ -18,8 +18,8 @@ public class EmpServiceImpl implements EmpService {
     public boolean login(String userName, String password) {
         EmpExample example = new EmpExample();
         EmpExample.Criteria criteria = example.createCriteria();
-        criteria.andUserNameEqualTo(userName);
-        criteria.andPasswordEqualTo(password);
+        criteria.andUserNameEqualTo(userName);//用户名
+        criteria.andPasswordEqualTo(password);//密码
         long count = empMapper.countByExample(example);
         return count > 0;
     }
