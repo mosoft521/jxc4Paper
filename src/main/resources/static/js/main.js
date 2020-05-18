@@ -16,64 +16,63 @@ $(function () {
                     "text": "客户类别",
                     "url": "customerType.html"
                 },
+
                 {
-                    "text": "仓库",
-                    "url": "warehouse.html"
+                    "text": "员工",
+                    "url": "emp.html"
+                }
+            ]
+        },
+        {
+            "text": "采购管理",
+            "children": [
+                {
+                    "text": "商品",
+                    "url": "product.html"
                 },
                 {
                     "text": "供应商",
                     "url": "provider.html"
                 },
+
                 {
-                    "text": "员工",
-                    "url": "emp.html"
-                },
+                    "text": "采购",
+                    "url": "purchase.html"
+                }
+            ]
+        },
+        {
+            "text": "销售管理",
+            "children": [
                 {
                     "text": "客户",
                     "url": "customer.html"
                 },
                 {
-                    "text": "商品",
-                    "url": "product.html"
+                    "text": "销售",
+                    "url": "sale.html"
                 }
+
             ]
         },
         {
-            "text": "库存及补货",
+            "text": "仓库管理",
             "children": [
                 {
-                    "text": "库存",
-                    "url": "stock.html"
-                },
-                {
-                    "text": "补货",
-                    "url": "supplement.html"
-                }
-            ]
-        },
-        {
-            "text": "采购及入库",
-            "children": [
-                {
-                    "text": "采购",
-                    "url": "purchase.html"
+                    "text": "仓库",
+                    "url": "warehouse.html"
                 },
                 {
                     "text": "采购入库",
                     "url": "purchaseStockIn.html"
-                }
-            ]
-        },
-        {
-            "text": "销售及出库",
-            "children": [
-                {
-                    "text": "销售",
-                    "url": "sale.html"
                 },
                 {
                     "text": "销售出库",
                     "url": "saleStockOut.html"
+                },
+                {
+                    "text": "库存",
+                    "url": "stock.html"
                 }
             ]
         }
