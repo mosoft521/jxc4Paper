@@ -71,5 +71,5 @@ INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VAL
 INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4001, 5, 5, 10000);
 INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4002, 5, 10, 10000);
 
-INSERT INTO supplement (supplement_id, supplement_no, product_id, quantity, remark) VALUES (1, 'BH202005150000', 4000, 1, '补货首单');
-INSERT INTO supplement (supplement_id, supplement_no, product_id, quantity, remark) VALUES (12001, 'BH202005150000', 4001, 3, '补货二单');
+INSERT INTO supplement (supplement_id, supplement_no, product_id, quantity, day, remark) VALUES (1, 'BH202005150000', 4000, 1, '2020-05-14 06:59:15', '补货首单');
+INSERT INTO supplement (supplement_id, supplement_no, product_id, quantity, day, remark) VALUES (12001, 'BH202005150000', 4001, 3, '2020-05-14 06:59:15', '补货二单');

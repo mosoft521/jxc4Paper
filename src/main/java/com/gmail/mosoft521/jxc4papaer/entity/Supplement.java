@@ -1,5 +1,7 @@
 package com.gmail.mosoft521.jxc4papaer.entity;
 
+import java.util.Date;
+
 public class Supplement {
     private Integer supplementId;
 
@@ -8,6 +10,8 @@ public class Supplement {
     private Integer productId;
 
     private Integer quantity;
+
+    private Date day;
 
     private String remark;
 
@@ -41,6 +45,14 @@ public class Supplement {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Date getDay() {
+        return day;
+    }
+
+    public void setDay(Date day) {
+        this.day = day;
     }
 
     public String getRemark() {
