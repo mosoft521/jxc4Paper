@@ -12,12 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 @RequestMapping("/supplement")
 public class SupplementController {
+
+    //日期格式
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    //时间格式
+    private SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Autowired
     private SupplementService supplementService;
@@ -51,12 +59,20 @@ public class SupplementController {
      */
     @PostMapping("/saveOrUpdate")
     @ResponseBody
-    public boolean saveOrUpdate(@RequestParam Integer supplementId, @RequestParam String supplementNo, @RequestParam Integer productId, @RequestParam Integer quantity, @RequestParam String remark) {
+    public boolean saveOrUpdate(@RequestParam Integer supplementId, @RequestParam String supplementNo, @RequestParam Integer productId, @RequestParam Integer quantity,
+                                @RequestParam String strDay, @RequestParam String remark) {
         Supplement supplement = new Supplement();
         supplement.setSupplementId(supplementId);
         supplement.setSupplementNo(supplementNo);
         supplement.setProductId(productId);
         supplement.setQuantity(quantity);
+        Date d = null;
+        try {
+            d = timeFormat.parse(strDay);
+        } catch (ParseException e) {
+            return false;
+        }
+        supplement.setDay(d);
         supplement.setRemark(remark);
         return supplementService.saveOrUpdate(supplement);
     }
