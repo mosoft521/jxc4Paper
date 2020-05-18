@@ -107,13 +107,13 @@ create table emp
    dept_id              int not null comment '所属部门ID',
    manage_type_id       int not null comment '管理类别ID',
    name                 varchar(10) not null comment '姓名',
-   emp_no               varchar(10) not null comment '工号',
-   tel                  varchar(11) not null comment '联系电话',
-   user_name            varchar(8) not null comment '用户名',
-   password             varchar(8) not null comment '密码',
+   emp_no               varchar(10) comment '工号',
+   tel                  varchar(11) comment '联系电话',
+   user_name            varchar(10) not null comment '用户名',
+   password             varchar(10) not null comment '密码',
    sex                  char(1) comment '性别',
    birthday             datetime comment '出生年月',
-   degree               varchar(8) comment '最高学历',
+   degree               varchar(10) comment '最高学历',
    primary key (emp_id)
 );
 
@@ -139,11 +139,11 @@ create table product
 (
    product_id           int not null auto_increment comment '商品ID',
    warehouse_id         int not null comment '仓库ID',
-   provider_id          int comment '供应商ID',
+   provider_id          int not null comment '供应商ID',
    product_name         varchar(30) not null comment '商品名',
    price                float not null comment '单价',
-   uom                  varchar(10) not null comment '商品计量单位',
-   spec                 varchar(10) not null comment '商品规格',
+   uom                  varchar(10) comment '商品计量单位',
+   spec                 varchar(10) comment '商品规格',
    remark               varchar(50) comment '备注',
    primary key (product_id)
 );
@@ -157,10 +157,10 @@ create table provider
 (
    provider_id          int not null auto_increment comment '供应商ID',
    name                 varchar(30) not null comment '名称',
-   linkman              varchar(8) not null comment '联系人',
-   tel                  varchar(11) not null comment '电话',
-   address              varchar(50) not null comment '地址',
-   zip                  char(6) not null comment '邮编',
+   linkman              varchar(10) comment '联系人',
+   tel                  varchar(11) comment '电话',
+   address              varchar(50) comment '地址',
+   zip                  char(6) comment '邮编',
    fax                  varchar(15) comment '传真',
    remark               varchar(50) comment '备注',
    primary key (provider_id)
