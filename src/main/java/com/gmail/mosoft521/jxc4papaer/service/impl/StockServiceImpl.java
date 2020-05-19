@@ -1,7 +1,9 @@
 package com.gmail.mosoft521.jxc4papaer.service.impl;
 
+import com.gmail.mosoft521.jxc4papaer.constant.Constants;
 import com.gmail.mosoft521.jxc4papaer.dao.StockMapper;
 import com.gmail.mosoft521.jxc4papaer.entity.Stock;
+import com.gmail.mosoft521.jxc4papaer.entity.StockKey;
 import com.gmail.mosoft521.jxc4papaer.service.StockService;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +28,17 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public boolean delete(Integer productId) {
-        return stockMapper.deleteByPrimaryKey(productId) > 0 ? true : false;
+        StockKey stockKey = new StockKey();
+        stockKey.setProductId(productId);
+        stockKey.setWarehouseId(Constants.WAREHOUSE_ID);
+        return stockMapper.deleteByPrimaryKey(stockKey) > 0 ? true : false;
     }
 
     @Override
     public Stock getStockById(Integer productId) {
-        return stockMapper.selectByPrimaryKey(productId);
+        StockKey stockKey = new StockKey();
+        stockKey.setProductId(productId);
+        stockKey.setWarehouseId(Constants.WAREHOUSE_ID);
+        return stockMapper.selectByPrimaryKey(stockKey);
     }
 }

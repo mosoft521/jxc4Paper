@@ -56,7 +56,6 @@ public class StockController {
         stock.setProductId(productId);
         stock.setQuantityCurrent(quantityCurrent);
         stock.setQuantityMin(quantityMin);
-        stock.setQuantityMax(quantityMax);
         return stockService.saveOrUpdate(stock);
     }
 

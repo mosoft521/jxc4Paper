@@ -17,7 +17,6 @@
     <tr>
         <th field="productId" width="100" align="center">商品ID</th>
         <th field="productName" width="100" align="center">商品名称</th>
-        <th field="warehouseName" width="100" align="center">仓库名称</th>
         <th field="price" width="100" align="center">单价</th>
         <th field="uom" width="100" align="center">计量单位</th>
         <th field="spec" width="100" align="center">商品规格</th>
@@ -48,11 +47,6 @@
         <div class="fitem">
             <label>商品名称:</label>
             <input name="productName" class="easyui-validatebox" required="true">
-        </div>
-        <div class="fitem">
-            <label>仓库:</label>
-            <select id="warehouseId" name="warehouseId" required="true">
-            </select>
         </div>
         <div class="fitem">
             <label>单价:</label>
@@ -147,16 +141,6 @@
     }
 
     $(function () {
-
-        //Ajax初始化仓库select
-        $.get("/warehouse/list", function (data, status) {
-            if (status) {
-                $.each(data, function (i, v) {
-                    $("#warehouseId").append('<option value ="' + v.warehouseId + '">' + v.warehouseName + '</option>');
-                })
-
-            }
-        });
     })
 </script>
 </html>

@@ -1,5 +1,6 @@
 package com.gmail.mosoft521.jxc4papaer.service.impl;
 
+import com.gmail.mosoft521.jxc4papaer.constant.Constants;
 import com.gmail.mosoft521.jxc4papaer.dao.ProductMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.PurchaseStockInItemMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.StockMapper;
@@ -7,6 +8,7 @@ import com.gmail.mosoft521.jxc4papaer.dao.SupplementMapper;
 import com.gmail.mosoft521.jxc4papaer.entity.PurchaseStockInItem;
 import com.gmail.mosoft521.jxc4papaer.entity.PurchaseStockInItemExample;
 import com.gmail.mosoft521.jxc4papaer.entity.Stock;
+import com.gmail.mosoft521.jxc4papaer.entity.StockKey;
 import com.gmail.mosoft521.jxc4papaer.entity.Supplement;
 import com.gmail.mosoft521.jxc4papaer.service.PurchaseStockInItemService;
 import com.gmail.mosoft521.jxc4papaer.vo.PurchaseStockInItemVO;
@@ -86,7 +88,10 @@ public class PurchaseStockInItemServiceImpl implements PurchaseStockInItemServic
             r = purchaseStockInItemMapper.updateByPrimaryKey(purchaseStockInItem);
         }
         //更新一下库存
-        Stock stock = stockMapper.selectByPrimaryKey(purchaseStockInItem.getProductId());
+        StockKey stockKey = new StockKey();
+        stockKey.setProductId(purchaseStockInItem.getProductId());
+        stockKey.setWarehouseId(Constants.WAREHOUSE_ID);
+        Stock stock = stockMapper.selectByPrimaryKey(stockKey);
         int quantityCurrent = stock.getQuantityCurrent() + delta;
         stock.setQuantityCurrent(quantityCurrent);
         stockMapper.updateByPrimaryKey(stock);
@@ -106,7 +111,10 @@ public class PurchaseStockInItemServiceImpl implements PurchaseStockInItemServic
     public boolean delete(Integer purchaseStockInItemId) {
         PurchaseStockInItem purchaseStockInItem = purchaseStockInItemMapper.selectByPrimaryKey(purchaseStockInItemId);
         //更新一下库存【删入库明细，就是减当前库存】
-        Stock stock = stockMapper.selectByPrimaryKey(purchaseStockInItem.getProductId());
+        StockKey stockKey = new StockKey();
+        stockKey.setProductId(purchaseStockInItem.getProductId());
+        stockKey.setWarehouseId(Constants.WAREHOUSE_ID);
+        Stock stock = stockMapper.selectByPrimaryKey(stockKey);
         stock.setQuantityCurrent(stock.getQuantityCurrent() - purchaseStockInItem.getQuantity());
         stockMapper.updateByPrimaryKey(stock);
         return purchaseStockInItemMapper.deleteByPrimaryKey(purchaseStockInItemId) > 0 ? true : false;

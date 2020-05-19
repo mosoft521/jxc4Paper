@@ -1,5 +1,6 @@
 package com.gmail.mosoft521.jxc4papaer.service.impl;
 
+import com.gmail.mosoft521.jxc4papaer.constant.Constants;
 import com.gmail.mosoft521.jxc4papaer.dao.PurchaseMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.PurchaseStockInItemMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.PurchaseStockInMapper;
@@ -10,6 +11,7 @@ import com.gmail.mosoft521.jxc4papaer.entity.PurchaseStockIn;
 import com.gmail.mosoft521.jxc4papaer.entity.PurchaseStockInItem;
 import com.gmail.mosoft521.jxc4papaer.entity.PurchaseStockInItemExample;
 import com.gmail.mosoft521.jxc4papaer.entity.Stock;
+import com.gmail.mosoft521.jxc4papaer.entity.StockKey;
 import com.gmail.mosoft521.jxc4papaer.entity.Supplement;
 import com.gmail.mosoft521.jxc4papaer.service.PurchaseStockInService;
 import org.springframework.stereotype.Service;
@@ -47,7 +49,6 @@ public class PurchaseStockInServiceImpl implements PurchaseStockInService {
         if (null == purchaseStockIn.getPurchaseStockInId()) {
             r = purchaseStockInMapper.insertSelective(purchaseStockIn);
         } else {
-            PurchaseStockIn stockInOld = purchaseStockInMapper.selectByPrimaryKey(purchaseStockIn.getPurchaseStockInId());
             r = purchaseStockInMapper.updateByPrimaryKey(purchaseStockIn);
         }
         return r > 0 ? true : false;
@@ -73,7 +74,10 @@ public class PurchaseStockInServiceImpl implements PurchaseStockInService {
         for (PurchaseStockInItem purchaseStockInItem : purchaseStockInItemList) {
             purchaseStockInItemMapper.deleteByPrimaryKey(purchaseStockInItem.getPurchaseStockInItemId());
             //更新一下库存【删入库明细，就是减当前库存】
-            Stock stock = stockMapper.selectByPrimaryKey(purchaseStockInItem.getProductId());
+            StockKey stockKey = new StockKey();
+            stockKey.setProductId(purchaseStockInItem.getProductId());
+            stockKey.setWarehouseId(Constants.WAREHOUSE_ID);
+            Stock stock = stockMapper.selectByPrimaryKey(stockKey);
             int quantityCurrent = stock.getQuantityCurrent() - purchaseStockInItem.getQuantity();
             stock.setQuantityCurrent(quantityCurrent);
             stockMapper.updateByPrimaryKey(stock);

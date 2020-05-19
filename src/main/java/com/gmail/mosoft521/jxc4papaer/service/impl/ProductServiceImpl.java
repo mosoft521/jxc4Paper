@@ -2,10 +2,12 @@ package com.gmail.mosoft521.jxc4papaer.service.impl;
 
 import com.gmail.mosoft521.jxc4papaer.dao.ProductMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.StockMapper;
-import com.gmail.mosoft521.jxc4papaer.dao.WarehouseMapper;
+import com.gmail.mosoft521.jxc4papaer.dao.SupplyMapper;
 import com.gmail.mosoft521.jxc4papaer.entity.Product;
-import com.gmail.mosoft521.jxc4papaer.entity.ProductExample;
 import com.gmail.mosoft521.jxc4papaer.entity.Stock;
+import com.gmail.mosoft521.jxc4papaer.entity.StockExample;
+import com.gmail.mosoft521.jxc4papaer.entity.Supply;
+import com.gmail.mosoft521.jxc4papaer.entity.SupplyExample;
 import com.gmail.mosoft521.jxc4papaer.service.ProductService;
 import com.gmail.mosoft521.jxc4papaer.vo.ProductVO;
 import org.springframework.beans.BeanUtils;
@@ -25,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
     private StockMapper stockMapper;
 
     @Resource
-    private WarehouseMapper warehouseMapper;
+    private SupplyMapper supplyMapper;
 
     @Override
     public List<ProductVO> list() {
@@ -34,7 +36,6 @@ public class ProductServiceImpl implements ProductService {
         for (Product product : productList) {
             ProductVO productVO = new ProductVO();
             BeanUtils.copyProperties(product, productVO);
-            productVO.setWarehouseName(warehouseMapper.selectByPrimaryKey(productVO.getWarehouseId()).getWarehouseName());
             productVOList.add(productVO);
         }
         return productVOList;
@@ -42,15 +43,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductVO> list(Integer providerId) {
-        ProductExample productExample = new ProductExample();
-        ProductExample.Criteria productExampleCriteria = productExample.createCriteria();
-        productExampleCriteria.andProviderIdEqualTo(providerId);
-        List<Product> productList = productMapper.selectByExample(productExample);
-        List<ProductVO> productVOList = new ArrayList<>(productList.size());
-        for (Product product : productList) {
+        SupplyExample supplyExample = new SupplyExample();
+        SupplyExample.Criteria supplyExampleCriteria = supplyExample.createCriteria();
+        supplyExampleCriteria.andProviderIdEqualTo(providerId);
+        List<Supply> supplyList = supplyMapper.selectByExample(supplyExample);
+        List<ProductVO> productVOList = new ArrayList<>(supplyList.size());
+        for (Supply supply : supplyList) {
+            Integer productId = supply.getProductId();
+            Product product = productMapper.selectByPrimaryKey(productId);
             ProductVO productVO = new ProductVO();
             BeanUtils.copyProperties(product, productVO);
-            productVO.setWarehouseName(warehouseMapper.selectByPrimaryKey(productVO.getWarehouseId()).getWarehouseName());
             productVOList.add(productVO);
         }
         return productVOList;
@@ -66,7 +68,6 @@ public class ProductServiceImpl implements ProductService {
             stock.setProductId(product.getProductId());
             stock.setQuantityCurrent(0);
             stock.setQuantityMin(0);
-            stock.setQuantityMax(Integer.MAX_VALUE);
             stockMapper.insert(stock);
         } else {
             r = productMapper.updateByPrimaryKey(product);
@@ -77,7 +78,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public boolean delete(Integer productId) {
         //先删除库存
-        stockMapper.deleteByPrimaryKey(productId);
+        StockExample stockExample = new StockExample();
+        StockExample.Criteria stockExampleCriteria = stockExample.createCriteria();
+        stockExampleCriteria.andProductIdEqualTo(productId);
+        stockMapper.deleteByExample(stockExample);
         return productMapper.deleteByPrimaryKey(productId) > 0 ? true : false;
     }
 

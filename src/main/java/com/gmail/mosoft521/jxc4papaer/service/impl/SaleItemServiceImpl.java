@@ -1,11 +1,13 @@
 package com.gmail.mosoft521.jxc4papaer.service.impl;
 
+import com.gmail.mosoft521.jxc4papaer.constant.Constants;
 import com.gmail.mosoft521.jxc4papaer.dao.ProductMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.SaleItemMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.StockMapper;
 import com.gmail.mosoft521.jxc4papaer.entity.SaleItem;
 import com.gmail.mosoft521.jxc4papaer.entity.SaleItemExample;
 import com.gmail.mosoft521.jxc4papaer.entity.Stock;
+import com.gmail.mosoft521.jxc4papaer.entity.StockKey;
 import com.gmail.mosoft521.jxc4papaer.service.SaleItemService;
 import com.gmail.mosoft521.jxc4papaer.vo.ResponseVO;
 import com.gmail.mosoft521.jxc4papaer.vo.SaleItemVO;
@@ -68,7 +70,10 @@ public class SaleItemServiceImpl implements SaleItemService {
         }
         responseVO.setSuccess(r > 0 ? true : false);
         //查询库存，比销售明细商品数量少就报缺货
-        Stock stock = stockMapper.selectByPrimaryKey(saleItem.getProductId());
+        StockKey stockKey = new StockKey();
+        stockKey.setProductId(saleItem.getProductId());
+        stockKey.setWarehouseId(Constants.WAREHOUSE_ID);
+        Stock stock = stockMapper.selectByPrimaryKey(stockKey);
         if (stock.getQuantityCurrent() < saleItem.getQuantity()) {
             responseVO.setMsg("商品: " + productMapper.selectByPrimaryKey(saleItem.getProductId()).getProductName() + " 缺货，请立即采购" + (saleItem.getQuantity() - stock.getQuantityCurrent()) + "件");
         }

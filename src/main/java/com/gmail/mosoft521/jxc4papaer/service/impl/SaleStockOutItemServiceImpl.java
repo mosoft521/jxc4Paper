@@ -1,5 +1,6 @@
 package com.gmail.mosoft521.jxc4papaer.service.impl;
 
+import com.gmail.mosoft521.jxc4papaer.constant.Constants;
 import com.gmail.mosoft521.jxc4papaer.dao.ProductMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.SaleStockOutItemMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.StockMapper;
@@ -7,6 +8,7 @@ import com.gmail.mosoft521.jxc4papaer.dao.SupplementMapper;
 import com.gmail.mosoft521.jxc4papaer.entity.SaleStockOutItem;
 import com.gmail.mosoft521.jxc4papaer.entity.SaleStockOutItemExample;
 import com.gmail.mosoft521.jxc4papaer.entity.Stock;
+import com.gmail.mosoft521.jxc4papaer.entity.StockKey;
 import com.gmail.mosoft521.jxc4papaer.entity.Supplement;
 import com.gmail.mosoft521.jxc4papaer.service.SaleStockOutItemService;
 import com.gmail.mosoft521.jxc4papaer.vo.ResponseVO;
@@ -89,7 +91,10 @@ public class SaleStockOutItemServiceImpl implements SaleStockOutItemService {
         }
         responseVO.setSuccess(r > 0 ? true : false);
         //更新一下库存
-        Stock stock = stockMapper.selectByPrimaryKey(saleStockOutItem.getProductId());
+        StockKey stockKey = new StockKey();
+        stockKey.setProductId(saleStockOutItem.getProductId());
+        stockKey.setWarehouseId(Constants.WAREHOUSE_ID);
+        Stock stock = stockMapper.selectByPrimaryKey(stockKey);
         int quantityCurrent = stock.getQuantityCurrent() - delta;
         stock.setQuantityCurrent(quantityCurrent);
         stockMapper.updateByPrimaryKey(stock);
@@ -111,7 +116,10 @@ public class SaleStockOutItemServiceImpl implements SaleStockOutItemService {
     public boolean delete(Integer saleStockOutItemId) {
         SaleStockOutItem saleStockOutItem = saleStockOutItemMapper.selectByPrimaryKey(saleStockOutItemId);
         //更新一下库存【删出库明细，就是加当前库存】
-        Stock stock = stockMapper.selectByPrimaryKey(saleStockOutItem.getProductId());
+        StockKey stockKey = new StockKey();
+        stockKey.setProductId(saleStockOutItem.getProductId());
+        stockKey.setWarehouseId(Constants.WAREHOUSE_ID);
+        Stock stock = stockMapper.selectByPrimaryKey(stockKey);
         stock.setQuantityCurrent(stock.getQuantityCurrent() + saleStockOutItem.getQuantity());
         stockMapper.updateByPrimaryKey(stock);
         return saleStockOutItemMapper.deleteByPrimaryKey(saleStockOutItemId) > 0 ? true : false;

@@ -1,5 +1,6 @@
 package com.gmail.mosoft521.jxc4papaer.service.impl;
 
+import com.gmail.mosoft521.jxc4papaer.constant.Constants;
 import com.gmail.mosoft521.jxc4papaer.dao.CustomerMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.EmpMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.SaleMapper;
@@ -12,6 +13,7 @@ import com.gmail.mosoft521.jxc4papaer.entity.SaleStockOut;
 import com.gmail.mosoft521.jxc4papaer.entity.SaleStockOutItem;
 import com.gmail.mosoft521.jxc4papaer.entity.SaleStockOutItemExample;
 import com.gmail.mosoft521.jxc4papaer.entity.Stock;
+import com.gmail.mosoft521.jxc4papaer.entity.StockKey;
 import com.gmail.mosoft521.jxc4papaer.entity.Supplement;
 import com.gmail.mosoft521.jxc4papaer.service.SaleStockOutService;
 import com.gmail.mosoft521.jxc4papaer.vo.SaleStockOutVO;
@@ -92,10 +94,13 @@ public class SaleStockOutServiceImpl implements SaleStockOutService {
         SaleStockOutItemExample.Criteria saleStockOutItemExampleCriteria = saleStockOutItemExample.createCriteria();
         saleStockOutItemExampleCriteria.andSaleStockOutIdEqualTo(saleStockOutId);//查询该销售出库单下所有销售出库明细
         List<SaleStockOutItem> saleStockOutItemList = saleStockOutItemMapper.selectByExample(saleStockOutItemExample);
-        for(SaleStockOutItem saleStockOutItem : saleStockOutItemList) {
+        for (SaleStockOutItem saleStockOutItem : saleStockOutItemList) {
             saleStockOutItemMapper.deleteByPrimaryKey(saleStockOutItem.getSaleStockOutItemId());
             //更新一下库存【删出库明细，就是加当前库存】
-            Stock stock = stockMapper.selectByPrimaryKey(saleStockOutItem.getProductId());
+            StockKey stockKey = new StockKey();
+            stockKey.setProductId(saleStockOutItem.getProductId());
+            stockKey.setWarehouseId(Constants.WAREHOUSE_ID);
+            Stock stock = stockMapper.selectByPrimaryKey(stockKey);
             int quantityCurrent = stock.getQuantityCurrent() + saleStockOutItem.getQuantity();
             stock.setQuantityCurrent(quantityCurrent);
             stockMapper.updateByPrimaryKey(stock);

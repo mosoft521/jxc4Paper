@@ -33,9 +33,6 @@ public class ProductController {
     private ProductService productService;
 
     @Autowired
-    private WarehouseService warehouseService;
-
-    @Autowired
     private PurchaseService purchaseService;
 
     @Autowired
@@ -89,7 +86,6 @@ public class ProductController {
             ProductVO productVO = new ProductVO();
             Product product = productService.getById(purchaseItemVO.getProductId());
             BeanUtils.copyProperties(product, productVO);
-            productVO.setWarehouseName(warehouseService.getNameById(productVO.getWarehouseId()));
             productVOList.add(productVO);
         }
         return productVOList;
@@ -110,7 +106,6 @@ public class ProductController {
             ProductVO productVO = new ProductVO();
             Product product = productService.getById(saleItemVO.getProductId());
             BeanUtils.copyProperties(product, productVO);
-            productVO.setWarehouseName(warehouseService.getNameById(productVO.getWarehouseId()));
             productVOList.add(productVO);
         }
         return productVOList;
@@ -127,7 +122,6 @@ public class ProductController {
         Product product = new Product();
         product.setProductId(productId);
         product.setProductName(productName);
-        product.setWarehouseId(warehouseId);
         product.setPrice(price);
         product.setUom(uom);
         product.setSpec(spec);
