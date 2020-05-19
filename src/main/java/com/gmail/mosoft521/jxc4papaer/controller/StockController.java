@@ -3,6 +3,7 @@ package com.gmail.mosoft521.jxc4papaer.controller;
 import com.gmail.mosoft521.jxc4papaer.entity.Stock;
 import com.gmail.mosoft521.jxc4papaer.service.ProductService;
 import com.gmail.mosoft521.jxc4papaer.service.StockService;
+import com.gmail.mosoft521.jxc4papaer.service.WarehouseService;
 import com.gmail.mosoft521.jxc4papaer.vo.StockVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class StockController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private WarehouseService warehouseService;
+
     /**
      * 获取所有仓库列表
      *
@@ -39,6 +43,7 @@ public class StockController {
             StockVO stockVO = new StockVO();
             BeanUtils.copyProperties(stock, stockVO);
             stockVO.setProductName(productService.getNameById(stock.getProductId()));
+            stockVO.setWarehouseName(warehouseService.getNameById(stock.getWarehouseId()));
             stockVOList.add(stockVO);
         }
         return stockVOList;
@@ -51,9 +56,10 @@ public class StockController {
      */
     @PostMapping("/saveOrUpdate")
     @ResponseBody
-    public boolean saveOrUpdate(@RequestParam Integer productId, @RequestParam Integer quantityCurrent, @RequestParam Integer quantityMin, @RequestParam Integer quantityMax) {
+    public boolean saveOrUpdate(@RequestParam Integer productId, @RequestParam Integer warehouseId, @RequestParam Integer quantityCurrent, @RequestParam Integer quantityMin) {
         Stock stock = new Stock();
         stock.setProductId(productId);
+        stock.setWarehouseId(warehouseId);
         stock.setQuantityCurrent(quantityCurrent);
         stock.setQuantityMin(quantityMin);
         return stockService.saveOrUpdate(stock);

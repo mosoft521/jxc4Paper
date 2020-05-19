@@ -11,12 +11,13 @@
 </head>
 <body>
 <!-- 数据列表 start -->
-<table id="dg" title="库存列表" class="easyui-datagrid" style="width:400px;height:400px"
+<table id="dg" title="库存列表" class="easyui-datagrid" style="width:500px;height:400px"
        url="/stock/list" toolbar="#toolbar" singleSelect="true" method="get">
     <thead>
     <tr>
         <th field="productId" width="100" align="center">商品ID</th>
         <th field="productName" width="100" align="center">商品名称</th>
+        <th field="warehouseName" width="100" align="center">仓库名称</th>
         <th field="quantityCurrent" width="100" align="center">当前库存量</th>
         <th field="quantityMin" width="98" align="center">最小库存量</th>
     </tr>
@@ -40,6 +41,11 @@
         <div class="fitem">
             <label>商品:</label>
             <select id="productId" name="productId" required="true">
+            </select>
+        </div>
+        <div class="fitem">
+            <label>仓库:</label>
+            <select id="warehouseId" name="warehouseId" required="true">
             </select>
         </div>
 
@@ -134,6 +140,16 @@
             if (status) {
                 $.each(data, function (i, v) {
                     $("#productId").append('<option value ="' + v.productId + '">' + v.productName + '</option>');
+                })
+
+            }
+        });
+
+        //Ajax初始化仓库select
+        $.get("/warehouse/list", function (data, status) {
+            if (status) {
+                $.each(data, function (i, v) {
+                    $("#warehouseId").append('<option value ="' + v.warehouseId + '">' + v.warehouseName + '</option>');
                 })
 
             }
