@@ -1,5 +1,6 @@
 package com.gmail.mosoft521.jxc4papaer.service.impl;
 
+import com.gmail.mosoft521.jxc4papaer.constant.Constants;
 import com.gmail.mosoft521.jxc4papaer.dao.ProductMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.StockMapper;
 import com.gmail.mosoft521.jxc4papaer.dao.SupplyMapper;
@@ -66,6 +67,7 @@ public class ProductServiceImpl implements ProductService {
             //顺便插入一份库存
             Stock stock = new Stock();
             stock.setProductId(product.getProductId());
+            stock.setWarehouseId(Constants.WAREHOUSE_ID);
             stock.setQuantityCurrent(0);
             stock.setQuantityMin(0);
             stockMapper.insert(stock);

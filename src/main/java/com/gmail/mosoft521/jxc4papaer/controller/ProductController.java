@@ -10,7 +10,6 @@ import com.gmail.mosoft521.jxc4papaer.service.PurchaseService;
 import com.gmail.mosoft521.jxc4papaer.service.PurchaseStockInService;
 import com.gmail.mosoft521.jxc4papaer.service.SaleItemService;
 import com.gmail.mosoft521.jxc4papaer.service.SaleStockOutService;
-import com.gmail.mosoft521.jxc4papaer.service.WarehouseService;
 import com.gmail.mosoft521.jxc4papaer.vo.ProductVO;
 import com.gmail.mosoft521.jxc4papaer.vo.PurchaseItemVO;
 import com.gmail.mosoft521.jxc4papaer.vo.SaleItemVO;
@@ -118,7 +117,7 @@ public class ProductController {
      */
     @PostMapping("/saveOrUpdate")
     @ResponseBody
-    public boolean saveOrUpdate(@RequestParam Integer productId, @RequestParam String productName, @RequestParam Integer warehouseId, @RequestParam Float price, @RequestParam String uom, @RequestParam String spec, @RequestParam String remark) {
+    public boolean saveOrUpdate(@RequestParam Integer productId, @RequestParam String productName, @RequestParam Float price, @RequestParam String uom, @RequestParam String spec, @RequestParam String remark) {
         Product product = new Product();
         product.setProductId(productId);
         product.setProductName(productName);

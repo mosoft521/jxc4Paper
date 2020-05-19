@@ -109,9 +109,11 @@
                 var result = eval('(' + result + ')');
                 if (result.success) {
                     $.messager.show({
-                        title: 'Error',
+                        title: '缺货通知',
                         msg: result.msg
                     });
+                    $('#dlg').dialog('close');        // close the dialog
+                    $('#dg').datagrid('reload');    // reload the sale data
                 } else {
                     $('#dlg').dialog('close');        // close the dialog
                     $('#dg').datagrid('reload');    // reload the sale data

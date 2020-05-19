@@ -54,10 +54,11 @@ public class DeptController {
      */
     @PostMapping("/saveOrUpdate")
     @ResponseBody
-    public boolean saveOrUpdate(@RequestParam Integer deptId, @RequestParam String name, @RequestParam String place, @RequestParam String tel, @RequestParam String fax, @RequestParam String remark) {
+    public boolean saveOrUpdate(@RequestParam Integer deptId, @RequestParam String name, @RequestParam Integer empId, @RequestParam String place, @RequestParam String tel, @RequestParam String fax, @RequestParam String remark) {
         Dept dept = new Dept();
         dept.setDeptId(deptId);
         dept.setName(name);
+        dept.setEmpId(empId);
         dept.setPlace(place);
         dept.setTel(tel);
         dept.setFax(fax);
