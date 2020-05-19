@@ -25,9 +25,13 @@ INSERT INTO warehouse (warehouse_id, warehouse_name, warehouse_address, tel, war
 INSERT INTO warehouse (warehouse_id, warehouse_name, warehouse_address, tel, warehouse_size) VALUES (5001, '浦东仓', '浦东外高桥', '56781234', 10000);
 INSERT INTO warehouse (warehouse_id, warehouse_name, warehouse_address, tel, warehouse_size) VALUES (5002, '杨行仓', '宝山区杨行镇', '41236789', 5000);
 
-INSERT INTO product (product_id, product_name, warehouse_id, provider_id, price, uom, spec, remark) VALUES (4000, '10g项链', 5000, 3000, 4000, '件', '黄金,10g', '10g项链');
-INSERT INTO product (product_id, product_name, warehouse_id, provider_id, price, uom, spec, remark) VALUES (4001, 'Apple手机', 5001, 3001, 5000, '台', '粉红色,64G', '苹果手机');
-INSERT INTO product (product_id, product_name, warehouse_id, provider_id, price, uom, spec, remark) VALUES (4002, 'Oppo手机', 5001, 3001, 2000, '台', '32G,红色', 'Oppo手机');
+-- INSERT INTO product (product_id, product_name, warehouse_id, provider_id, price, uom, spec, remark) VALUES (4000, '10g项链', 5000, 3000, 4000, '件', '黄金,10g', '10g项链');
+-- INSERT INTO product (product_id, product_name, warehouse_id, provider_id, price, uom, spec, remark) VALUES (4001, 'Apple手机', 5001, 3001, 5000, '台', '粉红色,64G', '苹果手机');
+-- INSERT INTO product (product_id, product_name, warehouse_id, provider_id, price, uom, spec, remark) VALUES (4002, 'Oppo手机', 5001, 3001, 2000, '台', '32G,红色', 'Oppo手机');
+
+INSERT INTO product (product_id, product_name, price, uom, spec, remark) VALUES (4000, '10g项链', 5000, '件', '黄金,10g', '10g项链');
+INSERT INTO product (product_id, product_name, price, uom, spec, remark) VALUES (4001, 'Apple手机', 5001, '台', '粉红色,64G', '苹果手机');
+INSERT INTO product (product_id, product_name, price, uom, spec, remark) VALUES (4002, 'Oppo手机', 5001, '台', '32G,红色', 'Oppo手机');
 
 INSERT INTO customer_type (customer_type_id, name, discount_rate, remark) VALUES (9001, '普通', 1, '普通顾客');
 INSERT INTO customer_type (customer_type_id, name, discount_rate, remark) VALUES (9002, '银牌客户', 0.95, '银牌客户九五折');
@@ -67,9 +71,21 @@ INSERT INTO sale_stock_out_item (sale_stock_out_item_id, sale_stock_out_id, prod
 INSERT INTO sale_stock_out_item (sale_stock_out_item_id, sale_stock_out_id, product_id, quantity, remark) VALUES (11001, 1001, 4001, 3, '首单销售出库明细init01');
 INSERT INTO sale_stock_out_item (sale_stock_out_item_id, sale_stock_out_id, product_id, quantity, remark) VALUES (11002, 1001, 4002, 5, '首单销售出库明细init02');
 
-INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4000, 8, 10, 10000);
-INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4001, 5, 5, 10000);
-INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4002, 5, 10, 10000);
+-- INSERT INTO product (product_id, product_name, warehouse_id, provider_id, price, uom, spec, remark) VALUES (4000, '10g项链', 5000, 3000, 4000, '件', '黄金,10g', '10g项链');
+-- INSERT INTO product (product_id, product_name, warehouse_id, provider_id, price, uom, spec, remark) VALUES (4001, 'Apple手机', 5001, 3001, 5000, '台', '粉红色,64G', '苹果手机');
+-- INSERT INTO product (product_id, product_name, warehouse_id, provider_id, price, uom, spec, remark) VALUES (4002, 'Oppo手机', 5001, 3001, 2000, '台', '32G,红色', 'Oppo手机');
+
+-- INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4000, 8, 10, 10000);
+-- INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4001, 5, 5, 10000);
+-- INSERT INTO stock (product_id, quantity_current, quantity_min, quantity_max) VALUES (4002, 5, 10, 10000);
+
+INSERT INTO stock (product_id, warehouse_id, quantity_current, quantity_min) VALUES (4000, 5000, 8, 10);
+INSERT INTO stock (product_id, warehouse_id, quantity_current, quantity_min) VALUES (4001, 5001, 5, 5);
+INSERT INTO stock (product_id, warehouse_id, quantity_current, quantity_min) VALUES (4002, 5001, 5, 10);
+
+INSERT INTO supply (product_id, provider_id, price, remark) VALUES (4000, 3000, 4000, '10g项链 精品');
+INSERT INTO supply (product_id, provider_id, price, remark) VALUES (4001, 3001, 5000, '苹果手机 精品');
+INSERT INTO supply (product_id, provider_id, price, remark) VALUES (4002, 3001, 2000, 'Oppo手机 特价');
 
 INSERT INTO supplement (supplement_id, supplement_no, product_id, quantity, day, remark) VALUES (1, 'BH202005150000', 4000, 1, '2020-05-14 06:59:15', '补货首单');
 INSERT INTO supplement (supplement_id, supplement_no, product_id, quantity, day, remark) VALUES (12001, 'BH202005150000', 4001, 3, '2020-05-14 06:59:15', '补货二单');
