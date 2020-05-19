@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gmail.mosoft521.jxc4papaer.dao.ProductMapper">
-  <resultMap id="BaseResultMap" type="com.gmail.mosoft521.jxc4papaer.entity.Product">
+<mapper namespace="com.gmail.mosoft521.jxc4papaer.dao.SupplyMapper">
+  <resultMap id="BaseResultMap" type="com.gmail.mosoft521.jxc4papaer.entity.Supply">
     <id column="product_id" jdbcType="INTEGER" property="productId" />
-    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <id column="provider_id" jdbcType="INTEGER" property="providerId" />
     <result column="price" jdbcType="REAL" property="price" />
-    <result column="uom" jdbcType="VARCHAR" property="uom" />
-    <result column="spec" jdbcType="VARCHAR" property="spec" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -68,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    product_id, product_name, price, uom, spec, remark
+    product_id, provider_id, price, remark
   </sql>
-  <select id="selectByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.ProductExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.SupplyExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from product
+    from supply
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -84,94 +82,78 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="com.gmail.mosoft521.jxc4papaer.entity.SupplyKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from product
+    from supply
     where product_id = #{productId,jdbcType=INTEGER}
+      and provider_id = #{providerId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from product
+  <delete id="deleteByPrimaryKey" parameterType="com.gmail.mosoft521.jxc4papaer.entity.SupplyKey">
+    delete from supply
     where product_id = #{productId,jdbcType=INTEGER}
+      and provider_id = #{providerId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.ProductExample">
-    delete from product
+  <delete id="deleteByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.SupplyExample">
+    delete from supply
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Product">
-    <selectKey keyProperty="productId" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into product (product_name, price, uom, 
-      spec, remark)
-    values (#{productName,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, #{uom,jdbcType=VARCHAR}, 
-      #{spec,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Supply">
+    insert into supply (product_id, provider_id, price, 
+      remark)
+    values (#{productId,jdbcType=INTEGER}, #{providerId,jdbcType=INTEGER}, #{price,jdbcType=REAL}, 
+      #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Product">
-    <selectKey keyProperty="productId" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into product
+  <insert id="insertSelective" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Supply">
+    insert into supply
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="productName != null">
-        product_name,
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="providerId != null">
+        provider_id,
       </if>
       <if test="price != null">
         price,
-      </if>
-      <if test="uom != null">
-        uom,
-      </if>
-      <if test="spec != null">
-        spec,
       </if>
       <if test="remark != null">
         remark,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="productName != null">
-        #{productName,jdbcType=VARCHAR},
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="providerId != null">
+        #{providerId,jdbcType=INTEGER},
       </if>
       <if test="price != null">
         #{price,jdbcType=REAL},
-      </if>
-      <if test="uom != null">
-        #{uom,jdbcType=VARCHAR},
-      </if>
-      <if test="spec != null">
-        #{spec,jdbcType=VARCHAR},
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.ProductExample" resultType="java.lang.Long">
-    select count(*) from product
+  <select id="countByExample" parameterType="com.gmail.mosoft521.jxc4papaer.entity.SupplyExample" resultType="java.lang.Long">
+    select count(*) from supply
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update product
+    update supply
     <set>
       <if test="record.productId != null">
         product_id = #{record.productId,jdbcType=INTEGER},
       </if>
-      <if test="record.productName != null">
-        product_name = #{record.productName,jdbcType=VARCHAR},
+      <if test="record.providerId != null">
+        provider_id = #{record.providerId,jdbcType=INTEGER},
       </if>
       <if test="record.price != null">
         price = #{record.price,jdbcType=REAL},
-      </if>
-      <if test="record.uom != null">
-        uom = #{record.uom,jdbcType=VARCHAR},
-      </if>
-      <if test="record.spec != null">
-        spec = #{record.spec,jdbcType=VARCHAR},
       </if>
       <if test="record.remark != null">
         remark = #{record.remark,jdbcType=VARCHAR},
@@ -182,45 +164,33 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update product
+    update supply
     set product_id = #{record.productId,jdbcType=INTEGER},
-      product_name = #{record.productName,jdbcType=VARCHAR},
+      provider_id = #{record.providerId,jdbcType=INTEGER},
       price = #{record.price,jdbcType=REAL},
-      uom = #{record.uom,jdbcType=VARCHAR},
-      spec = #{record.spec,jdbcType=VARCHAR},
       remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Product">
-    update product
+  <update id="updateByPrimaryKeySelective" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Supply">
+    update supply
     <set>
-      <if test="productName != null">
-        product_name = #{productName,jdbcType=VARCHAR},
-      </if>
       <if test="price != null">
         price = #{price,jdbcType=REAL},
-      </if>
-      <if test="uom != null">
-        uom = #{uom,jdbcType=VARCHAR},
-      </if>
-      <if test="spec != null">
-        spec = #{spec,jdbcType=VARCHAR},
       </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
     where product_id = #{productId,jdbcType=INTEGER}
+      and provider_id = #{providerId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Product">
-    update product
-    set product_name = #{productName,jdbcType=VARCHAR},
-      price = #{price,jdbcType=REAL},
-      uom = #{uom,jdbcType=VARCHAR},
-      spec = #{spec,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.gmail.mosoft521.jxc4papaer.entity.Supply">
+    update supply
+    set price = #{price,jdbcType=REAL},
       remark = #{remark,jdbcType=VARCHAR}
     where product_id = #{productId,jdbcType=INTEGER}
+      and provider_id = #{providerId,jdbcType=INTEGER}
   </update>
 </mapper>

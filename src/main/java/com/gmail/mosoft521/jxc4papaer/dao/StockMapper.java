@@ -2,6 +2,7 @@ package com.gmail.mosoft521.jxc4papaer.dao;
 
 import com.gmail.mosoft521.jxc4papaer.entity.Stock;
 import com.gmail.mosoft521.jxc4papaer.entity.StockExample;
+import com.gmail.mosoft521.jxc4papaer.entity.StockKey;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -13,7 +14,7 @@ public interface StockMapper {
 
     int deleteByExample(StockExample example);
 
-    int deleteByPrimaryKey(Integer productId);
+    int deleteByPrimaryKey(StockKey key);
 
     int insert(Stock record);
 
@@ -21,7 +22,7 @@ public interface StockMapper {
 
     List<Stock> selectByExample(StockExample example);
 
-    Stock selectByPrimaryKey(Integer productId);
+    Stock selectByPrimaryKey(StockKey key);
 
     int updateByExampleSelective(@Param("record") Stock record, @Param("example") StockExample example);
 

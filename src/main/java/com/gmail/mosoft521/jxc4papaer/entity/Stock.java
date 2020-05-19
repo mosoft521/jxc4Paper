@@ -1,21 +1,9 @@
 package com.gmail.mosoft521.jxc4papaer.entity;
 
-public class Stock {
-    private Integer productId;
-
+public class Stock extends StockKey {
     private Integer quantityCurrent;
 
     private Integer quantityMin;
-
-    private Integer quantityMax;
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
 
     public Integer getQuantityCurrent() {
         return quantityCurrent;
@@ -31,13 +19,5 @@ public class Stock {
 
     public void setQuantityMin(Integer quantityMin) {
         this.quantityMin = quantityMin;
-    }
-
-    public Integer getQuantityMax() {
-        return quantityMax;
-    }
-
-    public void setQuantityMax(Integer quantityMax) {
-        this.quantityMax = quantityMax;
     }
 }

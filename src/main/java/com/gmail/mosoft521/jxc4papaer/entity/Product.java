@@ -3,10 +3,6 @@ package com.gmail.mosoft521.jxc4papaer.entity;
 public class Product {
     private Integer productId;
 
-    private Integer warehouseId;
-
-    private Integer providerId;
-
     private String productName;
 
     private Float price;
@@ -23,22 +19,6 @@ public class Product {
 
     public void setProductId(Integer productId) {
         this.productId = productId;
-    }
-
-    public Integer getWarehouseId() {
-        return warehouseId;
-    }
-
-    public void setWarehouseId(Integer warehouseId) {
-        this.warehouseId = warehouseId;
-    }
-
-    public Integer getProviderId() {
-        return providerId;
-    }
-
-    public void setProviderId(Integer providerId) {
-        this.providerId = providerId;
     }
 
     public String getProductName() {

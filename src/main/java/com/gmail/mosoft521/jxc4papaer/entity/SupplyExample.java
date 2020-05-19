@@ -3,14 +3,14 @@ package com.gmail.mosoft521.jxc4papaer.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StockExample {
+public class SupplyExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public StockExample() {
+    public SupplyExample() {
         oredCriteria = new ArrayList<>();
     }
 
@@ -164,183 +164,193 @@ public class StockExample {
             return (Criteria) this;
         }
 
-        public Criteria andWarehouseIdIsNull() {
-            addCriterion("warehouse_id is null");
+        public Criteria andProviderIdIsNull() {
+            addCriterion("provider_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andWarehouseIdIsNotNull() {
-            addCriterion("warehouse_id is not null");
+        public Criteria andProviderIdIsNotNull() {
+            addCriterion("provider_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andWarehouseIdEqualTo(Integer value) {
-            addCriterion("warehouse_id =", value, "warehouseId");
+        public Criteria andProviderIdEqualTo(Integer value) {
+            addCriterion("provider_id =", value, "providerId");
             return (Criteria) this;
         }
 
-        public Criteria andWarehouseIdNotEqualTo(Integer value) {
-            addCriterion("warehouse_id <>", value, "warehouseId");
+        public Criteria andProviderIdNotEqualTo(Integer value) {
+            addCriterion("provider_id <>", value, "providerId");
             return (Criteria) this;
         }
 
-        public Criteria andWarehouseIdGreaterThan(Integer value) {
-            addCriterion("warehouse_id >", value, "warehouseId");
+        public Criteria andProviderIdGreaterThan(Integer value) {
+            addCriterion("provider_id >", value, "providerId");
             return (Criteria) this;
         }
 
-        public Criteria andWarehouseIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("warehouse_id >=", value, "warehouseId");
+        public Criteria andProviderIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("provider_id >=", value, "providerId");
             return (Criteria) this;
         }
 
-        public Criteria andWarehouseIdLessThan(Integer value) {
-            addCriterion("warehouse_id <", value, "warehouseId");
+        public Criteria andProviderIdLessThan(Integer value) {
+            addCriterion("provider_id <", value, "providerId");
             return (Criteria) this;
         }
 
-        public Criteria andWarehouseIdLessThanOrEqualTo(Integer value) {
-            addCriterion("warehouse_id <=", value, "warehouseId");
+        public Criteria andProviderIdLessThanOrEqualTo(Integer value) {
+            addCriterion("provider_id <=", value, "providerId");
             return (Criteria) this;
         }
 
-        public Criteria andWarehouseIdIn(List<Integer> values) {
-            addCriterion("warehouse_id in", values, "warehouseId");
+        public Criteria andProviderIdIn(List<Integer> values) {
+            addCriterion("provider_id in", values, "providerId");
             return (Criteria) this;
         }
 
-        public Criteria andWarehouseIdNotIn(List<Integer> values) {
-            addCriterion("warehouse_id not in", values, "warehouseId");
+        public Criteria andProviderIdNotIn(List<Integer> values) {
+            addCriterion("provider_id not in", values, "providerId");
             return (Criteria) this;
         }
 
-        public Criteria andWarehouseIdBetween(Integer value1, Integer value2) {
-            addCriterion("warehouse_id between", value1, value2, "warehouseId");
+        public Criteria andProviderIdBetween(Integer value1, Integer value2) {
+            addCriterion("provider_id between", value1, value2, "providerId");
             return (Criteria) this;
         }
 
-        public Criteria andWarehouseIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("warehouse_id not between", value1, value2, "warehouseId");
+        public Criteria andProviderIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("provider_id not between", value1, value2, "providerId");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityCurrentIsNull() {
-            addCriterion("quantity_current is null");
+        public Criteria andPriceIsNull() {
+            addCriterion("price is null");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityCurrentIsNotNull() {
-            addCriterion("quantity_current is not null");
+        public Criteria andPriceIsNotNull() {
+            addCriterion("price is not null");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityCurrentEqualTo(Integer value) {
-            addCriterion("quantity_current =", value, "quantityCurrent");
+        public Criteria andPriceEqualTo(Float value) {
+            addCriterion("price =", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityCurrentNotEqualTo(Integer value) {
-            addCriterion("quantity_current <>", value, "quantityCurrent");
+        public Criteria andPriceNotEqualTo(Float value) {
+            addCriterion("price <>", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityCurrentGreaterThan(Integer value) {
-            addCriterion("quantity_current >", value, "quantityCurrent");
+        public Criteria andPriceGreaterThan(Float value) {
+            addCriterion("price >", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityCurrentGreaterThanOrEqualTo(Integer value) {
-            addCriterion("quantity_current >=", value, "quantityCurrent");
+        public Criteria andPriceGreaterThanOrEqualTo(Float value) {
+            addCriterion("price >=", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityCurrentLessThan(Integer value) {
-            addCriterion("quantity_current <", value, "quantityCurrent");
+        public Criteria andPriceLessThan(Float value) {
+            addCriterion("price <", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityCurrentLessThanOrEqualTo(Integer value) {
-            addCriterion("quantity_current <=", value, "quantityCurrent");
+        public Criteria andPriceLessThanOrEqualTo(Float value) {
+            addCriterion("price <=", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityCurrentIn(List<Integer> values) {
-            addCriterion("quantity_current in", values, "quantityCurrent");
+        public Criteria andPriceIn(List<Float> values) {
+            addCriterion("price in", values, "price");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityCurrentNotIn(List<Integer> values) {
-            addCriterion("quantity_current not in", values, "quantityCurrent");
+        public Criteria andPriceNotIn(List<Float> values) {
+            addCriterion("price not in", values, "price");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityCurrentBetween(Integer value1, Integer value2) {
-            addCriterion("quantity_current between", value1, value2, "quantityCurrent");
+        public Criteria andPriceBetween(Float value1, Float value2) {
+            addCriterion("price between", value1, value2, "price");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityCurrentNotBetween(Integer value1, Integer value2) {
-            addCriterion("quantity_current not between", value1, value2, "quantityCurrent");
+        public Criteria andPriceNotBetween(Float value1, Float value2) {
+            addCriterion("price not between", value1, value2, "price");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityMinIsNull() {
-            addCriterion("quantity_min is null");
+        public Criteria andRemarkIsNull() {
+            addCriterion("remark is null");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityMinIsNotNull() {
-            addCriterion("quantity_min is not null");
+        public Criteria andRemarkIsNotNull() {
+            addCriterion("remark is not null");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityMinEqualTo(Integer value) {
-            addCriterion("quantity_min =", value, "quantityMin");
+        public Criteria andRemarkEqualTo(String value) {
+            addCriterion("remark =", value, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityMinNotEqualTo(Integer value) {
-            addCriterion("quantity_min <>", value, "quantityMin");
+        public Criteria andRemarkNotEqualTo(String value) {
+            addCriterion("remark <>", value, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityMinGreaterThan(Integer value) {
-            addCriterion("quantity_min >", value, "quantityMin");
+        public Criteria andRemarkGreaterThan(String value) {
+            addCriterion("remark >", value, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityMinGreaterThanOrEqualTo(Integer value) {
-            addCriterion("quantity_min >=", value, "quantityMin");
+        public Criteria andRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("remark >=", value, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityMinLessThan(Integer value) {
-            addCriterion("quantity_min <", value, "quantityMin");
+        public Criteria andRemarkLessThan(String value) {
+            addCriterion("remark <", value, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityMinLessThanOrEqualTo(Integer value) {
-            addCriterion("quantity_min <=", value, "quantityMin");
+        public Criteria andRemarkLessThanOrEqualTo(String value) {
+            addCriterion("remark <=", value, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityMinIn(List<Integer> values) {
-            addCriterion("quantity_min in", values, "quantityMin");
+        public Criteria andRemarkLike(String value) {
+            addCriterion("remark like", value, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityMinNotIn(List<Integer> values) {
-            addCriterion("quantity_min not in", values, "quantityMin");
+        public Criteria andRemarkNotLike(String value) {
+            addCriterion("remark not like", value, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityMinBetween(Integer value1, Integer value2) {
-            addCriterion("quantity_min between", value1, value2, "quantityMin");
+        public Criteria andRemarkIn(List<String> values) {
+            addCriterion("remark in", values, "remark");
             return (Criteria) this;
         }
 
-        public Criteria andQuantityMinNotBetween(Integer value1, Integer value2) {
-            addCriterion("quantity_min not between", value1, value2, "quantityMin");
+        public Criteria andRemarkNotIn(List<String> values) {
+            addCriterion("remark not in", values, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkBetween(String value1, String value2) {
+            addCriterion("remark between", value1, value2, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotBetween(String value1, String value2) {
+            addCriterion("remark not between", value1, value2, "remark");
             return (Criteria) this;
         }
     }
