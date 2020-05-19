@@ -107,7 +107,7 @@ public class SaleStockOutItemServiceImpl implements SaleStockOutItemService {
             supplement.setRemark("销售出库明细insert或update产生");
             supplementMapper.insert(supplement);
 
-            responseVO.setMsg("商品: " + productMapper.selectByPrimaryKey(saleStockOutItem.getProductId()).getProductName() + " 缺货，请补货" + (stock.getQuantityMin() - quantityCurrent) + "件");
+            responseVO.setMsg("商品: " + productMapper.selectByPrimaryKey(saleStockOutItem.getProductId()).getProductName() + " 请补货" + (stock.getQuantityMin() - quantityCurrent) + "件");
         }
         return responseVO;
     }
