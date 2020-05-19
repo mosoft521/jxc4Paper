@@ -48,6 +48,8 @@ drop table if exists stock;
 
 drop table if exists supplement;
 
+drop table if exists supply;
+
 drop table if exists warehouse;
 
 /*==============================================================*/
@@ -138,8 +140,6 @@ alter table emp_type comment '员工类别';
 create table product
 (
    product_id           int not null auto_increment comment '商品ID',
-   warehouse_id         int not null comment '仓库ID',
-   provider_id          int not null comment '供应商ID',
    product_name         varchar(30) not null comment '商品名',
    price                float not null comment '单价',
    uom                  varchar(10) comment '商品计量单位',
@@ -424,10 +424,10 @@ alter table sale_stock_out_item comment '销售出库明细';
 create table stock
 (
    product_id           int not null comment '商品ID',
+   warehouse_id         int not null comment '仓库ID',
    quantity_current     int not null comment '当前库存量',
    quantity_min         int not null comment '最小库存量',
-   quantity_max         int comment '最大库存量',
-   primary key (product_id)
+   primary key (product_id, warehouse_id)
 );
 
 alter table stock comment '库存';
@@ -447,6 +447,20 @@ create table supplement
 );
 
 alter table supplement comment '补货';
+
+/*==============================================================*/
+/* Table: supply                                                */
+/*==============================================================*/
+create table supply
+(
+   product_id           int not null comment '商品ID',
+   provider_id          int not null comment '供应商ID',
+   price                float not null comment '单价',
+   remark               varchar(50) comment '备注',
+   primary key (product_id, provider_id)
+);
+
+alter table supply comment '供应';
 
 /*==============================================================*/
 /* Table: warehouse                                             */
