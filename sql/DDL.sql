@@ -441,7 +441,7 @@ create table supplement
    supplement_no        varchar(32) not null comment '补货单号',
    product_id           int not null comment '商品ID',
    quantity             int not null comment '数量',
-   day                  datetime not null comment '日期',
+   day                  datetime comment '日期',
    remark               varchar(50) comment '备注',
    primary key (supplement_id)
 );

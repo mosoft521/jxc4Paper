@@ -140,14 +140,14 @@
 <!--        <table schema="" tableName="sale_stock_out_item" domainObjectName="SaleStockOutItem">-->
 <!--            <generatedKey column="sale_stock_out_item_id" sqlStatement="MySql" identity="true"/>-->
 <!--        </table>-->
-        <table schema="" tableName="stock" domainObjectName="Stock">
-        </table>
+<!--        <table schema="" tableName="stock" domainObjectName="Stock">-->
+<!--        </table>-->
 <!--        <table schema="" tableName="warehouse" domainObjectName="Warehouse">-->
 <!--            <generatedKey column="warehouse_id" sqlStatement="MySql" identity="true"/>-->
 <!--        </table>-->
-<!--        <table schema="" tableName="supplement" domainObjectName="Supplement">-->
-<!--            <generatedKey column="supplement_id" sqlStatement="MySql" identity="true"/>-->
-<!--        </table>-->
+        <table schema="" tableName="supplement" domainObjectName="Supplement">
+            <generatedKey column="supplement_id" sqlStatement="MySql" identity="true"/>
+        </table>
         <table schema="" tableName="supply" domainObjectName="Supply">
         </table>
 
